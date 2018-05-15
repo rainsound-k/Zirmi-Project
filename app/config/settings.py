@@ -93,7 +93,7 @@ DATABASES = secrets_base['DATABASES']
 
 RAVEN_CONFIG = {
     'dsn': secrets_base['RAVEN_DSN'],
-    'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
+    'release': raven.fetch_git_sha(ROOT_DIR),
 }
 
 AUTH_PASSWORD_VALIDATORS = [
