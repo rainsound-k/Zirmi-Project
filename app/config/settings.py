@@ -36,8 +36,7 @@ STATICFILES_DIRS = [
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-# Application definition
+AUTH_USER_MODEL = 'members.User'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -49,6 +48,8 @@ INSTALLED_APPS = [
 
     'django_extensions',
     'raven.contrib.django.raven_compat',
+
+    'members',
 ]
 
 MIDDLEWARE = [
