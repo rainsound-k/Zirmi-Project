@@ -11,10 +11,10 @@ class UserAdmin(DjangoUserAdmin):
             'password',
         )}),
         ('개인정보', {'fields': (
-            'first_name',
-            'last_name',
             'email',
-            'img_profile',
+            'generation',
+            'gender',
+
         )}),
         ('권한', {'fields': (
             'is_active',
