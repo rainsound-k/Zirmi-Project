@@ -45,6 +45,7 @@ class User(AbstractUser):
         (GENDER_MALE, '남성'),
         (GENDER_FEMALE, '여성'),
     )
+
     username = models.CharField(max_length=50, unique=False, blank=True, null=True)
     email = models.EmailField(max_length=50, unique=True, null=True)
     generation = models.CharField('세대', max_length=10, choices=CHOICES_GENERATION)
@@ -66,6 +67,12 @@ class User(AbstractUser):
 
     def get_short_name(self):
         return self.email
+
+    def toggle_like_item(self, item):
+        like, like_created = self.like_item_info_list.get_or_create(item=item)
+        if not like_created:
+            like.delete()
+        return like_created
 
     class Meta:
         verbose_name = '사용자'

@@ -53,9 +53,11 @@ INSTALLED_APPS = [
 
     'django_extensions',
     'raven.contrib.django.raven_compat',
+    'widget_tweaks',
 
     'members',
-    'widget_tweaks',
+    'items',
+
 ]
 
 MIDDLEWARE = [
