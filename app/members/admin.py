@@ -1,17 +1,22 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 
+from .forms import SignUpForm
 from .models import User
 
 
 class UserAdmin(DjangoUserAdmin):
+    add_form = SignUpForm
+    model = User
+    list_display = ['email', 'generation', 'gender', 'is_superuser']
+    ordering = ('-date_joined',)
+
     fieldsets = (
         (None, {'fields': (
-            'username',
+            'email',
             'password',
         )}),
         ('개인정보', {'fields': (
-            'email',
             'generation',
             'gender',
 

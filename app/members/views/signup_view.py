@@ -1,5 +1,4 @@
-from django.contrib.auth import get_user_model, authenticate
-from django.contrib.auth.views import login
+from django.contrib.auth import authenticate, get_user_model, login
 from django.shortcuts import redirect, render
 
 from ..forms import SignUpForm
@@ -12,28 +11,15 @@ __all__ = (
 
 
 def signup_view(request):
-    context = {
-        'errors': [],
-    }
-
-    signup_form = SignUpForm()
-    context['signup_form'] = signup_form
-
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            user.refresh_from_db()
-            user.email = form.cleaned_data['email']
-            user.generation = form.cleaned_data['generation']
-            user.gender = form.cleaned_data['gender']
-            user.save()
-            user.username = form.cleaned_data['username']
-            user.password = form.cleaned_data['password1']
-
-            user = authenticate(username=user.username, password=user.password)
-            login(request, user)
-
+            new_user = form.save()
+            new_user = authenticate(
+                email=form.cleaned_data['email'],
+                password=form.cleaned_data['password1']
+            )
+            login(request, new_user)
             return redirect('index')
     else:
         form = SignUpForm()

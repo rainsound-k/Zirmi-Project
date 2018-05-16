@@ -39,6 +39,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 AUTH_USER_MODEL = 'members.User'
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
