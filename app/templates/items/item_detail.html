@@ -33,7 +33,15 @@
       </div>
     </div>
   </div>
+  <!-- <form action="{% url 'items:item-edit' item_pk=item.pk %}" method="post">
+    {% csrf_token %}
+    <button class="btn btn-dark form-control">Edit item</button>
+  </form> -->
   <a href="{% url 'items:item-edit' item_pk=item.pk %}" class="btn btn-dark form-control">Edit item</a>
+  <form action="{% url 'items:item-delete' item_pk=item.pk %}" method="post">
+    {% csrf_token %}
+    <button class="btn btn-danger form-control">Delete item</button>
+  </form>
 </div>
 
 {% endblock %}

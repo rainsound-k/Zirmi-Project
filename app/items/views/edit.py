@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
 
 from ..forms import ItemForm
@@ -6,6 +7,9 @@ from ..models import Item
 
 def item_edit(request, item_pk):
     item = get_object_or_404(Item, pk=item_pk)
+    if request.user != item.user:
+        raise PermissionDenied('권한이 없습니다')
+
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES, instance=item)
         if form.is_valid():
