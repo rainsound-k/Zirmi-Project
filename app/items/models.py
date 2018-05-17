@@ -15,7 +15,7 @@ class Item(models.Model):
     purchase_url = models.URLField('상품 URL', max_length=200, blank=True)
     price = models.IntegerField('상품 가격')
     category = models.CharField('상품 카테고리', max_length=100, blank=True)
-    img_url = models.ImageField('상품 이미지', upload_to='items', blank=True)
+    img = models.ImageField('상품 이미지', upload_to='items', blank=True)
     public_visibility = models.BooleanField('공개 여부', default=True)
     created_date = models.DateTimeField(auto_now_add=True)
 

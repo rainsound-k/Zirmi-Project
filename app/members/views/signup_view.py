@@ -20,7 +20,7 @@ def signup_view(request):
                 password=form.cleaned_data['password1']
             )
             login(request, new_user)
-            return redirect('items:index')
+            return redirect('index')
     else:
         form = SignUpForm()
     context = {

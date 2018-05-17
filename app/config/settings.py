@@ -54,6 +54,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # integerfield 천단위로 콤마 구분
+    'django.contrib.humanize',
+
     'django_extensions',
     'raven.contrib.django.raven_compat',
     'widget_tweaks',
@@ -176,4 +179,4 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False

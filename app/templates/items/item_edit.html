@@ -6,7 +6,7 @@
 {% block content %}
 
 <div class="container">
-  <div class="item-add-container">
+  <div class="item-edit-container">
     <form action="" method="POST" class="clearfix" enctype='multipart/form-data'>
       {% csrf_token %}
           {% for field in form %}
@@ -19,7 +19,7 @@
             </div>
           {% endfor %}
       <div>
-        <button type="submit" class="btn btn-dark">등록</button>
+        <button type="submit" class="btn btn-dark">수정</button>
       </div>
     </form>
   </div>

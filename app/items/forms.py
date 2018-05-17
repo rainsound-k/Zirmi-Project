@@ -11,7 +11,7 @@ class ItemForm(forms.ModelForm):
             'purchase_url',
             'price',
             'category',
-            'img_url',
+            'img',
             'public_visibility',
         )
 

@@ -4,21 +4,23 @@
 
 
 {% block content %}
-<div class="signup-container">
-	<form action="" method="POST" class="clearfix">
-		{% csrf_token %}
-        {% for field in signup_form %}
-        <div class="form-group clearfix">
-			<label for="{{ field.id_for_label }}">{{ field.label }}</label>
-            {{ field|add_class:"form-control" }}
-            {% for error in field.errors %}
-            <p>{{ error }}</p>
-            {% endfor %}
-		</div>
-        {% endfor %}
-		<div>
-			<button type="submit" class="btn btn-dark">회원 가입</button>
-		</div>
-	</form>
+<div class="container">
+	<div class="signup-container">
+		<form action="" method="POST" class="clearfix">
+			{% csrf_token %}
+	        {% for field in signup_form %}
+	        <div class="form-group clearfix">
+				<label for="{{ field.id_for_label }}">{{ field.label }}</label>
+	            {{ field|add_class:"form-control" }}
+	            {% for error in field.errors %}
+	            <p>{{ error }}</p>
+	            {% endfor %}
+			</div>
+	        {% endfor %}
+			<div>
+				<button type="submit" class="btn btn-dark">회원 가입</button>
+			</div>
+		</form>
+	</div>
 </div>
 {% endblock %}

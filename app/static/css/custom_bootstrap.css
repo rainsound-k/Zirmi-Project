@@ -1,0 +1,15 @@
+img.card-img-top {
+  height: 225px;
+}
+
+.item-name {
+  padding: 30px;
+}
+
+.item-detail {
+  padding: 20px;
+}
+
+.item-detail-container {
+  margin-bottom: 70px;
+}

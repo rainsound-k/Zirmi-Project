@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('purchase_url', models.CharField(blank=True, max_length=200, verbose_name='상품 URL')),
                 ('price', models.IntegerField(verbose_name='상품 가격')),
                 ('category', models.CharField(blank=True, max_length=100, verbose_name='상품 카테고리')),
-                ('img_url', models.ImageField(blank=True, upload_to='items', verbose_name='상품 이미지')),
+                ('img', models.ImageField(blank=True, upload_to='items', verbose_name='상품 이미지')),
                 ('public_visibility', models.BooleanField(default=True, verbose_name='공개 여부')),
                 ('created_date', models.DateTimeField(auto_now_add=True)),
             ],

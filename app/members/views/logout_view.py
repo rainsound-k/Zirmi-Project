@@ -8,4 +8,4 @@ __all__ = (
 
 def logout_view(request):
     logout(request)
-    return redirect('items:index')
+    return redirect('index')

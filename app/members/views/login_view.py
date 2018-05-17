@@ -20,5 +20,5 @@ def login_view(request):
             # next url 있을 경우 next url로 redirect 설정
             if next_url:
                 return redirect(next_url)
-            return redirect('items:index')
+            return redirect('index')
     return render(request, 'members/login.html')
