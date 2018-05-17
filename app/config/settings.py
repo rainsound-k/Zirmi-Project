@@ -43,6 +43,9 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+# login_required 데코레이터 redirect url
+LOGIN_URL = '/login'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

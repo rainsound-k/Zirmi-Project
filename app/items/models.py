@@ -12,7 +12,7 @@ class Item(models.Model):
         null=True,
     )
     name = models.CharField('상품명', max_length=50)
-    purchase_url = models.CharField('상품 URL', max_length=200, blank=True)
+    purchase_url = models.URLField('상품 URL', max_length=200, blank=True)
     price = models.IntegerField('상품 가격')
     category = models.CharField('상품 카테고리', max_length=100, blank=True)
     img_url = models.ImageField('상품 이미지', upload_to='items', blank=True)

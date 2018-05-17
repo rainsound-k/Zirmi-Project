@@ -4,6 +4,7 @@
 <div>
   <h3>My items list</h3>
 </div>
+<a href="{% url 'items:item-add' %}" class="btn btn-dark">Add item</a>
 <div>
   <ul>
     {% for item in my_items %}

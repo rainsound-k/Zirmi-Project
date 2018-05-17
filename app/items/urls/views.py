@@ -5,4 +5,5 @@ app_name = 'items'
 urlpatterns = [
     path('', views.item_list, name='index'),
     path('list/', views.my_item_list, name='my-item-list'),
+    path('add/', views.item_add, name='item-add'),
 ]
