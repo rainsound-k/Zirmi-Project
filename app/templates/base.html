@@ -15,35 +15,41 @@
 	<div class="header-wrap">
 		<header class="main-header">
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-				<a class="navbar-brand" href="{% url 'index' %}">지르미</a>
+				<a class="navbar-brand" href="{% url 'items:index' %}">지르미</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 				<div class="collapse navbar-collapse" id="navbarText">
 					<ul class="navbar-nav mr-auto">
 						<li class="nav-item">
-							<a class="nav-link" href="{% url 'index' %}">Home</a>
+							<a class="nav-link" href="{% url 'items:index' %}">Home</a>
+						</li>
+					{% if user.is_authenticated %}
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'items:my-item-list' %}">My items</a>
 						</li>
 					</ul>
-					<ul class="navbar-nav ml-auto">
-						{% if user.is_authenticated %}
+						<ul class="navbar-nav ml-auto">
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									<i class="fas fa-user"></i> {{ user.email }}
 								</a>
 								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-									<a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+									<a class="dropdown-item" href="{% url 'members:logout' %}"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
 								</div>
 							</li>
-						{% else %}
+						</ul>
+					{% else %}
+				</ul>
+						<ul class="navbar-nav ml-auto">
 							<li class="nav-item">
-								<a class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Sign in</a>
+								<a class="nav-link" href="{% url 'members:login' %}"><i class="fas fa-sign-in-alt"></i> Sign in</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="{% url 'signup' %}"><i class="fas fa-user"></i> Sign Up</a>
+								<a class="nav-link" href="{% url 'members:signup' %}"><i class="fas fa-user"></i> Sign Up</a>
 							</li>
-						{% endif %}
-					</ul>
+						</ul>
+					{% endif %}
 				</div>
 			</nav>
 		</header>

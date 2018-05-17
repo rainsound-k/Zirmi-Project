@@ -5,6 +5,12 @@ User = get_user_model()
 
 
 class Item(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
     name = models.CharField('상품명', max_length=50)
     purchase_url = models.CharField('상품 URL', max_length=200, blank=True)
     price = models.IntegerField('상품 가격')
@@ -12,6 +18,9 @@ class Item(models.Model):
     img_url = models.ImageField('상품 이미지', upload_to='items', blank=True)
     public_visibility = models.BooleanField('공개 여부', default=True)
     created_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_date']
 
     def __str__(self):
         return self.name

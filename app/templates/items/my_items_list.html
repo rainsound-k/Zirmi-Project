@@ -2,11 +2,11 @@
 
 {% block content %}
 <div>
-  <h3>Index</h3>
+  <h3>My items list</h3>
 </div>
 <div>
   <ul>
-    {% for item in items %}
+    {% for item in my_items %}
       <li>{{ item.name }}</li>
     {% endfor %}
   </ul>
