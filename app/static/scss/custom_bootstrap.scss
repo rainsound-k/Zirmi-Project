@@ -1,16 +1,29 @@
 img.card-img-top {
   height: 225px;
 }
+.row {
+  margin: 0;
+}
 .item-name {
   padding: 30px;
 }
 .item-detail {
-  padding: 20px;
+  padding: 15px;
 }
-.item-detail-container {
+.container {
   margin-bottom: 70px;
 }
 .detail-img {
   width: 100%;
   max-height: 340px;
+}
+.comment-container {
+  padding: 15px;
+}
+p.media-body {
+  word-break: break-word;
+  padding-right: 5px;
+}
+.comment-delete-btn {
+  margin: 0;
 }
