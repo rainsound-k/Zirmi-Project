@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+<div class="container">
+	<div class="signup-container">
+		<form action="" method="POST" class="clearfix">
+			{% csrf_token %}
+      <div class="form-group clearfix">
+			   {{ form }}
+		  </div>
+			<div>
+				<button type="submit" class="btn btn-dark">댓글 쓰기</button>
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}

@@ -72,3 +72,22 @@ class ItemLike(models.Model):
         on_delete=models.CASCADE,
     )
     created_date = models.DateTimeField(auto_now_add=True)
+
+
+class ItemComment(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
+    item = models.ForeignKey(
+        Item,
+        related_name='comments',
+        on_delete=models.CASCADE,
+    )
+    content = models.TextField('댓글')
+    created_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['created_date']

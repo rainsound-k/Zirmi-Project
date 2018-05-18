@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
+from ..forms import CommentForm
 from ..models import Item
 
 __all__ = (
@@ -11,8 +12,10 @@ __all__ = (
 
 def item_list(request):
     items = Item.objects.filter(public_visibility=True)
+    comment_form = CommentForm()
     context = {
         'items': items,
+        'comment_form': comment_form,
     }
     return render(request, 'index.html', context)
 

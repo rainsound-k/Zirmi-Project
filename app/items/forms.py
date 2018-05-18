@@ -1,6 +1,11 @@
 from django import forms
 
-from .models import Item
+from .models import Item, ItemComment
+
+__all__ = (
+    'ItemForm',
+    'CommentForm',
+)
 
 
 class ItemForm(forms.ModelForm):
@@ -23,3 +28,18 @@ class ItemForm(forms.ModelForm):
             self.instance.user = user
 
         return super().save(*args, **kwargs)
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = ItemComment
+        fields = (
+            'content',
+        )
+        widgets = {
+            'content': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            )
+        }

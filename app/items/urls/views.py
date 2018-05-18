@@ -11,4 +11,9 @@ urlpatterns = [
     path('public/<int:item_pk>/like-toggle/', views.item_like_toggle, name='item-like-toggle'),
     path('<int:item_pk>/edit/', views.item_edit, name='item-edit'),
     path('<int:item_pk>/delete/', views.item_delete, name='item-delete'),
+
+    # comment
+    path('public/<int:item_pk>/comment/create/', views.comment_create, name='comment-create'),
+    path('public/comment/<int:comment_pk>/delete/', views.comment_delete, name='comment-delete'),
+
 ]
