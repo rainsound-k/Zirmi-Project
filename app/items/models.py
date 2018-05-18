@@ -4,6 +4,26 @@ from django.db import models
 User = get_user_model()
 
 
+class ItemManager(models.Manager):
+    def add_from_public(self, item_pk, request):
+        public_item = Item.objects.get(pk=item_pk)
+        item, item_created = self.get_or_create(
+            pk=item_pk,
+            # user=request.user,
+            defaults={
+                'user': request.user,
+                'name': public_item.name,
+                'purchase_url': public_item.purchase_url,
+                'price': public_item.price,
+                'category': public_item.category,
+                'img': public_item.img,
+                # 'public_visibility': False,
+            }
+
+        )
+        return item, item_created
+
+
 class Item(models.Model):
     user = models.ForeignKey(
         User,
@@ -18,6 +38,14 @@ class Item(models.Model):
     img = models.ImageField('상품 이미지', upload_to='items', blank=True)
     public_visibility = models.BooleanField('공개 여부', default=True)
     created_date = models.DateTimeField(auto_now_add=True)
+    like_users = models.ManyToManyField(
+        User,
+        through='ItemLike',
+        related_name='like_items',
+        blank=True
+    )
+
+    objects = ItemManager()
 
     class Meta:
         ordering = ['-created_date']

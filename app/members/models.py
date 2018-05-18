@@ -59,6 +59,12 @@ class User(AbstractUser):
 
     objects = MyUserManager()
 
+    def toggle_like_item(self, item):
+        like, like_created = self.like_item_info_list.get_or_create(item=item)
+        if not like_created:
+            like.delete()
+        return like_created
+
     def __str__(self):
         return self.email
 
@@ -67,12 +73,6 @@ class User(AbstractUser):
 
     def get_short_name(self):
         return self.email
-
-    def toggle_like_item(self, item):
-        like, like_created = self.like_item_info_list.get_or_create(item=item)
-        if not like_created:
-            like.delete()
-        return like_created
 
     class Meta:
         verbose_name = '사용자'
