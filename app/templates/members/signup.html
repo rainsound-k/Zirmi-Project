@@ -6,6 +6,7 @@
 {% block content %}
 <div class="container">
 	<div class="signup-container">
+		<h4>회원가입</h4>
 		<form action="" method="POST" class="clearfix">
 			{% csrf_token %}
 	        {% for field in signup_form %}

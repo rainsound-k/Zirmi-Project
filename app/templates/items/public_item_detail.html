@@ -36,34 +36,32 @@
     </div>
   </div>
 
-
   <div class="my-3 p-3 bg-white rounded box-shadow">
-    <h6 class="border-bottom border-gray pb-2 mb-0">댓글</h6>
+    <h6 class="border-bottom border-gray pb-2 mb-0">댓글 {{ item.comments.count }}</h6>
     {% for comment in item.comments.all %}
-    <div id="item-comments-{{ comment.pk }}" class="media text-muted pt-3 border-bottom border-gray align-items-center">
-      <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
-      <p class="media-body pb-3 mb-0 small lh-125">
-      <strong class="d-block text-gray-dark">{{ comment.user|id_from_email }}</strong>
-      {{ comment.content }}
-      </p>
+    <div id="item-comments-{{ comment.pk }}" class="comment-content media text-muted pt-3 border-bottom border-gray align-items-center">
+      <span class="mr-2 rounded user-profile">{% if comment.user.gender == 'f' %}<i class="far fa-user-circle fa-2x"></i>{% else %}<i class="fas fa-user-circle fa-2x"></i>{% endif %}</span>
+      <p class="media-body pb-3 mb-0 small lh-125"><strong class="d-block text-gray-dark">{{ comment.user|id_from_email }}</strong>{{ comment.content|linebreaksbr }}</p>
       {% if comment.user == user %}
-        <form action="{% url 'items:comment-delete' comment_pk=comment.pk %}?next={% url 'items:public-item-detail' item_pk=item.pk %}#item-comments-{{ comment.pk }}" method="post">
-          {% csrf_token %}
-          <button class="btn btn-sm btn-danger comment-delete-btn">삭제</button>
+        <form class="comment-delete-form" action="{% url 'items:comment-delete' comment_pk=comment.pk %}#item-comments-{{ comment.pk }}" method="post">
+        {% csrf_token %}
+          <button class="btn btn-sm btn-danger">삭제</button>
         </form>
-        {% endif %}
-      </div>
-      {% endfor %}
+      {% endif %}
     </div>
+      {% endfor %}
 
-
-
-    <form action="{% url 'items:comment-create' item_pk=item.pk %}?next={% url 'items:public-item-detail' item_pk=item.pk %}#item-comments-{{ comment.pk }}" method="post">
+    <form id="comments" action="{% url 'items:comment-create' item_pk=item.pk %}?next={% url 'items:public-item-detail' item_pk=item.pk %}#comments" method="post">
       {% csrf_token %}
-      {{ comment_form }}
-      <button class="btn btn-primary form-control">댓글달기</button>
+      <div class="input-group">
+        {{ comment_form }}
+        <div class="input-group-append">
+          <button class="btn btn-primary">등록</button>
+        </div>
+      </div>
     </form>
   </div>
+
 
 
 </div>

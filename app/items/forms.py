@@ -37,9 +37,12 @@ class CommentForm(forms.ModelForm):
             'content',
         )
         widgets = {
-            'content': forms.TextInput(
+            'content': forms.Textarea(
                 attrs={
+                    'cols': 115,
+                    'rows': 3,
                     'class': 'form-control',
+                    'placeholder': "댓글을 입력해주세요",
                 }
             )
         }

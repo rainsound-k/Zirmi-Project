@@ -11,8 +11,10 @@ __all__ = (
 
 def item_detail(request, item_pk):
     item = get_object_or_404(Item, pk=item_pk)
+    comment_form = CommentForm()
     context = {
         'item': item,
+        'comment_form': comment_form,
     }
     return render(request, 'items/item_detail.html', context)
 

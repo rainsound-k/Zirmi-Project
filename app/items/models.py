@@ -86,7 +86,7 @@ class ItemComment(models.Model):
         related_name='comments',
         on_delete=models.CASCADE,
     )
-    content = models.TextField('댓글')
+    content = models.TextField('')
     created_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
