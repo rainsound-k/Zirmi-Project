@@ -1,34 +1,35 @@
 img.card-img-top {
   height: 225px;
 }
-.row {
-  margin: 0;
-}
+
 .item-name {
   padding: 30px;
 }
+
 .item-detail {
   padding: 15px;
 }
-.container {
-  margin-bottom: 70px;
-}
+
 .detail-img {
   width: 100%;
   max-height: 340px;
 }
+
 p.media-body {
   word-break: break-word;
   white-space: pre-wrap;
   padding-right: 20px;
 }
+
 .comment-content {
   margin-bottom: 15px;
 }
+
 .comment-delete-form {
   margin-top: -1rem !important;
   margin-bottom: 0;
 }
+
 .user-profile {
   padding-right: 20px;
   margin-top: -1rem !important;
