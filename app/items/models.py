@@ -7,21 +7,20 @@ User = get_user_model()
 class ItemManager(models.Manager):
     def add_from_public(self, item_pk, request):
         public_item = Item.objects.get(pk=item_pk)
-        item, item_created = self.get_or_create(
-            pk=item_pk,
-            # user=request.user,
-            defaults={
-                'user': request.user,
-                'name': public_item.name,
-                'purchase_url': public_item.purchase_url,
-                'price': public_item.price,
-                'category': public_item.category,
-                'img': public_item.img,
-                # 'public_visibility': False,
-            }
+        if public_item.user == request.user:
+            pass
+        else:
+            item = self.create(
+                user=request.user,
+                name=public_item.name,
+                purchase_url=public_item.purchase_url,
+                price=public_item.price,
+                category=public_item.category,
+                img=public_item.img,
+                public_visibility=False,
 
-        )
-        return item, item_created
+            )
+            return item
 
 
 class Item(models.Model):
@@ -30,6 +29,7 @@ class Item(models.Model):
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
+        related_name='user_items'
     )
     name = models.CharField('상품명', max_length=50)
     purchase_url = models.URLField('상품 URL', max_length=200, blank=True)
