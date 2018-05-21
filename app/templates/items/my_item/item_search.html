@@ -24,8 +24,11 @@
       <input type="text" name="purchase_url" value="{{ url }}" class="form-control">
       <label for="">상품 카테고리</label>
       <input type="text" name="category" class="form-control">
+      {% if item_img %}
+      {% else %}
       <label for="">상품 이미지</label>
-      <input type="file" name="img" value="{{ item_img }}" class="form-control">
+      <input type="file" name="img" class="form-control">
+      {% endif %}
       <label for="">공개 여부</label>
       <input type="checkbox" name="public_visibility" class="form-control" checked>
 

@@ -1,7 +1,12 @@
 from datetime import datetime
+from urllib.parse import urlparse
 
 from django.contrib.auth import get_user_model
+from django.core.files import File
 from django.db import models
+
+from utils.file import download
+from utils.url_parser import get_11st_item_info
 
 User = get_user_model()
 
@@ -23,6 +28,38 @@ class ItemManager(models.Manager):
 
             )
             return item
+
+    @staticmethod
+    def add_from_search(request):
+        item_name = request.POST['name']
+        item_purchase_url = request.POST['purchase_url']
+        item_price = request.POST['price']
+        item_category = request.POST['category']
+        item_img = request.FILES.get('img', '')
+        item_public_visibility = request.POST['public_visibility']
+        if item_public_visibility == 'on':
+            item_public_visibility = True
+        else:
+            item_public_visibility = False
+
+        item = Item.objects.create(
+            user=request.user,
+            name=item_name,
+            purchase_url=item_purchase_url,
+            price=item_price,
+            category=item_category,
+            img=item_img,
+            public_visibility=item_public_visibility,
+        )
+
+        if not item.img:
+            search_item = get_11st_item_info(item_purchase_url)
+            item_img_url = search_item['item_img']
+            temp_file = download(item_img_url)
+            file_name = urlparse(item_img_url).path.split('/')[-1]
+            item.img.save(file_name, File(temp_file))
+
+        return item
 
     def purchase_complete(self, item_pk):
         item, created = self.update_or_create(
