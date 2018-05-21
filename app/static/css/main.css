@@ -8,6 +8,14 @@ img.card-img-top {
 
 .item-detail {
   padding: 15px;
+  word-break: break-word;
+}
+
+.card-text {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  overflow: hidden;
 }
 
 .detail-img {

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="item-add-container">
+    <form action="" method="get">
+      <label for="">상품 URL</label>
+      <input type="text" name="url" class="form-control">
+      <button type="submit">검색</button>
+    </form>
+    <br>
+
+    <form action="{% url 'items:item-add' %}" method="POST" class="clearfix" enctype='multipart/form-data'>
+      {% csrf_token %}
+      <label for="">상품명</label>
+      <input type="text" name="name" value="{{ item_name }}" class="form-control">
+      <label for="">상품 가격</label>
+      <input type="text" name="price" value="{{ item_price }}" class="form-control">
+      <label for="">상품 URL</label>
+      <input type="text" name="purchase_url" value="{{ url }}" class="form-control">
+      <label for="">상품 카테고리</label>
+      <input type="text" name="category" class="form-control">
+      <label for="">상품 이미지</label>
+      <input type="file" name="img" value="{{ item_img }}" class="form-control">
+      <label for="">공개 여부</label>
+      <input type="checkbox" name="public_visibility" class="form-control" checked>
+
+      <div>
+        <button type="submit" class="btn btn-dark">등록</button>
+      </div>
+    </form>
+
+
+  </div>
+</div>
+{% endblock %}

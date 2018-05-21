@@ -6,7 +6,9 @@ urlpatterns = [
     path('list/', views.my_item_list, name='my-item-list'),
     path('list/complete/', views.my_complete_item_list, name='my-complete-item-list'),
     path('complete/<int:item_pk>/', views.purchase_item_detail, name='purchase-item-detail'),
-    path('add/', views.item_add, name='item-add'),
+    path('search/', views.search_url, name='search-url'),
+    path('search/add/', views.item_add, name='item-add'),
+
     path('<int:item_pk>/', views.item_detail, name='item-detail'),
     path('<int:item_pk>/edit/', views.item_edit, name='item-edit'),
     path('<int:item_pk>/delete/', views.item_delete, name='item-delete'),

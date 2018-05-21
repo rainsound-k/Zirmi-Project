@@ -26,7 +26,7 @@
         </div>
         <div class="item-detail">
           <h3>구입 링크</h3>
-          <a href="{{ item.purchase_url }}" class="text-muted">{% if item.purchase_url %}{{ item.purchase_url }}{% else %} {% endif %}</a>
+          <a href="{{ item.purchase_url }}" class="text-muted">{% if item.purchase_url %}{{ item.purchase_url|truncatechars:70 }}{% else %} {% endif %}</a>
         </div>
         <div class="item-detail">
           <h3>관심 있는 사람</h3>

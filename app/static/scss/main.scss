@@ -1,3 +1,5 @@
+@import 'variables';
+
 img.card-img-top {
   height: 225px;
 }
@@ -6,6 +8,10 @@ img.card-img-top {
 }
 .item-detail {
   padding: 15px;
+  word-break: break-word;
+}
+.card-text {
+  @include max-line(1);
 }
 .detail-img {
   width: 100%;
