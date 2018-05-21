@@ -15,9 +15,13 @@ def item_delete(request, item_pk):
         return redirect('members:login')
 
     if request.method == 'POST':
+        next_url = request.GET.get('next_url', '').strip()
+
         item = get_object_or_404(Item, pk=item_pk)
         if item.user == request.user:
             item.delete()
+            if next_url:
+                return redirect(next_url)
             return redirect('items:my-item-list')
         else:
             raise PermissionDenied('권한이 없습니다')

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -22,6 +24,16 @@ class ItemManager(models.Manager):
             )
             return item
 
+    def purchase_complete(self, item_pk):
+        item, created = self.update_or_create(
+            pk=item_pk,
+            defaults={
+                'is_purchase': True,
+                'purchase_date': datetime.now(),
+            }
+        )
+        return item, created
+
 
 class Item(models.Model):
     user = models.ForeignKey(
@@ -38,6 +50,8 @@ class Item(models.Model):
     img = models.ImageField('상품 이미지', upload_to='items', blank=True)
     public_visibility = models.BooleanField('공개 여부', default=True)
     created_date = models.DateTimeField(auto_now_add=True)
+    is_purchase = models.BooleanField('구매 여부', default=False)
+    purchase_date = models.DateTimeField(auto_now_add=False, blank=True, null=True)
     like_users = models.ManyToManyField(
         User,
         through='ItemLike',

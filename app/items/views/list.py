@@ -7,6 +7,7 @@ from ..models import Item
 __all__ = (
     'item_list',
     'my_item_list',
+    'my_complete_item_list',
 )
 
 
@@ -25,8 +26,30 @@ def my_item_list(request):
     if not request.user.is_authenticated:
         return redirect('members:login')
 
-    my_items = Item.objects.filter(user=request.user)
+    my_items = Item.objects.filter(user=request.user, is_purchase=False)
+    total_cost = 0
+    for my_item in my_items:
+        total_cost += my_item.price
+
     context = {
         'my_items': my_items,
+        'total_cost': total_cost,
     }
     return render(request, 'items/my_items_list.html', context)
+
+
+@login_required
+def my_complete_item_list(request):
+    if not request.user.is_authenticated:
+        return redirect('members:login')
+
+    my_items = Item.objects.filter(user=request.user, is_purchase=True)
+    total_cost = 0
+    for my_item in my_items:
+        total_cost += my_item.price
+
+    context = {
+        'my_items': my_items,
+        'total_cost': total_cost,
+    }
+    return render(request, 'items/my_complete_items_list.html', context)

@@ -27,17 +27,24 @@
 						<li class="nav-item">
 							<a class="nav-link" href="{% url 'index' %}">Home</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{% url 'items:my-item-list' %}">My items</a>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								My items
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+								<a class="dropdown-item" href="{% url 'items:my-item-list' %}">지르미들</a>
+								<a class="dropdown-item" href="{% url 'items:my-complete-item-list' %}">완료된 지르미들</a>
+							</div>
+
 						</li>
 					</ul>
 					<ul class="navbar-nav ml-auto">
 						{% if user.is_authenticated %}
 							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									<i class="fas fa-user"></i> {{ user.email }}
 								</a>
-								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
 									<a class="dropdown-item" href="{% url 'members:logout' %}"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
 								</div>
 							</li>

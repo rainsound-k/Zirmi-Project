@@ -4,9 +4,8 @@
 
 
 <div class="top-container container clearfix">
-  <h3 class="float-left">내 지르미들</h3>
-  <span class="text_muted float-right">지름에 필요한 총 금액: {{ total_cost|intcomma }}원</a>
-  <a href="{% url 'items:item-add' %}" class="btn btn-dark float-right">Add item</a>
+  <h3 class="float-left">내 완료된 지르미들</h3>
+  <span class="text_muted float-right">총 지름 금액: {{ total_cost|intcomma }}원</a>
 </div>
 
 <div class="album py-5 bg-light">
@@ -16,19 +15,19 @@
       {% for item in my_items %}
         <div class="col-md-4">
           <div class="card mb-4 box-shadow">
-            <a href="{% url 'items:item-detail' item_pk=item.pk %}">
+            <a href="{% url 'items:purchase-item-detail' item_pk=item.pk %}">
               <img class="card-img-top" src="{% if item.img %}{{ item.img.url }}{% else %}https://www.publicdomainpictures.net/pictures/250000/velka/shopping-1515702542IGF.jpg{% endif %}" alt="item-image">
             </a>
             <div class="card-body">
               <p class="card-text">{{ item.name }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <form action="{% url 'items:purchase-complete' item_pk=item.pk %}" method="post">
+                  <form action="{% url 'items:item-delete' item_pk=item.pk %}?next_url={%url 'items:my-complete-item-list' %}" method="post">
                     {% csrf_token %}
-                  <button class="btn btn-sm btn-outline-success">지름 완료</button>
+                  <button class="btn btn-sm btn-danger">삭제</button>
                   </form>
                 </div>
-                <small class="text-muted">못 지른지 {{ item.created_date|timesince }}째</small>
+                <small class="text-muted">{{ item.purchase_date|date:'y년 n월 j일' }}</small>
               </div>
             </div>
           </div>
