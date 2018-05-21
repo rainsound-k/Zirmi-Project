@@ -1,7 +1,9 @@
 @import 'variables';
 
 img.card-img-top {
-  height: 225px;
+  max-height: 225px;
+  width: auto;
+  padding-top: 2px
 }
 .item-name {
   padding: 30px;
@@ -14,7 +16,7 @@ img.card-img-top {
   @include max-line(1);
 }
 .detail-img {
-  width: 100%;
+  width: auto;
   max-height: 340px;
 }
 p.media-body {

@@ -1,5 +1,7 @@
 img.card-img-top {
-  height: 225px;
+  max-height: 225px;
+  width: auto;
+  padding-top: 2px;
 }
 
 .item-name {
@@ -19,7 +21,7 @@ img.card-img-top {
 }
 
 .detail-img {
-  width: 100%;
+  width: auto;
   max-height: 340px;
 }
 
