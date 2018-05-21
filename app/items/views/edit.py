@@ -20,4 +20,4 @@ def item_edit(request, item_pk):
     context = {
         'form': form,
     }
-    return render(request, 'items/item_edit.html', context)
+    return render(request, 'items/my_item/item_edit.html', context)

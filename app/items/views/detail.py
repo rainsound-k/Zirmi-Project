@@ -17,7 +17,7 @@ def item_detail(request, item_pk):
         'item': item,
         'comment_form': comment_form,
     }
-    return render(request, 'items/item_detail.html', context)
+    return render(request, 'items/my_item/item_detail.html', context)
 
 
 def public_item_detail(request, item_pk):
@@ -27,7 +27,7 @@ def public_item_detail(request, item_pk):
         'item': item,
         'comment_form': comment_form,
     }
-    return render(request, 'items/public_item_detail.html', context)
+    return render(request, 'items/public_item/public_item_detail.html', context)
 
 
 def purchase_item_detail(request, item_pk):
@@ -37,4 +37,4 @@ def purchase_item_detail(request, item_pk):
         'item': item,
         'comment_form': comment_form,
     }
-    return render(request, 'items/purchase_item_detail.html', context)
+    return render(request, 'items/my_item/purchase_item_detail.html', context)

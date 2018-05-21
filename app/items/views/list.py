@@ -35,7 +35,7 @@ def my_item_list(request):
         'my_items': my_items,
         'total_cost': total_cost,
     }
-    return render(request, 'items/my_items_list.html', context)
+    return render(request, 'items/my_item/my_items_list.html', context)
 
 
 @login_required
@@ -52,4 +52,4 @@ def my_complete_item_list(request):
         'my_items': my_items,
         'total_cost': total_cost,
     }
-    return render(request, 'items/my_complete_items_list.html', context)
+    return render(request, 'items/my_item/my_complete_items_list.html', context)

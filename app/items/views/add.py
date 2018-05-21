@@ -25,4 +25,4 @@ def item_add(request):
     context = {
         'form': form,
     }
-    return render(request, 'items/item_add.html', context)
+    return render(request, 'items/my_item/item_add.html', context)
