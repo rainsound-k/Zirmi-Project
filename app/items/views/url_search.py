@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from utils.url_parser import get_11st_item_info
+from utils.url_parser import get_item_info_url
 
 __all__ = (
     'search_url',
@@ -12,7 +12,8 @@ def search_url(request):
     context = {}
 
     if url:
-        search_item = get_11st_item_info(url)
+        # search_item = get_11st_item_info(url)
+        search_item = get_item_info_url(url)
         item_img = search_item['item_img']
         item_price = search_item['item_price']
         item_name = search_item['item_name']

@@ -6,7 +6,7 @@ from django.core.files import File
 from django.db import models
 
 from utils.file import download
-from utils.url_parser import get_11st_item_info
+from utils.url_parser import get_item_info_url
 
 User = get_user_model()
 
@@ -53,7 +53,7 @@ class ItemManager(models.Manager):
         )
 
         if not item.img:
-            search_item = get_11st_item_info(item_purchase_url)
+            search_item = get_item_info_url(item_purchase_url)
             item_img_url = search_item['item_img']
             temp_file = download(item_img_url)
             file_name = urlparse(item_img_url).path.split('/')[-1]
