@@ -33,6 +33,13 @@ p.media-body {
 .item-add-detail-container {
   margin-bottom: 30px;
 }
+.form-check {
+  padding: 15px;
+  > input {
+    position: relative;
+    margin: 0;
+  }
+}
 .comment-content {
   margin-bottom: 15px;
 }
