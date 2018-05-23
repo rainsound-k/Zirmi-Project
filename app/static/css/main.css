@@ -20,6 +20,10 @@ img.card-img-top {
   overflow: hidden;
 }
 
+.card-body {
+  width: 100%;
+}
+
 .detail-img {
   width: auto;
   max-height: 340px;

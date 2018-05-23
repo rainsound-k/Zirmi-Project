@@ -15,6 +15,9 @@ img.card-img-top {
 .card-text {
   @include max-line(1);
 }
+.card-body {
+  width: 100%;
+}
 .detail-img {
   width: auto;
   max-height: 340px;

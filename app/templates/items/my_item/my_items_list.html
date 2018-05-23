@@ -27,6 +27,10 @@
                     {% csrf_token %}
                   <button class="btn btn-sm btn-outline-success">지름 완료</button>
                   </form>
+                  <form action="{% url 'items:item-delete' item_pk=item.pk %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-sm btn-outline-danger">삭제</button>
+                  </form>
                 </div>
                 <small class="text-muted">못 지른지 {{ item.created_date|timesince }}째</small>
               </div>

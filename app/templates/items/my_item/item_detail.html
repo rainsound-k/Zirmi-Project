@@ -26,7 +26,7 @@
         </div>
         <div class="item-detail">
           <h3>구입 링크</h3>
-          <a href="{{ item.purchase_url }}" class="text-muted">{% if item.purchase_url %}{{ item.purchase_url|truncatechars:70 }}{% else %} {% endif %}</a>
+          <a href="{{ item.purchase_url }}" class="text-muted" target="_blank">{% if item.purchase_url %}{{ item.purchase_url|truncatechars:70 }}{% else %} {% endif %}</a>
         </div>
         <div class="item-detail">
           <h3>못 지른지</h3>
@@ -62,10 +62,10 @@
     </form>
   </div>
 
-  <a href="{% url 'items:item-edit' item_pk=item.pk %}" class="btn btn-dark form-control">Edit item</a>
+  <a href="{% url 'items:item-edit' item_pk=item.pk %}" class="btn btn-dark form-control">수정</a>
   <form action="{% url 'items:item-delete' item_pk=item.pk %}" method="post">
     {% csrf_token %}
-    <button class="btn btn-danger form-control">Delete item</button>
+    <button class="btn btn-danger form-control">삭제</button>
   </form>
 </div>
 
