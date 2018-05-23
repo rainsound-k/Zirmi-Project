@@ -14,5 +14,6 @@ def item_add(request):
         return redirect('members:login')
 
     if request.method == 'POST':
-        Item.objects.add_from_search(request)
+        url = request.POST['purchase_url']
+        Item.objects.add_from_search(request, url)
         return redirect('items:my-item-list')

@@ -5,8 +5,10 @@
 
 <div class="top-container container clearfix">
   <h3 class="float-left">내 지르미들</h3>
-  <span class="text_muted float-right">지름에 필요한 총 금액: {{ total_cost|intcomma }}원</a>
-  <a href="{% url 'items:search-url' %}" class="btn btn-dark float-right">Add item</a>
+  <div class="right-top-container float-right">
+    <span class="text_muted">지름에 필요한 총 금액: {{ total_cost|intcomma }}원</span>
+    <a href="{% url 'items:search-url' %}" class="btn btn-dark">Add item</a>
+  </div>
 </div>
 
 <div class="album py-5 bg-light">
