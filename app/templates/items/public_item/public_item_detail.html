@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load id_from_email_tag %}
 {% load humanize %}
 {% load widget_tweaks %}
@@ -12,7 +13,9 @@
     <div class="row justify-content-around align-items-center">
       <div class="col-lg-6 order-lg-1">
         <div class="mb3">
-          <img class="col-12 rounded detail-img mx-auto d-block" src="{% if item.img %}{{ item.img.url }}{% else %}https://www.publicdomainpictures.net/pictures/250000/velka/shopping-1515702542IGF.jpg{% endif %}" alt="item-image">
+          <img class="col-12 rounded detail-img mx-auto d-block"
+          src="{% if item.img %}{{ item.img.url }}{% else %}{% static 'images/default_img.jpg' %}{% endif %}"
+          alt="item-image">
         </div>
       </div>
       <div class="col-lg-4 order-lg-2">
@@ -39,11 +42,20 @@
   <div class="my-3 p-3 bg-white rounded box-shadow">
     <h6 class="border-bottom border-gray pb-2 mb-0">댓글 {{ item.comments.count }}</h6>
     {% for comment in item.comments.all %}
-    <div id="item-comments-{{ comment.pk }}" class="comment-content media text-muted pt-3 border-bottom border-gray align-items-center">
-      <span class="mr-2 rounded user-profile">{% if comment.user.gender == 'f' %}<i class="far fa-user-circle fa-2x"></i>{% else %}<i class="fas fa-user-circle fa-2x"></i>{% endif %}</span>
+    <div id="itemComments{{ comment.pk }}"
+    class="comment-content media text-muted pt-3 border-bottom border-gray align-items-center">
+      <span class="mr-2 rounded user-profile">
+        {% if comment.user.gender == 'f' %}
+          <i class="far fa-user-circle fa-2x"></i>
+        {% else %}
+          <i class="fas fa-user-circle fa-2x"></i>
+        {% endif %}
+        </span>
       <p class="media-body pb-3 mb-0 small lh-125"><strong class="d-block text-gray-dark">{{ comment.user|id_from_email }}</strong>{{ comment.content|linebreaksbr }}</p>
       {% if comment.user == user %}
-        <form class="comment-delete-form" action="{% url 'items:comment-delete' comment_pk=comment.pk %}#item-comments-{{ comment.pk }}" method="post">
+        <form class="comment-delete-form"
+        action="{% url 'items:comment-delete' comment_pk=comment.pk %}#itemComments{{ comment.pk }}"
+        method="post">
         {% csrf_token %}
           <button class="btn btn-sm btn-danger">삭제</button>
         </form>
@@ -51,7 +63,8 @@
     </div>
       {% endfor %}
 
-    <form id="comments" action="{% url 'items:comment-create' item_pk=item.pk %}?next={% url 'items:public-item-detail' item_pk=item.pk %}#comments" method="post">
+    <form id="comments" action="{% url 'items:comment-create' item_pk=item.pk %}?next={% url 'items:public-item-detail' item_pk=item.pk %}#comments"
+    method="post">
       {% csrf_token %}
       <div class="input-group">
         {{ comment_form }}

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load humanize %}
 {% block content %}
 
@@ -20,11 +21,7 @@
           <div class="card mb-4 box-shadow align-items-center">
             <a href="{% url 'items:item-detail' item_pk=item.pk %}">
               <img class="card-img-top"
-              src="{% if item.img %}
-              {{ item.img.url }}
-              {% else %}
-              https://www.publicdomainpictures.net/pictures/250000/velka/shopping-1515702542IGF.jpg
-              {% endif %}"
+              src="{% if item.img %}{{ item.img.url }}{% else %}{% static 'images/default_img.jpg' %}{% endif %}"
               alt="item-image">
             </a>
             <div class="card-body">

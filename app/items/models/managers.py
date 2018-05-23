@@ -4,7 +4,7 @@ from urllib.parse import urlparse
 from django.core.files import File
 from django.db import models
 
-from utils.file import download
+from utils.file import download, get_buffer_ext
 from utils.url_parser import ItemData
 
 __all__ = (
@@ -69,10 +69,13 @@ class ItemManager(models.Manager):
             public_visibility=item_public_visibility,
         )
 
-        if not item.img:
+        if not item.img and item_data.item_img:
             item_img_url = item_data.item_img
             temp_file = download(item_img_url)
-            file_name = urlparse(item_img_url).path.split('/')[-1]
+            file_name = '{urlparse}.{ext}'.format(
+                urlparse=urlparse(item_img_url).path.split('/')[-1],
+                ext=get_buffer_ext(temp_file)
+            )
             item.img.save(file_name, File(temp_file))
 
         return item

@@ -16,28 +16,29 @@ class ItemData:
 
     def get_info_from_11st(self):
         url = self.url
-        if re.search(r'[iI]tem[nN]o=(\w+)(.*)', url):
-            item_no = re.search(r'[iI]tem[nN]o=(\w+)(.*)', url).group(1)
-            url = 'http://itempage3.auction.co.kr/DetailView.aspx?ItemNo=' + item_no
+        if re.search(r'prd[nN]o=(\w+)(.*)', url):
+            item_no = re.search(r'prd[nN]o=(\w+)(.*)', url).group(1)
+            url = 'http://www.11st.co.kr/product/SellerProductDetail.tmall?method=getSellerProductDetail&prdNo=' \
+                  + item_no
         html = urlopen(url)
         soup = BeautifulSoup(html, 'html.parser')
 
-        if not soup.select_one('.thumb-gallery .viewerwrap .viewer .on img'):
+        if not soup.select_one('.thumbBox .v-align img'):
             item_img = ''
         else:
-            item_img = soup.select_one('.thumb-gallery .viewerwrap .viewer .on img').get('src')
-        if not soup.select_one('.price_real'):
+            item_img = soup.select_one('.thumbBox .v-align img').get('src')
+        if not soup.select_one('.sale_price'):
             item_price_str = ''
         else:
-            item_price_str = soup.select_one('.price_real').text
+            item_price_str = soup.select_one('.sale_price').text
         if not item_price_str:
             item_price = ''
         else:
-            item_price = int(item_price_str.replace(',', '').replace('원', ''))
-        if not soup.select_one('.itemtit'):
+            item_price = int(item_price_str.replace(',', ''))
+        if not soup.select_one('.heading h2'):
             item_name = ''
         else:
-            item_name = soup.select_one('.itemtit').text
+            item_name = soup.select_one('.heading h2').text
 
         self.item_img = item_img
         self.item_price = item_price
