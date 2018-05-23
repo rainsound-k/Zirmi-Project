@@ -8,8 +8,11 @@ class ItemData:
     def __init__(self, request, url):
         self.url = url
         self.item_img = ''
-        self.item_price = request.POST['price']
-        self.item_name = request.POST['name']
+        self.item_price = ''
+        self.item_name = ''
+        if request.method == 'POST':
+            self.item_price = request.POST['price']
+            self.item_name = request.POST['name']
 
     def get_info_from_11st(self):
         url = self.url

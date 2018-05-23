@@ -12,7 +12,7 @@ def search_url(request):
     context = {}
 
     if url:
-        item_data = ItemData(url)
+        item_data = ItemData(request, url)
         if '11st.co.kr' in url:
             item_data.get_info_from_11st()
 

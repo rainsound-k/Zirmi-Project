@@ -12,32 +12,90 @@
       <input type="text" name="url" class="form-control">
       <button type="submit">검색</button>
     </form>
-    <br>
 
-    <form action="{% url 'items:item-add' %}" method="POST" class="clearfix" enctype='multipart/form-data'>
-      {% csrf_token %}
-      <label for="">상품명</label>
-      <input type="text" name="name" value="{{ item_name }}" class="form-control">
-      <label for="">상품 가격</label>
-      <input type="text" name="price" value="{{ item_price }}" class="form-control">
-      <label for="">상품 URL</label>
-      <input type="text" name="purchase_url" value="{{ url }}" class="form-control">
-      <label for="">상품 카테고리</label>
-      <input type="text" name="category" class="form-control">
-      {% if item_img %}
-      {% else %}
-      <label for="">상품 이미지</label>
-      <input type="file" name="img" class="form-control">
-      {% endif %}
-      <label for="">공개 여부</label>
-      <input type="checkbox" name="public_visibility" class="form-control" checked>
-
-      <div>
-        <button type="submit" class="btn btn-dark">등록</button>
-      </div>
-    </form>
-
-
+    {% if url %}
+      <form action="{% url 'items:item-add' %}" method="POST"
+      class="clearfix" enctype='multipart/form-data'>
+        {% csrf_token %}
+        <div class="item-detail-container">
+          <div class="row justify-content-around align-items-center">
+            <div class="col-sm-4 order-sm-1">
+              <div class="mb3">
+                <img class="col-12 rounded detail-img mx-auto d-block"
+                id="previewImg"
+                src="{% if item_img %}
+                {{ item_img }}
+                {% else %}
+                https://www.publicdomainpictures.net/pictures/250000/velka/shopping-1515702542IGF.jpg
+                {% endif %}"
+                alt="item-image">
+              </div>
+            </div>
+            <div class="col-sm-6 order-sm-2">
+              <div class="item-detail">
+                <h3>상품명</h3>
+                <input type="text" name="name" value="{{ item_name }}" class="form-control">
+              </div>
+              <div class="item-detail">
+                <h3>상품 가격</h3>
+                <input type="text" name="price" value="{{ item_price }}" class="form-control">
+              </div>
+              <div class="item-detail">
+                <h3>구입 링크</h3>
+                <input type="text" name="purchase_url" value="{{ url }}" class="form-control">
+              </div>
+              <div class="item-detail">
+                <h3>상품 카테고리</h3>
+                <input type="text" name="category" class="form-control">
+              </div>
+              {% if item_img %}
+              {% else %}
+              <div class="item-detail">
+                <h3>상품 이미지</h3>
+                <input type="file" id="imgInp" name="img" class="form-control">
+              </div>
+              {% endif %}
+              <div class="item-detail">
+                <h3>공개여부</h3>
+                <input type="checkbox" name="public_visibility" class="form-control" checked>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button type="submit" class="btn btn-dark form-control">등록</button>
+        </div>
+      </form>
+    {% else %}
+    {% endif %}
   </div>
 </div>
+
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  // 업로드 이미지 실시간 preview
+  $(function() {
+     $("#imgInp").on('change', function(){
+         readURL(this);
+     });
+  });
+
+  function readURL(input) {
+     if (input.files && input.files[0]) {
+     var reader = new FileReader();
+
+     reader.onload = function (e) {
+             $('#previewImg').attr('src', e.target.result);
+         }
+       reader.readAsDataURL(input.files[0]);
+     }
+  }
+</script>
+
+
+
+
+
+
 {% endblock %}
