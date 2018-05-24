@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect, get_object_or_404, render
 
@@ -10,6 +11,7 @@ __all__ = (
 )
 
 
+@login_required
 def comment_create(request, item_pk):
     if not request.user.is_authenticated:
         return redirect('members:login')
@@ -30,6 +32,7 @@ def comment_create(request, item_pk):
             return redirect('items:public-item-detail', item_pk=item_pk)
 
 
+@login_required
 def comment_delete(request, comment_pk):
     next_url = request.GET.get('next_url', '').strip()
 

@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -5,6 +6,7 @@ from ..forms import ItemForm
 from ..models import Item
 
 
+@login_required
 def item_edit(request, item_pk):
     item = get_object_or_404(Item, pk=item_pk)
     if request.user != item.user:

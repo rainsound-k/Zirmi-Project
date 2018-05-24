@@ -1,10 +1,12 @@
 from django import template
+from django.contrib.auth.decorators import login_required
 
 from ..models import Item
 
 register = template.Library()
 
 
+@login_required
 @register.simple_tag
 def check_item_exists(item, request):
     public_item_name = item.name

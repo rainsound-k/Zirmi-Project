@@ -147,8 +147,9 @@ class ItemData:
     def get_info_from_naver_store(self):
         url = self.url
         if re.search(r'products/(\w+)(.*)', url):
-            item_no = re.search(r'products/(\w+)(.*)', url).group(1)
-            url = 'http://smartstore.naver.com/aladin/products/' + item_no
+            shop_name = re.search(r'com/(\w+)/products/(\w+)(.*)', url).group(1)
+            item_no = re.search(r'com/(\w+)/products/(\w+)(.*)', url).group(2)
+            url = f'http://smartstore.naver.com/{shop_name}/products/{item_no}'
         html = urlopen(url)
         soup = BeautifulSoup(html, 'html.parser')
 
