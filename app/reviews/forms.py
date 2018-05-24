@@ -5,6 +5,19 @@ from .models import Review
 
 
 class PostForm(forms.ModelForm):
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # user가 구매완료한 제품만 표시
+        self.fields['item'].queryset = self.fields['item'].queryset.filter(user=user, is_purchase=True)
+
+        self.fields['item'].label = '제품명'
+
+        class_update_fields = ('item', 'title')
+        for field in class_update_fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+            })
+
     class Meta:
         model = Review
         fields = (
@@ -13,9 +26,5 @@ class PostForm(forms.ModelForm):
             'content',
         )
         widgets = {
-            'content': SummernoteWidget()
+            'content': SummernoteWidget(),
         }
-
-    def __init__(self, user, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['item'].queryset = self.fields['item'].queryset.filter(user=user, is_purchase=True)

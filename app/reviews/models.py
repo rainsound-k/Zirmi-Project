@@ -27,4 +27,4 @@ class Review(TimeStampedModel):
         null=True,
     )
     title = models.CharField('제목', max_length=200)
-    content = models.TextField(default='')
+    content = models.TextField('내용', default='')
