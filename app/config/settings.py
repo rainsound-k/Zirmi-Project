@@ -58,11 +58,13 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
 
     'django_extensions',
+    'django_summernote',
     'raven.contrib.django.raven_compat',
     'widget_tweaks',
 
-    'members',
     'items',
+    'members',
+    'reviews',
 
 ]
 
@@ -106,6 +108,46 @@ DATABASES = {
 }
 
 # DATABASES = secrets_base['DATABASES']
+
+# django_summernote(wysiwyg) 관련 설정
+SUMMERNOTE_CONFIG = {
+    'summernote': {
+        'airMode': False,
+        'width': '100%',
+        'height': '480',
+        'lang': 'ko-KR',
+    },
+    'base_css': (
+        '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
+    ),
+    'base_js': (
+        '//code.jquery.com/jquery-3.2.1.min.js',
+        '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js',
+    ),
+
+    # Media files for CodeMirror
+    'codemirror_css': (
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.29.0/codemirror.min.css',
+    ),
+    'codemirror_js': (
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.29.0/codemirror.min.js',
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.29.0/mode/xml/xml.min.js',
+        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.29.0/mode/htmlmixed/htmlmixed.min.js',
+    ),
+
+    # Media files for all Summernote widgets
+    'default_css': (
+        'summernote/summernote.css',
+        'summernote/django_summernote.css',
+    ),
+    'default_js': (
+        'summernote/jquery.ui.widget.js',
+        'summernote/jquery.iframe-transport.js',
+        'summernote/jquery.fileupload.js',
+        'summernote/summernote.min.js',
+        'summernote/ResizeSensor.js',
+    ),
+}
 
 RAVEN_CONFIG = {
     'dsn': secrets_base['RAVEN_DSN'],

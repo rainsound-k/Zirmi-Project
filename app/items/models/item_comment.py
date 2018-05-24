@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
+from core.models import TimeStampedModel
 from . import Item
 
 User = get_user_model()
@@ -10,7 +11,7 @@ __all__ = (
 )
 
 
-class ItemComment(models.Model):
+class ItemComment(TimeStampedModel):
     user = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
@@ -23,7 +24,6 @@ class ItemComment(models.Model):
         on_delete=models.CASCADE,
     )
     content = models.TextField('')
-    created_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['created_date']
+        ordering = ['created_time']

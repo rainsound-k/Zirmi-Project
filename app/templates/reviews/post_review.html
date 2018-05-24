@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+  <form method="post" action="">
+      {% csrf_token %}
+      {{ form|safe }}
+      <br/>
+      <button type="submit">등록</button>
+  </form>
+</div>
+
+
+
+{% endblock %}

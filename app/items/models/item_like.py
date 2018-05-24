@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
+from core.models import TimeStampedModel
 from . import Item
 
 User = get_user_model()
@@ -10,7 +11,7 @@ __all__ = (
 )
 
 
-class ItemLike(models.Model):
+class ItemLike(TimeStampedModel):
     item = models.ForeignKey(
         Item,
         related_name='like_user_info_list',
@@ -21,4 +22,3 @@ class ItemLike(models.Model):
         related_name='like_item_info_list',
         on_delete=models.CASCADE,
     )
-    created_date = models.DateTimeField(auto_now_add=True)

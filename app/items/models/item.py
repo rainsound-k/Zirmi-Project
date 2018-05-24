@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
+from core.models import TimeStampedModel
 from ..models.managers import ItemManager
 
 User = get_user_model()
@@ -10,7 +11,7 @@ __all__ = (
 )
 
 
-class Item(models.Model):
+class Item(TimeStampedModel):
     user = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
@@ -24,7 +25,6 @@ class Item(models.Model):
     category = models.CharField('상품 카테고리', max_length=100, blank=True)
     img = models.ImageField('상품 이미지', upload_to='items', blank=True)
     public_visibility = models.BooleanField('공개 여부', default=True)
-    created_date = models.DateTimeField(auto_now_add=True)
     is_purchase = models.BooleanField('구매 여부', default=False)
     purchase_date = models.DateTimeField(auto_now_add=False, blank=True, null=True)
     like_users = models.ManyToManyField(
@@ -37,7 +37,7 @@ class Item(models.Model):
     objects = ItemManager()
 
     class Meta:
-        ordering = ['-created_date']
+        ordering = ['-created_time']
 
     def __str__(self):
         return self.name
