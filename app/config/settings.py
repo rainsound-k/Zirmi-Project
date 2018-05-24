@@ -114,7 +114,7 @@ SUMMERNOTE_CONFIG = {
     'summernote': {
         'airMode': False,
         'width': '100%',
-        'height': '600',
+        'height': '520',
         'lang': 'ko-KR',
     },
     'base_css': (
