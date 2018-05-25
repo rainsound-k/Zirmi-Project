@@ -28,3 +28,6 @@ class Review(TimeStampedModel):
     )
     title = models.CharField('제목', max_length=200)
     content = models.TextField('내용', default='')
+
+    def __str__(self):
+        return f'{self.title} - {self.user}'

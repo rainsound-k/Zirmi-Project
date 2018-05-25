@@ -4,11 +4,11 @@ from django_summernote.widgets import SummernoteWidget
 from .models import Review
 
 
-class PostForm(forms.ModelForm):
-    def __init__(self, user, *args, **kwargs):
+class AddReviewForm(forms.ModelForm):
+    def __init__(self, request, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # user가 구매완료한 제품만 표시
-        self.fields['item'].queryset = self.fields['item'].queryset.filter(user=user, is_purchase=True)
+        self.fields['item'].queryset = self.fields['item'].queryset.filter(user=request.user, is_purchase=True)
 
         self.fields['item'].label = '제품명'
 

@@ -11,9 +11,6 @@ __all__ = (
 
 @require_POST
 def item_delete(request, item_pk):
-    if not request.user.is_authenticated:
-        return redirect('members:login')
-
     if request.method == 'POST':
         next_url = request.GET.get('next_url', '').strip()
 

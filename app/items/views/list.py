@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 
 from ..forms import CommentForm
 from ..models import Item
@@ -23,9 +23,6 @@ def item_list(request):
 
 @login_required
 def my_item_list(request):
-    if not request.user.is_authenticated:
-        return redirect('members:login')
-
     my_items = Item.objects.filter(user=request.user, is_purchase=False)
     total_cost = 0
     for my_item in my_items:
@@ -40,9 +37,6 @@ def my_item_list(request):
 
 @login_required
 def my_complete_item_list(request):
-    if not request.user.is_authenticated:
-        return redirect('members:login')
-
     my_items = Item.objects.filter(user=request.user, is_purchase=True)
     total_cost = 0
     for my_item in my_items:

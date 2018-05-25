@@ -13,9 +13,6 @@ __all__ = (
 
 @login_required
 def comment_create(request, item_pk):
-    if not request.user.is_authenticated:
-        return redirect('members:login')
-
     item = get_object_or_404(Item, pk=item_pk)
     if request.method == 'POST':
         form = CommentForm(request.POST)

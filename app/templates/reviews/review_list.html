@@ -4,7 +4,15 @@
 {% block content %}
 
 <div class="container">
-  <a href="{% url 'reviews:new-post' %}" class="btn btn-dark">리뷰 작성하기</a>
+  <ul>
+  {% for review in reviews %}
+    <li>{{ review.title }}</li>
+    <li>{{ review.content }}</li>
+  {% endfor %}
+  </ul>
+
+
+  <a href="{% url 'reviews:add-review' %}" class="btn btn-dark">리뷰 작성하기</a>
 </div>
 
 {% endblock %}
