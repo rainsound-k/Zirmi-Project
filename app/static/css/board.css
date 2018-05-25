@@ -41,6 +41,10 @@
   color: inherit;
 }
 
+.board-container #table .table-cell > a > .review-comments {
+  display: none;
+}
+
 .board-container #table .table-cell > a:hover {
   text-decoration: none;
   color: #a19f9f;
@@ -50,7 +54,7 @@
   display: none;
 }
 
-.board-container #table .col1, .board-container #table .col5 {
+.board-container #table .col1, .board-container #table .col6 {
   width: 6%;
   text-align: center;
 }
@@ -59,7 +63,11 @@
   width: 68%;
 }
 
-.board-container #table .col3, .board-container #table .col4 {
+.board-container #table .col3 {
+  display: none;
+}
+
+.board-container #table .col4, .board-container #table .col5 {
   width: 10%;
   text-align: center;
 }
@@ -90,12 +98,19 @@
     display: none;
   }
   .board-container #table .col2 {
-    display: block;
+    display: inline-block;
     font-size: 1.2rem;
     width: 90%;
     padding-top: 10px;
   }
   .board-container #table .col3 {
+    display: inline-block;
+    width: 8%;
+    text-align: center;
+    background-color: #b1b1b1;
+    color: white;
+  }
+  .board-container #table .col4 {
     display: inline-block;
     font-size: 0.8rem;
     color: #7d7c7c;
@@ -103,18 +118,20 @@
     text-align: left;
     padding: 4px 0 10px 0;
   }
-  .board-container #table .col4 {
-    display: inline-block;
-    font-size: 0.8rem;
-    color: #7d7c7c;
-    width: 80px;
-    padding: 4px 0 10px 0;
-  }
   .board-container #table .col5 {
     display: inline-block;
     font-size: 0.8rem;
     color: #7d7c7c;
+    width: 80px;
+    text-align: left;
+    padding: 4px 0 10px 0;
+  }
+  .board-container #table .col6 {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: #7d7c7c;
     width: 50px;
+    text-align: left;
     padding: 4px 0 10px 0;
   }
 }

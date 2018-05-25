@@ -29,6 +29,9 @@
       vertical-align: middle;
       > a {
         color: inherit;
+        > .review-comments {
+          display: none;
+        }
       }
       > a:hover {
         text-decoration: none;
@@ -38,18 +41,20 @@
         display: none;
       }
     }
-    .col1, .col5 {
+    .col1, .col6 {
       width: 6%;
       text-align: center;
     }
     .col2 {
       width: 68%;
     }
-    .col3, .col4 {
+    .col3 {
+      display: none;
+    }
+    .col4, .col5 {
       width: 10%;
       text-align: center;
     }
-
   }
 }
 @media (max-width: 796px) {
@@ -78,12 +83,19 @@
         display: none;
       }
       .col2 {
-        display: block;
+        display: inline-block;
         font-size: 1.2rem;
         width: 90%;
         padding-top: 10px;
       }
       .col3 {
+        display: inline-block;
+        width: 8%;
+        text-align: center;
+        background-color: #b1b1b1;
+        color: white;
+      }
+      .col4 {
         display: inline-block;
         font-size: 0.8rem;
         color: #7d7c7c;
@@ -91,18 +103,20 @@
         text-align: left;
         padding: 4px 0 10px 0;
       }
-      .col4 {
-        display: inline-block;
-        font-size: 0.8rem;
-        color: #7d7c7c;
-        width: 80px;
-        padding: 4px 0 10px 0;
-      }
       .col5 {
         display: inline-block;
         font-size: 0.8rem;
         color: #7d7c7c;
+        width: 80px;
+        text-align: left;
+        padding: 4px 0 10px 0;
+      }
+      .col6 {
+        display: inline-block;
+        font-size: 0.8rem;
+        color: #7d7c7c;
         width: 50px;
+        text-align: left;
         padding: 4px 0 10px 0;
       }
     }

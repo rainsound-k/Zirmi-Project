@@ -1,7 +1,7 @@
 from django import forms
 from django_summernote.widgets import SummernoteWidget
 
-from .models import Review
+from .models import Review, ReviewComment
 
 
 class AddReviewForm(forms.ModelForm):
@@ -27,4 +27,22 @@ class AddReviewForm(forms.ModelForm):
         )
         widgets = {
             'content': SummernoteWidget(),
+        }
+
+
+class ReviewCommentForm(forms.ModelForm):
+    class Meta:
+        model = ReviewComment
+        fields = (
+            'content',
+        )
+        widgets = {
+            'content': forms.Textarea(
+                attrs={
+                    'cols': 115,
+                    'rows': 3,
+                    'class': 'form-control',
+                    'placeholder': "댓글을 입력해주세요",
+                }
+            )
         }

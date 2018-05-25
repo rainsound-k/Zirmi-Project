@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load id_from_email_tag %}
+
+{% block content %}
+
+<div class="container">
+  <div class="review-item-name-container">
+    <span class="review-item-name">{{ review.item }}</span>
+  </div>
+  <div class="review-title-container">
+    <span class="review-title">{{ review.title }}</span>
+  </div>
+  <div class="review-info-container clearfix">
+    <span class="review-date-view-count">{{ review.created_time|date:'Y. n. j G:i' }} | 조회수 {{ review.view_count|intcomma }}</span>
+    <div class="edit-delete-btn">
+      <a href="{% url 'reviews:review-list' %}" class="btn btn-sm btn-dark">목록</a>
+      {% if request.user == review.user %}
+      <a href="" class="btn btn-sm btn-primary">수정</a>
+      <a href="" class="btn btn-sm btn-danger">삭제</a>
+      {% endif %}
+
+    </div>
+  </div>
+  <hr><hr>
+  {{ review.content|safe }}
+  <hr>
+
+  <div class="my-3 bg-white rounded box-shadow">
+    <h6 class="border-bottom border-gray pb-2 mb-0">댓글 {{ review.comments.count }}</h6>
+    {% for comment in review.comments.all %}
+    <div id="reviewComments{{ comment.pk }}"
+    class="comment-content media text-muted pt-3 border-bottom border-gray align-items-center">
+      <span class="mr-2 rounded user-profile">
+        {% if comment.user.gender == 'f' %}
+          <i class="far fa-user-circle fa-2x"></i>
+        {% else %}
+          <i class="fas fa-user-circle fa-2x"></i>
+        {% endif %}
+        </span>
+      <p class="media-body pb-3 mb-0 small lh-125"><strong class="d-block text-gray-dark">{{ comment.user|id_from_email }}</strong>{{ comment.content|linebreaksbr }}</p>
+      {% if comment.user == user %}
+        <form class="comment-delete-form"
+        action="{% url 'reviews:comment-delete' comment_pk=comment.pk %}#reviewComments{{ comment.pk }}"
+        method="post">
+        {% csrf_token %}
+          <button class="btn btn-sm btn-danger">삭제</button>
+        </form>
+      {% endif %}
+    </div>
+      {% endfor %}
+
+    <form id="comments" action="{% url 'reviews:comment-create' review_pk=review.pk %}?next={% url 'reviews:review-detail' review_pk=review.pk %}#comments"
+    method="post">
+      {% csrf_token %}
+      <div class="input-group">
+        {{ comment_form }}
+        <div class="input-group-append">
+          <button class="btn btn-primary">등록</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+</div>
+
+
+{% endblock %}
