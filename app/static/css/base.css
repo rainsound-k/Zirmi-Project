@@ -9,6 +9,13 @@ img {
 
 .top-container {
   margin-bottom: 20px !important;
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+
+.top-container > span {
+  margin-left: auto;
 }
 
 .container {

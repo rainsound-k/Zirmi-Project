@@ -4,9 +4,9 @@
 {% block content %}
 
 
-<div class="top-container container clearfix">
-  <h3 class="float-left">내 지르미들</h3>
-  <div class="right-top-container float-right">
+<div class="top-container container">
+  <h3>내 지르미들</h3>
+  <div class="right-top-container">
     <span class="text_muted">지름에 필요한 총 금액: {{ total_cost|intcomma }}원</span>
     <a href="{% url 'items:search-url' %}" class="btn btn-dark">Add item</a>
   </div>

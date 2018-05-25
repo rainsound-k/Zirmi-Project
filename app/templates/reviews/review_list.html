@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% load id_from_email_tag %}
 
 {% block content %}
@@ -23,8 +24,8 @@
         <a href="{% url 'reviews:view-review' review_pk=review.pk %}">{{ review.title|linebreaksbr }}</a>
       </span>
       <span class="table-cell col3">{{ review.user|id_from_email }}</span>
-      <span class="table-cell col4">{{ review.created_time|date:'y.n.j' }}</span>
-      <span class="table-cell col5"><i class="eye-icon fas fa-eye"></i> {{ review.view_count }}</span>
+      <span class="table-cell col4">{{ review.created_time|date:'Y. n. j' }}</span>
+      <span class="table-cell col5"><i class="eye-icon fas fa-eye"></i> {{ review.view_count|intcomma }}</span>
     </div>
     {% endfor %}
   </div>

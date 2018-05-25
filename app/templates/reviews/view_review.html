@@ -1,14 +1,29 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block content %}
 
 <div class="container">
-  <p>제목 : {{ review.title }}</p>
-  <p>상품명 : {{ review.item }}</p>
+  <div class="review-item-name-container">
+    <span class="review-item-name">{{ review.item }}</span>
+  </div>
+  <div class="review-title-container">
+    <span class="review-title">{{ review.title }}</span>
+  </div>
+  <div class="review-info-container clearfix">
+    <span class="review-date-view-count">{{ review.created_time|date:'Y. n. j G:i' }} | 조회수 {{ review.view_count|intcomma }}</span>
+    {% if request.user == review.user %}
+    <div class="edit-delete-btn">
+      <a href="" class="btn btn-sm btn-primary">수정</a>
+      <a href="" class="btn btn-sm btn-danger">삭제</a>
+    </div>
+    {% endif %}
+  </div>
+  <hr><hr>
+
   {{ review.content|safe }}
 </div>
-
 
 
 {% endblock %}

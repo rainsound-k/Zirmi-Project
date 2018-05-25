@@ -107,7 +107,7 @@
     display: inline-block;
     font-size: 0.8rem;
     color: #7d7c7c;
-    width: 60px;
+    width: 80px;
     padding: 4px 0 10px 0;
   }
   .board-container #table .col5 {
@@ -117,4 +117,37 @@
     width: 50px;
     padding: 4px 0 10px 0;
   }
+}
+
+.review-item-name-container {
+  margin-bottom: 12px;
+}
+
+.review-item-name-container > .review-item-name {
+  font-size: 1.2rem;
+  color: #797979;
+}
+
+.review-title-container {
+  margin-bottom: 8px;
+}
+
+.review-title-container > .review-title {
+  font-size: 1.6rem;
+  line-height: 1.1;
+  font-weight: bold;
+}
+
+.review-info-container {
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.review-info-container .review-date-view-count {
+  color: #7d7c7c;
+}
+
+.review-info-container .edit-delete-btn {
+  margin-left: auto;
 }

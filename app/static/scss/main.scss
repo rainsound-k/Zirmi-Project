@@ -1,5 +1,14 @@
 @import 'variables';
 
+.right-top-container {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  > span {
+    padding-right: 15px;
+  }
+}
+
 img.card-img-top {
   max-height: 225px;
   width: auto;
