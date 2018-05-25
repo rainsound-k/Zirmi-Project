@@ -27,10 +27,7 @@ p.media-body {
   white-space: pre-wrap;
   padding-right: 20px;
 }
-.item-search-form {
-  margin-bottom: 30px;
-}
-.item-add-detail-container {
+.item-search-form, .item-add-detail-container, .comment-content {
   margin-bottom: 30px;
 }
 .form-check {
@@ -39,9 +36,6 @@ p.media-body {
     position: relative;
     margin: 0;
   }
-}
-.comment-content {
-  margin-bottom: 15px;
 }
 .comment-delete-form {
   margin-top: -1rem !important;

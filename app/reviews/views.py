@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import F
 from django.shortcuts import render, redirect
 
 from .models import Review
@@ -28,3 +29,15 @@ def review_list(request):
         'reviews': reviews,
     }
     return render(request, 'reviews/review_list.html', context)
+
+
+def view_review(request, review_pk):
+    # view 수 증가
+    view = Review.objects.filter(pk=review_pk)
+    view.update(view_count=F('view_count') + 1)
+
+    review = Review.objects.get(pk=review_pk)
+    context = {
+        'review': review,
+    }
+    return render(request, 'reviews/view_review.html', context)

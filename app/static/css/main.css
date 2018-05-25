@@ -35,11 +35,7 @@ p.media-body {
   padding-right: 20px;
 }
 
-.item-search-form {
-  margin-bottom: 30px;
-}
-
-.item-add-detail-container {
+.item-search-form, .item-add-detail-container, .comment-content {
   margin-bottom: 30px;
 }
 
@@ -50,10 +46,6 @@ p.media-body {
 .form-check > input {
   position: relative;
   margin: 0;
-}
-
-.comment-content {
-  margin-bottom: 15px;
 }
 
 .comment-delete-form {

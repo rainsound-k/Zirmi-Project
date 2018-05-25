@@ -1,18 +1,34 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load id_from_email_tag %}
 
 {% block content %}
 
-<div class="container">
-  <ul>
-  {% for review in reviews %}
-    <li>{{ review.title }}</li>
-    <li>{{ review.content }}</li>
-  {% endfor %}
-  </ul>
-
-
-  <a href="{% url 'reviews:add-review' %}" class="btn btn-dark">리뷰 작성하기</a>
+<div class="board-container">
+  <div class="add-review-container clearfix">
+    <a href="{% url 'reviews:add-review' %}" class="btn btn-dark float-right">리뷰 작성하기</a>
+  </div>
+  <div id="table">
+    <div class="table-header-row">
+      <span class="table-cell col1">번호</span>
+      <span class="table-cell col2">제목</span>
+      <span class="table-cell col3">작성자</span>
+      <span class="table-cell col4">날짜</span>
+      <span class="table-cell col5">조회수</span>
+    </div>
+    {% for review in reviews %}
+    <div class="table-row">
+      <span class="table-cell col1">{{ review.pk }}</span>
+      <span class="table-cell col2">
+        <a href="{% url 'reviews:view-review' review_pk=review.pk %}">{{ review.title|linebreaksbr }}</a>
+      </span>
+      <span class="table-cell col3">{{ review.user|id_from_email }}</span>
+      <span class="table-cell col4">{{ review.created_time|date:'y.n.j' }}</span>
+      <span class="table-cell col5"><i class="eye-icon fas fa-eye"></i> {{ review.view_count }}</span>
+    </div>
+    {% endfor %}
+  </div>
 </div>
+
 
 {% endblock %}

@@ -28,6 +28,10 @@ class Review(TimeStampedModel):
     )
     title = models.CharField('제목', max_length=200)
     content = models.TextField('내용', default='')
+    view_count = models.IntegerField('조회수', default=0)
+
+    class Meta:
+        ordering = ['-created_time']
 
     def __str__(self):
         return f'{self.title} - {self.user}'

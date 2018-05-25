@@ -1,0 +1,120 @@
+.board-container {
+  padding: 0 15px;
+  margin: 0 auto 70px auto;
+}
+
+.board-container .add-review-container {
+  margin-bottom: 30px;
+}
+
+.board-container #table {
+  display: table;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.board-container #table > .table-header-row {
+  display: table-row;
+  font-weight: bold;
+  font-size: 12px;
+  background-color: #212529;
+  color: white;
+}
+
+.board-container #table > .table-header-row > .table-cell {
+  text-align: center;
+}
+
+.board-container #table > .table-row {
+  display: table-row;
+  color: #707070;
+}
+
+.board-container #table .table-cell {
+  display: table-cell;
+  padding: 7px;
+  border-bottom: 1px solid #ccc;
+  vertical-align: middle;
+}
+
+.board-container #table .table-cell > a {
+  color: inherit;
+}
+
+.board-container #table .table-cell > a:hover {
+  text-decoration: none;
+  color: #a19f9f;
+}
+
+.board-container #table .table-cell > .eye-icon {
+  display: none;
+}
+
+.board-container #table .col1, .board-container #table .col5 {
+  width: 6%;
+  text-align: center;
+}
+
+.board-container #table .col2 {
+  width: 68%;
+}
+
+.board-container #table .col3, .board-container #table .col4 {
+  width: 10%;
+  text-align: center;
+}
+
+@media (max-width: 796px) {
+  .board-container #table {
+    display: block;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  .board-container #table > .table-header-row {
+    display: none;
+  }
+  .board-container #table > .table-row {
+    display: block;
+    color: black;
+    border-bottom: 1px solid #ccc;
+  }
+  .board-container #table .table-cell {
+    border-bottom: 0;
+    padding: 0;
+  }
+  .board-container #table .table-cell > .eye-icon {
+    display: inline;
+    color: #cbcaca;
+  }
+  .board-container #table .col1 {
+    display: none;
+  }
+  .board-container #table .col2 {
+    display: block;
+    font-size: 1.2rem;
+    width: 90%;
+    padding-top: 10px;
+  }
+  .board-container #table .col3 {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: #7d7c7c;
+    width: 80px;
+    text-align: left;
+    padding: 4px 0 10px 0;
+  }
+  .board-container #table .col4 {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: #7d7c7c;
+    width: 60px;
+    padding: 4px 0 10px 0;
+  }
+  .board-container #table .col5 {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: #7d7c7c;
+    width: 50px;
+    padding: 4px 0 10px 0;
+  }
+}
