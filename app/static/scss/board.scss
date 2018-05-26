@@ -4,6 +4,16 @@
 .board-container {
   padding: 0 15px;
   margin: 0 auto 70px auto;
+  .review-add-btn {
+    height: 56px;
+    width: 56px;
+    border-radius: 28px;
+    text-align: center;
+    padding-top: 14px;
+    float: right;
+    box-shadow: -2px 0 2px 0 rgba(0,0,0,0.16), 3px 0 3px 0 rgba(0,0,0,0.16), 0 3px 3px 0 rgba(0,0,0,0.23);
+  }
+
   .add-review-container {
     margin-bottom: 30px;
   }
@@ -15,7 +25,7 @@
       display: table-row;
       font-weight: bold;
       font-size: 12px;
-      background-color: #212529;
+      background-color: #343a40;
       color: white;
       > .table-cell {
         text-align: center;
@@ -55,61 +65,85 @@
   #table {
     display: none !important;
   }
-  #small-table {
-    display: block;
-    width: 100%;
-    margin-bottom: 30px;
+  .board-container {
+    padding: 0;
+    margin-bottom: 70px;
+    margin-top: -30px;
 
-    .small-table-row {
-      display: flex;
-      // align-items: center;
-      color: #222222;
-      border-bottom: 1px solid #ccc;
-      overflow: hidden;
-      height: auto;
-      flex-flow: row;
+    .review-add-btn {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+    }
 
-      .small-table-detail {
-        display: inline-block;
-        font-size: 1.2rem;
-        width: 90%;
-        padding-top: 10px;
-        .small-table-title {
-          a {
-            color: inherit;
-          }
-          a:hover {
-            text-decoration: none;
-            color: #a19f9f;
-          }
-        }
-      }
+    #small-table {
+      display: block;
+      width: 100%;
+      margin-bottom: 30px;
 
-      .small-table-review-info {
-        > span {
+      .small-table-row {
+        display: flex;
+        color: #414141;
+        border-bottom: 1px solid #ccc;
+        overflow: hidden;
+        height: auto;
+        flex-flow: row;
+
+        .small-table-detail {
           display: inline-block;
-          font-size: 0.8rem;
-          color: #7d7c7c;
-          width: 80px;
-          text-align: left;
-          padding: 4px 0 10px 0;
+          width: 85%;
+          padding-top: 10px;
+          .small-table-title {
+            padding-left: 5px;
+            padding-right: 30px;
+            a {
+              color: inherit;
+            }
+            a:hover {
+              text-decoration: none;
+              color: #a19f9f;
+            }
+          }
         }
-        > .eye-icon {
-          display: inline;
-          color: #cbcaca;
-        }
-      }
 
-      .small-table-comments {
-        width: 8%;
-        text-align: center;
-        margin-left: auto;
-        background-color: #999595;
-        color: white;
+        .small-table-review-info {
+          > span {
+            display: inline-block;
+            font-size: 0.7rem;
+            color: #7d7c7c;
+            width: 80px;
+            text-align: left;
+            padding: 5px 5px 10px;
+          }
+          > .eye-icon {
+            display: inline;
+            color: #cbcaca;
+          }
+        }
+
+        .small-table-comments {
+          width: 15%;
+          margin-left: auto;
+          background-color: #f2f2f2;
+          display: flex;
+          align-items: center;
+          .comments-box {
+            margin: 0 auto;
+            text-align: center;
+            .comments-count {
+              color: inherit;
+              font-size: 0.9rem;
+            }
+            .comments-text {
+              color: #808080;
+              font-size: 0.8rem;
+              font-weight: 100;
+            }
+          }
+        }
       }
     }
   }
-
 
 .review-item-name-container {
   margin-bottom: 12px;

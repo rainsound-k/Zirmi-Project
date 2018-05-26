@@ -7,6 +7,16 @@
   margin: 0 auto 70px auto;
 }
 
+.board-container .review-add-btn {
+  height: 56px;
+  width: 56px;
+  border-radius: 28px;
+  text-align: center;
+  padding-top: 14px;
+  float: right;
+  box-shadow: -2px 0 2px 0 rgba(0, 0, 0, 0.16), 3px 0 3px 0 rgba(0, 0, 0, 0.16), 0 3px 3px 0 rgba(0, 0, 0, 0.23);
+}
+
 .board-container .add-review-container {
   margin-bottom: 30px;
 }
@@ -21,7 +31,7 @@
   display: table-row;
   font-weight: bold;
   font-size: 12px;
-  background-color: #212529;
+  background-color: #343a40;
   color: white;
 }
 
@@ -68,50 +78,76 @@
   #table {
     display: none !important;
   }
-  #small-table {
+  .board-container {
+    padding: 0;
+    margin-bottom: 70px;
+    margin-top: -30px;
+  }
+  .board-container .review-add-btn {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+  }
+  .board-container #small-table {
     display: block;
     width: 100%;
     margin-bottom: 30px;
   }
-  #small-table .small-table-row {
+  .board-container #small-table .small-table-row {
     display: flex;
-    color: #222222;
+    color: #414141;
     border-bottom: 1px solid #ccc;
     overflow: hidden;
     height: auto;
     flex-flow: row;
   }
-  #small-table .small-table-row .small-table-detail {
+  .board-container #small-table .small-table-row .small-table-detail {
     display: inline-block;
-    font-size: 1.2rem;
-    width: 90%;
+    width: 85%;
     padding-top: 10px;
   }
-  #small-table .small-table-row .small-table-detail .small-table-title a {
+  .board-container #small-table .small-table-row .small-table-detail .small-table-title {
+    padding-left: 5px;
+    padding-right: 30px;
+  }
+  .board-container #small-table .small-table-row .small-table-detail .small-table-title a {
     color: inherit;
   }
-  #small-table .small-table-row .small-table-detail .small-table-title a:hover {
+  .board-container #small-table .small-table-row .small-table-detail .small-table-title a:hover {
     text-decoration: none;
     color: #a19f9f;
   }
-  #small-table .small-table-row .small-table-review-info > span {
+  .board-container #small-table .small-table-row .small-table-review-info > span {
     display: inline-block;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     color: #7d7c7c;
     width: 80px;
     text-align: left;
-    padding: 4px 0 10px 0;
+    padding: 5px 5px 10px;
   }
-  #small-table .small-table-row .small-table-review-info > .eye-icon {
+  .board-container #small-table .small-table-row .small-table-review-info > .eye-icon {
     display: inline;
     color: #cbcaca;
   }
-  #small-table .small-table-row .small-table-comments {
-    width: 8%;
-    text-align: center;
+  .board-container #small-table .small-table-row .small-table-comments {
+    width: 15%;
     margin-left: auto;
-    background-color: #999595;
-    color: white;
+    background-color: #f2f2f2;
+    display: flex;
+    align-items: center;
+  }
+  .board-container #small-table .small-table-row .small-table-comments .comments-box {
+    margin: 0 auto;
+    text-align: center;
+  }
+  .board-container #small-table .small-table-row .small-table-comments .comments-box .comments-count {
+    color: inherit;
+    font-size: 0.9rem;
+  }
+  .board-container #small-table .small-table-row .small-table-comments .comments-box .comments-text {
+    color: #808080;
+    font-size: 0.8rem;
+    font-weight: 100;
   }
   .review-item-name-container {
     margin-bottom: 12px;

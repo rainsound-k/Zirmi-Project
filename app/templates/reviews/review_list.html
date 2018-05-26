@@ -6,8 +6,16 @@
 {% block content %}
 
 <div class="board-container">
+
+
   <div class="add-review-container clearfix">
-    <a href="{% url 'reviews:review-add' %}" class="btn btn-dark float-right">리뷰 작성하기</a>
+    <a href="{% url 'reviews:review-add' %}" class="review-add-btn btn btn-dark btn-fab" id="main">
+      <i class="material-icons">
+        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+          <path fill="#a7a7a7" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" />
+        </svg>
+      </i>
+    </a>
   </div>
   <div id="table">
     <div class="table-header-row">
@@ -48,8 +56,11 @@
           </div>
         </div>
         <div class="small-table-comments">
-          <span class="">댓글</span><br>
-          <span class="">{{ review.comments.count }}</span>
+          <div class="comments-box">
+            <span class="comments-count">{{ review.comments.count }}</span>
+            <br>
+            <span class="comments-text">댓글</span>
+          </div>
         </div>
       </div>
     {% endfor %}
