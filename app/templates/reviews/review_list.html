@@ -13,10 +13,9 @@
     <div class="table-header-row">
       <span class="table-cell col1">번호</span>
       <span class="table-cell col2">제목</span>
-      <span class="table-cell col3">댓글</span>
-      <span class="table-cell col4">작성자</span>
-      <span class="table-cell col5">날짜</span>
-      <span class="table-cell col6">조회수</span>
+      <span class="table-cell col3">작성자</span>
+      <span class="table-cell col4">날짜</span>
+      <span class="table-cell col5">조회수</span>
     </div>
     {% for review in reviews %}
     <div class="table-row">
@@ -25,14 +24,39 @@
         <a href="{% url 'reviews:review-detail' review_pk=review.pk %}">
           {{ review.title|linebreaksbr }} <span class="review-comments font-weight-bold">[{{ review.comments.count }}]</span></a>
       </span>
-      <span class="table-cell col3">댓글 {{ review.comments.count }}</span>
-      <span class="table-cell col4">{{ review.user|id_from_email }}</span>
-      <span class="table-cell col5">{{ review.created_time|date:'Y. n. j' }}</span>
-      <span class="table-cell col6"><i class="eye-icon fas fa-eye"></i> {{ review.view_count|intcomma }}</span>
+      <span class="table-cell col3">{{ review.user|id_from_email }}</span>
+      <span class="table-cell col4">{{ review.created_time|date:'Y. n. j' }}</span>
+      <span class="table-cell col5">{{ review.view_count|intcomma }}</span>
     </div>
     {% endfor %}
-
   </div>
+
+  <div id="small-table">
+    {% for review in reviews %}
+      <div class="small-table-row no-gutters">
+        <div class="small-table-detail">
+          <div class="small-table-title">
+            <span>
+              <a href="{% url 'reviews:review-detail' review_pk=review.pk %}">
+                {{ review.title|linebreaksbr }}</a>
+              </span>
+          </div>
+          <div class="small-table-review-info">
+            <span>{{ review.user|id_from_email }}</span>
+            <span>{{ review.created_time|date:'Y. n. j' }}</span>
+            <span><i class="eye-icon fas fa-eye"></i> {{ review.view_count|intcomma }}</span>
+          </div>
+        </div>
+        <div class="small-table-comments">
+          <span class="">댓글</span><br>
+          <span class="">{{ review.comments.count }}</span>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+
+
 </div>
 
 

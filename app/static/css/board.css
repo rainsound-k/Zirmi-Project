@@ -1,3 +1,7 @@
+#small-table {
+  display: none;
+}
+
 .board-container {
   padding: 0 15px;
   margin: 0 auto 70px auto;
@@ -41,20 +45,12 @@
   color: inherit;
 }
 
-.board-container #table .table-cell > a > .review-comments {
-  display: none;
-}
-
 .board-container #table .table-cell > a:hover {
   text-decoration: none;
   color: #a19f9f;
 }
 
-.board-container #table .table-cell > .eye-icon {
-  display: none;
-}
-
-.board-container #table .col1, .board-container #table .col6 {
+.board-container #table .col1, .board-container #table .col5 {
   width: 6%;
   text-align: center;
 }
@@ -63,108 +59,84 @@
   width: 68%;
 }
 
-.board-container #table .col3 {
-  display: none;
-}
-
-.board-container #table .col4, .board-container #table .col5 {
+.board-container #table .col3, .board-container #table .col4 {
   width: 10%;
   text-align: center;
 }
 
 @media (max-width: 796px) {
-  .board-container #table {
+  #table {
+    display: none !important;
+  }
+  #small-table {
     display: block;
     width: 100%;
     margin-bottom: 30px;
   }
-  .board-container #table > .table-header-row {
-    display: none;
-  }
-  .board-container #table > .table-row {
-    display: block;
-    color: black;
+  #small-table .small-table-row {
+    display: flex;
+    color: #222222;
     border-bottom: 1px solid #ccc;
+    overflow: hidden;
+    height: auto;
+    flex-flow: row;
   }
-  .board-container #table .table-cell {
-    border-bottom: 0;
-    padding: 0;
-  }
-  .board-container #table .table-cell > .eye-icon {
-    display: inline;
-    color: #cbcaca;
-  }
-  .board-container #table .col1 {
-    display: none;
-  }
-  .board-container #table .col2 {
+  #small-table .small-table-row .small-table-detail {
     display: inline-block;
     font-size: 1.2rem;
     width: 90%;
     padding-top: 10px;
   }
-  .board-container #table .col3 {
+  #small-table .small-table-row .small-table-detail .small-table-title a {
+    color: inherit;
+  }
+  #small-table .small-table-row .small-table-detail .small-table-title a:hover {
+    text-decoration: none;
+    color: #a19f9f;
+  }
+  #small-table .small-table-row .small-table-review-info > span {
     display: inline-block;
+    font-size: 0.8rem;
+    color: #7d7c7c;
+    width: 80px;
+    text-align: left;
+    padding: 4px 0 10px 0;
+  }
+  #small-table .small-table-row .small-table-review-info > .eye-icon {
+    display: inline;
+    color: #cbcaca;
+  }
+  #small-table .small-table-row .small-table-comments {
     width: 8%;
     text-align: center;
-    background-color: #b1b1b1;
+    margin-left: auto;
+    background-color: #999595;
     color: white;
   }
-  .board-container #table .col4 {
-    display: inline-block;
-    font-size: 0.8rem;
-    color: #7d7c7c;
-    width: 80px;
-    text-align: left;
-    padding: 4px 0 10px 0;
+  .review-item-name-container {
+    margin-bottom: 12px;
   }
-  .board-container #table .col5 {
-    display: inline-block;
-    font-size: 0.8rem;
-    color: #7d7c7c;
-    width: 80px;
-    text-align: left;
-    padding: 4px 0 10px 0;
+  .review-item-name-container > .review-item-name {
+    font-size: 1.2rem;
+    color: #797979;
   }
-  .board-container #table .col6 {
-    display: inline-block;
-    font-size: 0.8rem;
-    color: #7d7c7c;
-    width: 50px;
-    text-align: left;
-    padding: 4px 0 10px 0;
+  .review-title-container {
+    margin-bottom: 8px;
   }
-}
-
-.review-item-name-container {
-  margin-bottom: 12px;
-}
-
-.review-item-name-container > .review-item-name {
-  font-size: 1.2rem;
-  color: #797979;
-}
-
-.review-title-container {
-  margin-bottom: 8px;
-}
-
-.review-title-container > .review-title {
-  font-size: 1.6rem;
-  line-height: 1.1;
-  font-weight: bold;
-}
-
-.review-info-container {
-  height: 30px;
-  display: flex;
-  align-items: center;
-}
-
-.review-info-container .review-date-view-count {
-  color: #7d7c7c;
-}
-
-.review-info-container .edit-delete-btn {
-  margin-left: auto;
+  .review-title-container > .review-title {
+    font-size: 1.6rem;
+    line-height: 1.1;
+    font-weight: bold;
+  }
+  .review-info-container {
+    height: 30px;
+    display: flex;
+    align-items: center;
+  }
+  .review-info-container .review-date-view-count {
+    color: #7d7c7c;
+  }
+  .review-info-container .edit-delete-btn {
+    margin-left: auto;
+  }
 }
