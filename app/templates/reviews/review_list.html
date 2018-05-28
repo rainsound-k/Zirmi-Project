@@ -31,7 +31,7 @@
       <span class="table-cell col1">{{ review.pk }}</span>
       <span class="table-cell col2">
         <a href="{% url 'reviews:review-detail' review_pk=review.pk %}">
-          {{ review.title|linebreaksbr }} <span class="review-comments font-weight-bold">[{{ review.comments.count }}]</span></a>
+          {{ review.title|linebreaksbr }} <span class="review-comments">[{{ review.comments.count }}]</span></a>
       </span>
       <span class="table-cell col3">{{ review.user|id_from_email }}</span>
       <span class="table-cell col4">{{ review.created_time|date_formatter }}</span>
@@ -52,7 +52,7 @@
           </div>
           <div class="small-table-review-info">
             <span>{{ review.user|id_from_email }}</span>
-            <span>{{ review.created_time|date_formatter }}</span>
+            <span class="review-date">{{ review.created_time|date_formatter }}</span>
             <span><i class="eye-icon fas fa-eye"></i> {{ review.view_count|intcomma }}</span>
           </div>
         </div>
@@ -66,7 +66,23 @@
       </div>
     {% endfor %}
   </div>
-
+  <div class="search-review-container">
+    <form action="{% url 'reviews:search-review' %}" method="get" class="review-search-form">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <select class="custom-select" name="search-type">
+            <option value="title">제목</option>
+            <option value="content">내용</option>
+            <option value="item">상품명</option>
+            <option value="total">종합</option>
+          </select>
+        </div>
+        <input type="text" name="search-text" class="form-control" value="{{ search_text }}">
+        <div class="input-group-append">
+          <button type="submit" class="form-control">검색</button>
+        </div>
+      </div>
+    </form>
 
 
 </div>

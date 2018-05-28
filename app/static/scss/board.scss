@@ -17,6 +17,11 @@
   .add-review-container {
     margin-bottom: 30px;
   }
+
+  .search-review-container {
+    max-width: 400px;
+    margin: 0 auto;
+  }
   #table {
     display: table;
     width: 100%;
@@ -42,6 +47,9 @@
       vertical-align: middle;
       > a {
         color: inherit;
+        .review-comments {
+          font-weight: 500;
+        }
       }
       > a:hover {
         text-decoration: none;
@@ -107,6 +115,9 @@
         }
 
         .small-table-review-info {
+          .review-date {
+            text-align: center;
+          }
           > span {
             display: inline-block;
             font-size: 0.7rem;
@@ -144,7 +155,7 @@
       }
     }
   }
-
+}
 .review-item-name-container {
   margin-bottom: 12px;
   > .review-item-name {
@@ -170,5 +181,4 @@
   .edit-delete-btn {
     margin-left: auto;
   }
-}
 }
