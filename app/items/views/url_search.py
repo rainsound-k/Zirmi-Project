@@ -31,6 +31,12 @@ def search_url(request):
         elif 'naver.me' in url:
             item_data.get_info_from_naver_short_url()
 
+        elif 'lotteimall.com' in url:
+            item_data.get_info_from_lotte()
+
+        elif 'hyundaihmall.com' in url:
+            item_data.get_info_from_hyundai()
+
         item_img = item_data.item_img
         item_price = item_data.item_price
         item_name = item_data.item_name

@@ -201,3 +201,67 @@ class ItemData:
         self.item_price = item_price
         self.item_name = item_name
         self.url = url
+
+    def get_info_from_lotte(self):
+        url = self.url
+        if re.search(r'goods_no=(\w+)(.*)', url):
+            item_no = re.search(r'goods_no=(\w+)(.*)', url).group(1)
+            url = 'http://www.lotteimall.com/goods/viewGoodsDetail.lotte?goods_no=' + item_no
+        html = urlopen(url)
+        soup = BeautifulSoup(html, 'html.parser')
+
+        if not soup.select_one('.area_thumb .thumb_product img'):
+            item_img = ''
+            item_name = ''
+        else:
+            item_img = soup.select_one('.area_thumb .thumb_product img').get('src')
+            item_name = soup.select_one('.area_thumb .thumb_product img').get('alt')
+        if not soup.select_one('.price .final .num'):
+            item_price_str = ''
+        else:
+            item_price_str = soup.select_one('.price .final .num').text
+        if not item_price_str:
+            item_price = ''
+        else:
+            item_price = int(item_price_str.replace(',', ''))
+
+        self.item_img = item_img
+        self.item_price = item_price
+        self.item_name = item_name
+        self.url = url
+
+    def get_info_from_hyundai(self):
+        url = self.url
+        if 'm.hyundaihmall.com' in url:
+            if re.search(r'ItemCode=(\w+)(.*)', url):
+                item_no = re.search(r'ItemCode=(\w+)(.*)', url).group(1)
+                url = 'http://www.hyundaihmall.com/front/pda/itemPtc.do?slitmCd=' + item_no
+        else:
+            if re.search(r'slitmCd=(\w+)(.*)', url):
+                item_no = re.search(r'slitmCd=(\w+)(.*)', url).group(1)
+                url = 'http://www.hyundaihmall.com/front/pda/itemPtc.do?slitmCd=' + item_no
+
+        html = urlopen(url)
+        soup = BeautifulSoup(html, 'html.parser')
+
+        if not soup.select_one('.pdtPhoto .pic480x480 img'):
+            item_img = ''
+        else:
+            item_img = soup.select_one('.pdtPhoto .pic480x480 img').get('src')
+        if not soup.select_one('.finalPrice'):
+            item_price_str = ''
+        else:
+            item_price_str = soup.select_one('.finalPrice strong').text
+        if not item_price_str:
+            item_price = ''
+        else:
+            item_price = int(item_price_str.replace(',', ''))
+        if not soup.select_one('.prdInfoTitle .pdtTitle'):
+            item_name = ''
+        else:
+            item_name = soup.select_one('.prdInfoTitle .pdtTitle').text.strip()
+
+        self.item_img = item_img
+        self.item_price = item_price
+        self.item_name = item_name
+        self.url = url

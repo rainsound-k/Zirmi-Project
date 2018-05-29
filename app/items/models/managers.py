@@ -51,6 +51,12 @@ class ItemManager(models.Manager):
         elif 'naver.me' in url:
             item_data.get_info_from_naver_short_url()
 
+        elif 'lotteimall.com' in url:
+            item_data.get_info_from_lotte()
+
+        elif 'hyundaihmall.com' in url:
+            item_data.get_info_from_hyundai()
+
         item_category = request.POST['category']
         item_img = request.FILES.get('img', '')
         item_public_visibility = request.POST['public_visibility']
