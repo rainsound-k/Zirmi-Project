@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 from django.shortcuts import render
 
 from ..forms import CommentForm
@@ -12,7 +13,8 @@ __all__ = (
 
 
 def item_list(request):
-    items = Item.objects.filter(public_visibility=True)
+    items = Item.objects.filter(public_visibility=True).annotate(num_like_users=Count('like_users'))\
+        .order_by('-num_like_users')
     comment_form = CommentForm()
     context = {
         'items': items,
