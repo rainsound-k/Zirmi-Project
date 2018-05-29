@@ -30,7 +30,7 @@ class ItemData:
         if not soup.select_one('.sale_price'):
             item_price_str = ''
         else:
-            item_price_str = soup.select_one('.sale_price').text
+            item_price_str = soup.select_one('.sale_price').text.strip()
         if not item_price_str:
             item_price = ''
         else:
@@ -38,7 +38,7 @@ class ItemData:
         if not soup.select_one('.heading h2'):
             item_name = ''
         else:
-            item_name = soup.select_one('.heading h2').text
+            item_name = soup.select_one('.heading h2').text.strip()
 
         self.item_img = item_img
         self.item_price = item_price
@@ -60,7 +60,7 @@ class ItemData:
         if not soup.select_one('.price_real'):
             item_price_str = ''
         else:
-            item_price_str = soup.select_one('.price_real').text
+            item_price_str = soup.select_one('.price_real').text.strip()
         if not item_price_str:
             item_price = ''
         else:
@@ -68,7 +68,7 @@ class ItemData:
         if not soup.select_one('.itemtit'):
             item_name = ''
         else:
-            item_name = soup.select_one('.itemtit').text
+            item_name = soup.select_one('.itemtit').text.strip()
 
         self.item_img = item_img
         self.item_price = item_price
@@ -90,7 +90,7 @@ class ItemData:
         if not soup.select_one('.price_real'):
             item_price_str = ''
         else:
-            item_price_str = soup.select_one('.price_real').text
+            item_price_str = soup.select_one('.price_real').text.strip()
         if not item_price_str:
             item_price = ''
         else:
@@ -98,7 +98,7 @@ class ItemData:
         if not soup.select_one('.itemtit'):
             item_name = ''
         else:
-            item_name = soup.select_one('.itemtit').text
+            item_name = soup.select_one('.itemtit').text.strip()
 
         self.item_img = item_img
         self.item_price = item_price
@@ -156,11 +156,12 @@ class ItemData:
         if not soup.select_one('.bimg .img_va img'):
             item_img = ''
         else:
-            item_img = soup.select_one('.bimg .img_va img').get('src').replace('?type=m450', '')
+            before_item_img = soup.select_one('.bimg .img_va img').get('src')
+            item_img = re.search(r'(.+jpg)(.*)', before_item_img).group(1)
         if not soup.select_one('.fc_point .thm'):
             item_price_str = ''
         else:
-            item_price_str = soup.select_one('.fc_point .thm').text
+            item_price_str = soup.select_one('.fc_point .thm').text.strip()
         if not item_price_str:
             item_price = ''
         else:
@@ -183,11 +184,12 @@ class ItemData:
         if not soup.select_one('.bimg .img_va img'):
             item_img = ''
         else:
-            item_img = soup.select_one('.bimg .img_va img').get('src').replace('?type=m450', '')
+            before_item_img = soup.select_one('.bimg .img_va img').get('src')
+            item_img = re.search(r'(.+jpg)(.*)', before_item_img).group(1)
         if not soup.select_one('.fc_point .thm'):
             item_price_str = ''
         else:
-            item_price_str = soup.select_one('.fc_point .thm').text
+            item_price_str = soup.select_one('.fc_point .thm').text.strip()
         if not item_price_str:
             item_price = ''
         else:
@@ -202,7 +204,7 @@ class ItemData:
         self.item_name = item_name
         self.url = url
 
-    def get_info_from_lotte(self):
+    def get_info_from_lotte_mall(self):
         url = self.url
         if re.search(r'goods_no=(\w+)(.*)', url):
             item_no = re.search(r'goods_no=(\w+)(.*)', url).group(1)
@@ -219,11 +221,47 @@ class ItemData:
         if not soup.select_one('.price .final .num'):
             item_price_str = ''
         else:
-            item_price_str = soup.select_one('.price .final .num').text
+            item_price_str = soup.select_one('.price .final .num').text.strip()
         if not item_price_str:
             item_price = ''
         else:
             item_price = int(item_price_str.replace(',', ''))
+
+        self.item_img = item_img
+        self.item_price = item_price
+        self.item_name = item_name
+        self.url = url
+
+    def get_info_from_lotte_dot_com(self):
+        url = self.url
+        if 'ellotte.com' in url:
+            if re.search(r'goods_no=(\w+)(.*)', url):
+                item_no = re.search(r'goods_no=(\w+)(.*)', url).group(1)
+                url = 'http://www.ellotte.com/goods/viewGoodsDetail.lotte?goods_no=' + item_no
+        else:
+            if re.search(r'goods_no=(\w+)(.*)', url):
+                item_no = re.search(r'goods_no=(\w+)(.*)', url).group(1)
+                url = 'http://www.lotte.com/goods/viewGoodsDetail.lotte?goods_no=' + item_no
+
+        html = urlopen(url)
+        soup = BeautifulSoup(html, 'html.parser')
+
+        if not soup.select_one('.zoomImg .zoom img'):
+            item_img = ''
+        else:
+            item_img = soup.select_one('.zoomImg .zoom img').get('src')
+        if not soup.select_one('.price .big'):
+            item_price_str = ''
+        else:
+            item_price_str = soup.select_one('.price .big').text.strip()
+        if not item_price_str:
+            item_price = ''
+        else:
+            item_price = int(item_price_str.replace(',', ''))
+        if not soup.select_one('.prd-name .pname'):
+            item_name = ''
+        else:
+            item_name = soup.select_one('.prd-name .pname').text.strip()
 
         self.item_img = item_img
         self.item_price = item_price
@@ -251,7 +289,7 @@ class ItemData:
         if not soup.select_one('.finalPrice'):
             item_price_str = ''
         else:
-            item_price_str = soup.select_one('.finalPrice strong').text
+            item_price_str = soup.select_one('.finalPrice strong').text.strip()
         if not item_price_str:
             item_price = ''
         else:
@@ -260,6 +298,160 @@ class ItemData:
             item_name = ''
         else:
             item_name = soup.select_one('.prdInfoTitle .pdtTitle').text.strip()
+
+        self.item_img = item_img
+        self.item_price = item_price
+        self.item_name = item_name
+        self.url = url
+
+    def get_info_from_ssg(self):
+        url = self.url
+        if re.search(r'itemId=(\w+)(.*)', url):
+            item_no = re.search(r'itemId=(\w+)(.*)', url).group(1)
+            url = 'http://www.ssg.com/item/itemView.ssg?itemId=' + item_no
+
+        html = urlopen(url)
+        soup = BeautifulSoup(html, 'html.parser')
+
+        if not soup.select_one('.cdtl_imgbox img'):
+            item_img = ''
+        else:
+            item_img = 'http:' + soup.select_one('.cdtl_imgbox img').get('src')
+        if not soup.select_one('.cdtl_price .ssg_price'):
+            item_price_str = ''
+        else:
+            item_price_str = soup.select_one('.cdtl_price .ssg_price').text.strip()
+        if not item_price_str:
+            item_price = ''
+        else:
+            item_price = int(item_price_str.replace(',', ''))
+        if not soup.select_one('.cdtl_info_tit'):
+            item_name = ''
+        else:
+            item_name = soup.select_one('.cdtl_info_tit').text.strip()
+
+        self.item_img = item_img
+        self.item_price = item_price
+        self.item_name = item_name
+        self.url = url
+
+    def get_info_from_gs(self):
+        url = self.url
+        if re.search(r'prdid=(\w+)(.*)', url):
+            item_no = re.search(r'prdid=(\w+)(.*)', url).group(1)
+            url = 'http://with.gsshop.com/prd/prd.gs?prdid=' + item_no
+
+        html = urlopen(url)
+        soup = BeautifulSoup(html, 'html.parser')
+
+        if not soup.select_one('.view_area .btn_img img'):
+            item_img = ''
+        else:
+            item_img = soup.select_one('.view_area .btn_img img').get('src')
+        if not soup.select_one('.price-definition-ins ins'):
+            item_price_str = ''
+        else:
+            item_price_str = soup.select_one('.price-definition-ins ins').text.strip()
+        if not item_price_str:
+            item_price = ''
+        else:
+            item_price = int(item_price_str.replace(',', ''))
+        if not soup.select_one('.product-title'):
+            item_name = ''
+        else:
+            if soup.select_one('.product-title span'):
+                before_item_name = soup.select_one('.product-title span').text
+                item_name = soup.select_one('.product-title').text.strip().replace(before_item_name, '')
+            item_name = soup.select_one('.product-title').text.strip()
+
+        self.item_img = item_img
+        self.item_price = item_price
+        self.item_name = item_name
+        self.url = url
+
+    def get_info_from_galleria(self):
+        url = self.url
+        if re.search(r'item_id=(\w+)(.*)', url):
+            item_no = re.search(r'item_id=(\w+)(.*)', url).group(1)
+            url = 'http://www.galleria.co.kr/item/showItemDtl.do?item_id=' + item_no
+
+        html = urlopen(url)
+        soup = BeautifulSoup(html, 'html.parser')
+
+        if not soup.select_one('#gallery img'):
+            item_img = ''
+            item_name = ''
+        else:
+            item_img = soup.select_one('#gallery img').get('src')
+            item_name = soup.select_one('#gallery img').get('alt')
+        if not soup.select_one('.customer .fl .t_price'):
+            item_price_str = ''
+        else:
+            item_price_str = soup.select_one('.customer .fl .t_price').text.strip()
+        if not item_price_str:
+            item_price = ''
+        else:
+            item_price = int(item_price_str.replace(',', ''))
+
+        self.item_img = item_img
+        self.item_price = item_price
+        self.item_name = item_name
+        self.url = url
+
+    def get_info_from_ak(self):
+        url = self.url
+        if re.search(r'goods_id=(\w+)(.*)', url):
+            item_no = re.search(r'goods_id=(\w+)(.*)', url).group(1)
+            url = 'http://www.akmall.com/goods/GoodsDetail.do?goods_id=' + item_no
+
+        html = urlopen(url)
+        soup = BeautifulSoup(html, 'html.parser')
+
+        if not soup.select_one('#mainGoodsImage'):
+            item_img = ''
+            item_name = ''
+        else:
+            item_img = 'http:' + soup.select_one('#mainGoodsImage').get('src')
+            item_name = soup.select_one('#mainGoodsImage').get('alt')
+        if not soup.select_one('.sale .c_pink i'):
+            item_price_str = ''
+        else:
+            item_price_str = soup.select_one('.sale .c_pink i').text.strip()
+        if not item_price_str:
+            item_price = ''
+        else:
+            item_price = int(item_price_str.replace(',', ''))
+
+        self.item_img = item_img
+        self.item_price = item_price
+        self.item_name = item_name
+        self.url = url
+
+    def get_info_from_ns(self):
+        url = self.url
+        if re.search(r'partNumber=(\w+)(.*)', url):
+            item_no = re.search(r'partNumber=(\w+)(.*)', url).group(1)
+            url = 'http://www.nsmall.com/ProductDisplay?partNumber=' + item_no
+
+        html = urlopen(url)
+        soup = BeautifulSoup(html, 'html.parser')
+
+        if not soup.select_one('#photoview_img'):
+            item_img = ''
+        else:
+            item_img = 'http:' + soup.select_one('#photoview_img').get('src')
+        if not soup.select_one('.save_price .price'):
+            item_price_str = ''
+        else:
+            item_price_str = soup.select_one('.save_price .price').text.strip()
+        if not item_price_str:
+            item_price = ''
+        else:
+            item_price = int(item_price_str.replace(',', ''))
+        if not soup.select_one('#ip_productName'):
+            item_name = ''
+        else:
+            item_name = soup.select_one('#ip_productName').get('value').strip()
 
         self.item_img = item_img
         self.item_price = item_price

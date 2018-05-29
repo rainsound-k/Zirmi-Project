@@ -52,10 +52,28 @@ class ItemManager(models.Manager):
             item_data.get_info_from_naver_short_url()
 
         elif 'lotteimall.com' in url:
-            item_data.get_info_from_lotte()
+            item_data.get_info_from_lotte_mall()
+
+        elif 'lotte.com' in url:
+            item_data.get_info_from_lotte_dot_com()
 
         elif 'hyundaihmall.com' in url:
             item_data.get_info_from_hyundai()
+
+        elif 'ssg.com' in url:
+            item_data.get_info_from_ssg()
+
+        elif 'gsshop.com' in url:
+            item_data.get_info_from_gs()
+
+        elif 'galleria.co.kr' in url:
+            item_data.get_info_from_galleria()
+
+        elif 'akmall.com' in url:
+            item_data.get_info_from_ak()
+
+        elif 'nsmall.com' in url:
+            item_data.get_info_from_ns()
 
         item_category = request.POST['category']
         item_img = request.FILES.get('img', '')
