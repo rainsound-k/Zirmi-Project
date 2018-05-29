@@ -23,11 +23,12 @@
     margin: 0 auto;
   }
   #table {
-    display: table;
+    display: flex;
+    flex-flow: column;
     width: 100%;
     margin-bottom: 30px;
     > .table-header-row {
-      display: table-row;
+      display: flex;
       font-weight: bold;
       font-size: 12px;
       background-color: #343a40;
@@ -37,10 +38,14 @@
       }
     }
     > .table-row {
-      display: table-row;
+      display: flex;
       color: #707070;
+      .empty-review {
+        text-align: center;
+      }
     }
     .table-cell {
+      flex-grow: 1;
       display: table-cell;
       padding: 7px;
       border-bottom: 1px solid #ccc;
@@ -96,6 +101,13 @@
         overflow: hidden;
         height: auto;
         flex-flow: row;
+
+        .empty-review {
+          text-align: center;
+          padding: 15px 5px;
+          width: 100%;
+
+        }
 
         .small-table-detail {
           display: inline-block;

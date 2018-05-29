@@ -26,45 +26,58 @@
       <span class="table-cell col4">날짜</span>
       <span class="table-cell col5">조회수</span>
     </div>
-    {% for review in reviews %}
-    <div class="table-row">
-      <span class="table-cell col1">{{ review.pk }}</span>
-      <span class="table-cell col2">
-        <a href="{% url 'reviews:review-detail' review_pk=review.pk %}">
-          {{ review.title|linebreaksbr }} <span class="review-comments">[{{ review.comments.count }}]</span></a>
-      </span>
-      <span class="table-cell col3">{{ review.user|id_from_email }}</span>
-      <span class="table-cell col4">{{ review.created_time|date_formatter }}</span>
-      <span class="table-cell col5">{{ review.view_count|intcomma }}</span>
-    </div>
-    {% endfor %}
+    {% if not reviews %}
+      <div class="table-row">
+        <span class="table-cell empty-review">리뷰가 없습니다</span>
+      </div>
+    {% else %}
+      {% for review in reviews %}
+      <div class="table-row">
+        <span class="table-cell col1">{{ review.pk }}</span>
+        <span class="table-cell col2">
+          <a href="{% url 'reviews:review-detail' review_pk=review.pk %}">
+            {{ review.title|linebreaksbr }} <span class="review-comments">[{{ review.comments.count }}]</span></a>
+        </span>
+        <span class="table-cell col3">{{ review.user|id_from_email }}</span>
+        <span class="table-cell col4">{{ review.created_time|date_formatter }}</span>
+        <span class="table-cell col5">{{ review.view_count|intcomma }}</span>
+      </div>
+      {% endfor %}
+    {% endif %}
   </div>
 
+
   <div id="small-table">
-    {% for review in reviews %}
-      <div class="small-table-row no-gutters">
-        <div class="small-table-detail">
-          <div class="small-table-title">
-            <span>
-              <a href="{% url 'reviews:review-detail' review_pk=review.pk %}">
-                {{ review.title|linebreaksbr }}</a>
-              </span>
-          </div>
-          <div class="small-table-review-info">
-            <span>{{ review.user|id_from_email }}</span>
-            <span class="review-date">{{ review.created_time|date_formatter }}</span>
-            <span><i class="eye-icon fas fa-eye"></i> {{ review.view_count|intcomma }}</span>
-          </div>
-        </div>
-        <div class="small-table-comments">
-          <div class="comments-box">
-            <span class="comments-count">{{ review.comments.count }}</span>
-            <br>
-            <span class="comments-text">댓글</span>
-          </div>
-        </div>
+    {% if not reviews %}
+      <div class="small-table-row">
+        <span class="empty-review">리뷰가 없습니다</span>
       </div>
-    {% endfor %}
+    {% else %}
+      {% for review in reviews %}
+        <div class="small-table-row no-gutters">
+          <div class="small-table-detail">
+            <div class="small-table-title">
+              <span>
+                <a href="{% url 'reviews:review-detail' review_pk=review.pk %}">
+                  {{ review.title|linebreaksbr }}</a>
+                </span>
+            </div>
+            <div class="small-table-review-info">
+              <span>{{ review.user|id_from_email }}</span>
+              <span class="review-date">{{ review.created_time|date_formatter }}</span>
+              <span><i class="eye-icon fas fa-eye"></i> {{ review.view_count|intcomma }}</span>
+            </div>
+          </div>
+          <div class="small-table-comments">
+            <div class="comments-box">
+              <span class="comments-count">{{ review.comments.count }}</span>
+              <br>
+              <span class="comments-text">댓글</span>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
   </div>
   <div class="search-review-container">
     <form action="{% url 'reviews:search-review' %}" method="get" class="review-search-form">

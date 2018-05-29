@@ -27,13 +27,14 @@
 }
 
 .board-container #table {
-  display: table;
+  display: flex;
+  flex-flow: column;
   width: 100%;
   margin-bottom: 30px;
 }
 
 .board-container #table > .table-header-row {
-  display: table-row;
+  display: flex;
   font-weight: bold;
   font-size: 12px;
   background-color: #343a40;
@@ -45,11 +46,16 @@
 }
 
 .board-container #table > .table-row {
-  display: table-row;
+  display: flex;
   color: #707070;
 }
 
+.board-container #table > .table-row .empty-review {
+  text-align: center;
+}
+
 .board-container #table .table-cell {
+  flex-grow: 1;
   display: table-cell;
   padding: 7px;
   border-bottom: 1px solid #ccc;
@@ -109,6 +115,11 @@
     overflow: hidden;
     height: auto;
     flex-flow: row;
+  }
+  .board-container #small-table .small-table-row .empty-review {
+    text-align: center;
+    padding: 15px 5px;
+    width: 100%;
   }
   .board-container #small-table .small-table-row .small-table-detail {
     display: inline-block;
