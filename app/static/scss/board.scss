@@ -80,13 +80,14 @@
   }
   .board-container {
     padding: 0;
-    margin-bottom: 70px;
+    margin-bottom: 80px;
     margin-top: -30px;
 
     .review-add-btn {
       position: fixed;
       bottom: 15px;
       right: 15px;
+      z-index: 5;
     }
 
     #small-table {
@@ -192,5 +193,15 @@
   }
   .edit-delete-btn {
     margin-left: auto;
+  }
+}
+.pagination {
+  margin-bottom: 30px;
+  .page-link {
+    color: #4f4f4f;
+  }
+  .page-item.active .page-link {
+    background-color: #4f4f4f;
+    border-color: #4f4f4f;
   }
 }

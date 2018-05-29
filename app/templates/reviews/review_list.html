@@ -79,6 +79,33 @@
       {% endfor %}
     {% endif %}
   </div>
+  <nav>
+    <ul class="pagination justify-content-center">
+      {% if reviews.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page=1">&laquo;</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ reviews.previous_page_number }}">&lsaquo;</a>
+        </li>
+      {% endif %}
+      {% for i in paginator_num %}
+        <li class="page-item {% if i == reviews.number %}active{% endif %}"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endfor %}
+      {% if reviews.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ reviews.next_page_number }}">&rsaquo;</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ reviews.paginator.num_pages }}">&raquo;</a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+
+
+
+
   <div class="search-review-container">
     <form action="{% url 'reviews:search-review' %}" method="get" class="review-search-form">
       <div class="input-group">
