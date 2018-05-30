@@ -28,10 +28,10 @@ class ItemData:
             item_img = ''
         else:
             item_img = soup.select_one('.thumbBox .v-align img').get('src')
-        if not soup.select_one('.sale_price'):
+        if not soup.select_one('.price_detail .sale_price'):
             item_price_str = ''
         else:
-            item_price_str = soup.select_one('.sale_price').text.strip()
+            item_price_str = soup.select_one('.price_detail .sale_price').text.strip()
         if not item_price_str:
             item_price = ''
         else:

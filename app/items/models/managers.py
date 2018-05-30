@@ -84,7 +84,7 @@ class ItemManager(models.Manager):
         elif 'ticketmonster.co.kr' in url:
             item_data.get_info_from_tmon()
 
-        elif 'g9.co.kr' or 'g9ro.kr' in url:
+        elif 'g9.co.kr' in url or 'g9ro.kr' in url:
             item_data.get_info_from_g9()
 
         item_category = request.POST['category']

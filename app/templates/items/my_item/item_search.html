@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load widget_tweaks %}
 
 {% block content %}
 
@@ -21,6 +22,7 @@
       <form action="{% url 'items:item-add' %}" method="POST"
       class="clearfix" enctype='multipart/form-data'>
         {% csrf_token %}
+
         <div class="item-add-detail-container">
           <div class="row justify-content-around align-items-center">
             <div class="col-lg-5 order-lg-1">
@@ -35,50 +37,49 @@
               <div class="form-group row">
                 <label class="font-weight-bold col-lg-3 col-form-label">상품명*</label>
                 <div class="col-lg-9">
-                  <input type="text" name="name" value="{{ item_name }}"
-                  class="form-control" placeholder="상품명을 입력해주세요" required>
+                  {% with in=item_name %}
+                    {% render_field form.name class="form-control" placeholder="상품명을 입력해주세요" value=in %}
+                  {% endwith %}
                 </div>
               </div>
               <div class="form-group row">
                 <label class="font-weight-bold col-lg-3 col-form-label">상품 가격*</label>
                 <div class="col-lg-9">
-                  <input type="text" name="price" value="{{ item_price }}"
-                  class="form-control" placeholder="가격을 입력해주세요" required>
+                  {% with ip=item_price %}
+                    {% render_field form.price class="form-control" placeholder="가격을 입력해주세요" value=ip %}
+                  {% endwith %}
                 </div>
               </div>
               <div class="form-group row">
                 <label class="font-weight-bold col-lg-3 col-form-label">상품 카테고리*</label>
                 <div class="col-lg-9">
-                  <select class="custom-select form-control" id="inputGroupSelect01" name="category" required>
-                    {% for id, name in category_choices %}
-                    <option value="{{ id }}">{{ name }}</option>
-                    {% endfor %}
-                  </select>
+                  {% render_field form.category class="custom-select form-control" %}
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label">구입 링크</label>
                 <div class="col-lg-9">
-                  <input type="text" name="purchase_url" value="{{ url }}"
-                  class="form-control" placeholder="구입 링크를 입력해주세요">
+                  {% with iu=url %}
+                    {% render_field form.purchase_url class="form-control" placeholder="구입 링크를 입력해주세요" value=iu %}
+                  {% endwith %}
                 </div>
               </div>
               {% if not item_img %}
               <div class="form-group row">
                 <label class="col-lg-3 col-form-label">상품 이미지</label>
                 <div class="col-lg-9">
-                  <input type="file" id="imgInp" name="img" class="form-control-file">
+                  {% render_field form.img id="imgInp" name="img" class="form-control-file" %}
                 </div>
               </div>
               {% endif %}
               <div class="form-check">
-                <input type="checkbox" name="public_visibility"
-                class="form-check-input" id="oepnCheck" checked>
+                {% render_field form.public_visibility class="form-check-input" id="oepnCheck" %}
                 <label class="form-check-label" for="oepnCheck">전체 공개</label>
               </div>
             </div>
           </div>
         </div>
+
         <div>
           <button type="submit" class="btn btn-dark form-control">등록</button>
         </div>

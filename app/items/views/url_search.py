@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
-from items.models.item import Item
+from ..forms import ItemForm
+from ..models.item import Item
 from utils.url_parser import ItemData
 
 __all__ = (
@@ -65,15 +66,17 @@ def search_url(request):
         elif 'ticketmonster.co.kr' in url:
             item_data.get_info_from_tmon()
 
-        elif 'g9.co.kr' or 'g9ro.kr' in url:
+        elif 'g9.co.kr' in url or 'g9ro.kr' in url:
             item_data.get_info_from_g9()
 
         item_img = item_data.item_img
         item_price = item_data.item_price
         item_name = item_data.item_name
         url = item_data.url
+        form = ItemForm()
 
         context = {
+            'form': form,
             'category_choices': Item.CHOICES_CATEGORY,
             'item_img': item_img,
             'item_price': item_price,

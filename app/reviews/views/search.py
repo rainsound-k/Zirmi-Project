@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render
@@ -36,7 +38,10 @@ def search_review(request):
         page = request.GET.get('page')
         reviews = paginator.get_page(page)
 
+    today_date = datetime.now().strftime('%Y. %-m. %d')
+
     context = {
+        'today_date': today_date,
         'reviews': reviews,
         'search_text': search_text,
         'paginator_num': paginator_num,
