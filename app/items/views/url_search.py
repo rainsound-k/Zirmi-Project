@@ -55,6 +55,18 @@ def search_url(request):
         elif 'nsmall.com' in url:
             item_data.get_info_from_ns()
 
+        elif 'coupang.com' in url:
+            item_data.get_info_from_coupang()
+
+        elif 'wemakeprice.com' in url:
+            item_data.get_info_from_wemakeprice()
+
+        elif 'ticketmonster.co.kr' in url:
+            item_data.get_info_from_tmon()
+
+        elif 'g9.co.kr' or 'g9ro.kr' in url:
+            item_data.get_info_from_g9()
+
         item_img = item_data.item_img
         item_price = item_data.item_price
         item_name = item_data.item_name

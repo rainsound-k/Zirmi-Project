@@ -14,7 +14,7 @@ __all__ = (
 
 def item_list(request):
     items = Item.objects.filter(public_visibility=True).annotate(num_like_users=Count('like_users'))\
-        .order_by('-num_like_users')
+        .order_by('-num_like_users', '-created_time')
     comment_form = CommentForm()
     context = {
         'items': items,

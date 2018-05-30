@@ -29,12 +29,12 @@
                   {% if is_exists %}
                     <span class="btn btn-sm btn-outline-secondary disabled">이미 있음</span>
                   {% else %}
+                    <form action="{% url 'items:add-from-public' item_pk=item.pk %}#item-{{ item.pk }}" method="post">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-sm btn-outline-secondary">내 지르미에 추가</button>
+                    </form>
                   {% endif %}
                 {% else %}
-                <form action="{% url 'items:add-from-public' item_pk=item.pk %}#item-{{ item.pk }}" method="post">
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-sm btn-outline-secondary">내 지르미에 추가</button>
-                </form>
                 {% endif %}
 
 

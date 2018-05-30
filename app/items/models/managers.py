@@ -75,9 +75,23 @@ class ItemManager(models.Manager):
         elif 'nsmall.com' in url:
             item_data.get_info_from_ns()
 
+        elif 'coupang.com' in url:
+            item_data.get_info_from_coupang()
+
+        elif 'wemakeprice.com' in url:
+            item_data.get_info_from_wemakeprice()
+
+        elif 'ticketmonster.co.kr' in url:
+            item_data.get_info_from_tmon()
+
+        elif 'g9.co.kr' or 'g9ro.kr' in url:
+            item_data.get_info_from_g9()
+
         item_category = request.POST['category']
         item_img = request.FILES.get('img', '')
         item_public_visibility = request.POST['public_visibility']
+        item_price = request.POST['price']
+        item_name = request.POST['name']
         if item_public_visibility == 'on' or item_public_visibility:
             item_public_visibility = True
         else:
@@ -85,9 +99,9 @@ class ItemManager(models.Manager):
 
         item = self.create(
             user=request.user,
-            name=item_data.item_name,
+            name=item_name,
             purchase_url=item_data.url,
-            price=item_data.item_price,
+            price=item_price,
             category=item_category,
             img=item_img,
             public_visibility=item_public_visibility,

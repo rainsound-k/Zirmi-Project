@@ -1,6 +1,7 @@
 import re
 from urllib.request import urlopen
 
+import requests
 from bs4 import BeautifulSoup
 
 
@@ -108,14 +109,12 @@ class ItemData:
     def get_info_from_interpark(self):
         url = self.url
         # 모바일과 데스크탑 url 구조가 다름
-        if 'm.shop.interpark.com' in url:
-            if re.search(r'product/(\w+)(.*)', url):
-                item_no = re.search(r'product/(\w+)(.*)', url).group(1)
-                url = 'http://shopping.interpark.com/product/productInfo.do?prdNo=' + item_no
-        else:
-            if re.search(r'prdNo=(\w+)(.*)', url):
-                item_no = re.search(r'prdNo=(\w+)(.*)', url).group(1)
-                url = 'http://shopping.interpark.com/product/productInfo.do?prdNo=' + item_no
+        if 'm.shop.interpark.com' in url and re.search(r'product/(\w+)(.*)', url):
+            item_no = re.search(r'product/(\w+)(.*)', url).group(1)
+            url = 'http://shopping.interpark.com/product/productInfo.do?prdNo=' + item_no
+        elif re.search(r'prdNo=(\w+)(.*)', url):
+            item_no = re.search(r'prdNo=(\w+)(.*)', url).group(1)
+            url = 'http://shopping.interpark.com/product/productInfo.do?prdNo=' + item_no
         html = urlopen(url)
         soup = BeautifulSoup(html, 'html.parser')
 
@@ -452,6 +451,145 @@ class ItemData:
             item_name = ''
         else:
             item_name = soup.select_one('#ip_productName').get('value').strip()
+
+        self.item_img = item_img
+        self.item_price = item_price
+        self.item_name = item_name
+        self.url = url
+
+    def get_info_from_coupang(self):
+        url = self.url
+        if re.search(r'products/(\w+)(.*)', url):
+            item_no = re.search(r'products/(\w+)(.*)', url).group(1)
+            if re.search(r'itemId=(\w+)(.*)', url):
+                item_id = re.search(r'itemId=(\w+)(.*)', url).group(1)
+                url = f'https://www.coupang.com/vp/products/{item_no}?itemId={item_id}'
+            url = f'https://www.coupang.com/vp/products/{item_no}'
+        hdr = {'referer': 'http://m.naver.com', 'User-Agent': 'Mozilla/5.0'}
+        req = requests.get(url, headers=hdr)
+        soup = BeautifulSoup(req.text, 'html.parser')
+
+        if not soup.select_one('.prod-image__detail'):
+            item_img = ''
+        else:
+            item_img = 'http:' + soup.select_one('.prod-image__detail').get('src')
+        if not soup.select_one('.prod-sale-price .total-price strong'):
+            item_price_str = ''
+        else:
+            item_price_str = soup.select_one('.prod-sale-price .total-price strong').text.strip()
+        if not item_price_str:
+            item_price = ''
+        else:
+            item_price = int(item_price_str.replace('원', '').replace(',', ''))
+        if not soup.select_one('.prod-buy-header .prod-buy-header__title'):
+            item_name = ''
+        else:
+            item_name = soup.select_one('.prod-buy-header .prod-buy-header__title').text.strip()
+
+        self.item_img = item_img
+        self.item_price = item_price
+        self.item_name = item_name
+        self.url = url
+
+    def get_info_from_wemakeprice(self):
+        url = self.url
+        if re.search(r'deal/adeal/(\w+)(.*)', url):
+            item_no = re.search(r'deal/adeal/(\w+)(.*)', url).group(1)
+            url = 'http://www.wemakeprice.com/deal/adeal/' + item_no
+
+        html = urlopen(url)
+        soup = BeautifulSoup(html, 'html.parser')
+
+        if not soup.select_one('.img_area .roll .slides_control .onecutImage'):
+            item_img = ''
+        else:
+            item_img = soup.select_one('.img_area .roll .slides_control .onecutImage').get('src')
+        if not soup.select_one('.sale .num'):
+            item_price_str = ''
+        else:
+            item_price_str = soup.select_one('.sale .num').text.strip()
+        if not item_price_str:
+            item_price = ''
+        else:
+            item_price = int(item_price_str.replace(',', ''))
+        if not soup.select_one('.price_area .deal_tit'):
+            item_name = ''
+        else:
+            before_item_name = soup.select_one('.price_area .deal_tit')
+            item_name = re.search(r'\t\t\t(.+)<br/>(.*)', str(before_item_name)).group(1)
+
+        self.item_img = item_img
+        self.item_price = item_price
+        self.item_name = item_name
+        self.url = url
+
+    def get_info_from_tmon(self):
+        url = self.url
+        if 'mobile' in url and re.search(r'deals/(\w+)(.*)', url):
+            item_no = re.search(r'deals/(\w+)(.*)', url).group(1)
+            url = 'https://www.ticketmonster.co.kr/deal/' + item_no
+        elif re.search(r'deal/(\w+)(.*)', url):
+            item_no = re.search(r'deal/(\w+)(.*)', url).group(1)
+            url = 'https://www.ticketmonster.co.kr/deal/' + item_no
+
+        html = urlopen(url)
+        soup = BeautifulSoup(html, 'lxml')
+
+        if not soup.select_one('#front_image_area'):
+            item_img = ''
+        else:
+            item_img = soup.select_one('#front_image_area').get('src')
+        if not soup.select_one('.price .now_price') and not soup.select_one('.sell .num'):
+            item_price_str = ''
+        elif soup.select_one('.price .now_price'):
+            before_item_price_str = soup.select('.price .now_price')
+            item_price_list = []
+            for i in before_item_price_str:
+                item_price_list.append(i.text)
+            item_price_str = ','.join(re.findall('\d+', item_price_list[0]))
+        elif soup.select_one('.sell .num'):
+            item_price_str = soup.select_one('.sell .num')
+        if not item_price_str:
+            item_price = ''
+        else:
+            item_price = int(item_price_str.replace(',', ''))
+        if not soup.select_one('.ct_wrp .main') and not soup.select_one('.ct_area .tit'):
+            item_name = ''
+        elif soup.select_one('.ct_wrp .main'):
+            item_name = soup.select_one('.ct_wrp .main').text.strip()
+        elif soup.select_one('.ct_area .tit'):
+            item_name = soup.select_one('.ct_area .tit').text.strip()
+
+        self.item_img = item_img
+        self.item_price = item_price
+        self.item_name = item_name
+        self.url = url
+
+    def get_info_from_g9(self):
+        url = self.url
+        if 'm.g9.co.kr' in url:
+            if re.search(r'VIP/(\w+)(.*)', url):
+                item_no = re.search(r'VIP/(\w+)(.*)', url).group(1)
+                url = 'http://www.g9.co.kr/Display/VIP/Index/' + item_no
+        elif 'g9ro.kr' in url:
+            url = url
+        else:
+            if re.search(r'Index/(\w+)(.*)', url):
+                item_no = re.search(r'Index/(\w+)(.*)', url).group(1)
+                url = 'http://www.g9.co.kr/Display/VIP/Index/' + item_no
+
+        html = urlopen(url)
+        soup = BeautifulSoup(html, 'html.parser')
+        if 'g9ro.kr' in url and re.search(r'http://image.g9.co.kr/g/(\d+)', str(soup)):
+            item_no = re.search(r'http://image.g9.co.kr/g/(\d+)', str(soup)).group(1)
+        item_img = f'http://image.g9.co.kr/g/{item_no}/n'
+        item_price = ''
+
+        if not re.search(r'<meta content="G9 - (.+)', str(soup)):
+            item_name = ''
+        else:
+            before_item_name = re.search(r'<meta content="G9 - (.+)', str(soup)).group(1)
+            item_name = before_item_name[:before_item_name.find('"')]
 
         self.item_img = item_img
         self.item_price = item_price
