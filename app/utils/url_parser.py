@@ -580,9 +580,14 @@ class ItemData:
 
         html = urlopen(url)
         soup = BeautifulSoup(html, 'html.parser')
-        if 'g9ro.kr' in url and re.search(r'http://image.g9.co.kr/g/(\d+)', str(soup)):
-            item_no = re.search(r'http://image.g9.co.kr/g/(\d+)', str(soup)).group(1)
-        item_img = f'http://image.g9.co.kr/g/{item_no}/n'
+        if 'g9ro.kr' in url:
+            if re.search(r'http://image.g9.co.kr/g/(\d+)', str(soup)):
+                item_no = re.search(r'http://image.g9.co.kr/g/(\d+)', str(soup)).group(1)
+                item_img = f'http://image.g9.co.kr/g/{item_no}/n'
+            else:
+                item_img = ''
+        else:
+            item_img = f'http://image.g9.co.kr/g/{item_no}/n'
         item_price = ''
 
         if not re.search(r'<meta content="G9 - (.+)', str(soup)):

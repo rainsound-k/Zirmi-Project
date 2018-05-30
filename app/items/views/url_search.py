@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+from items.models.item import Item
 from utils.url_parser import ItemData
 
 __all__ = (
@@ -73,6 +74,7 @@ def search_url(request):
         url = item_data.url
 
         context = {
+            'category_choices': Item.CHOICES_CATEGORY,
             'item_img': item_img,
             'item_price': item_price,
             'item_name': item_name,

@@ -20,11 +20,11 @@
       <div class="col-lg-4 order-lg-2">
         <div class="item-detail">
           <h3>상품 카테고리</h3>
-          <small class="text-muted">{% if item.category %}{{ item.category }}{% else %} {% endif %}</small>
+          <span class="text-muted">{% if item.category %}{{ item.get_category_display }}{% else %} {% endif %}</span>
         </div>
         <div class="item-detail">
           <h3>상품 가격</h3>
-          <small class="text-muted">{{ item.price|intcomma }}원</small>
+          <span class="text-muted">{{ item.price|intcomma }}원</span>
         </div>
         <div class="item-detail">
           <h3>구입 링크</h3>
@@ -32,7 +32,7 @@
         </div>
         <div class="item-detail">
           <h3>관심 있는 사람</h3>
-          <small class="text-muted">{{ item.like_users.count }} 명</small>
+          <span class="text-muted">{{ item.like_users.count }} 명</span>
         </div>
       </div>
     </div>
