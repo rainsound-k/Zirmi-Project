@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from django.core.paginator import Paginator
 from django.shortcuts import render
 
@@ -14,8 +16,10 @@ def review_list(request):
     paginator_num = range(1, paginator.num_pages + 1)
     page = request.GET.get('page')
     reviews = paginator.get_page(page)
+    today_date = datetime.now().strftime('%Y. %-m. %d')
 
     context = {
+        'today_date': today_date,
         'reviews': reviews,
         'paginator_num': paginator_num,
     }

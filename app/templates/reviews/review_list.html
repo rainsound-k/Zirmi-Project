@@ -36,7 +36,11 @@
         <span class="table-cell col1">{{ review.pk }}</span>
         <span class="table-cell col2">
           <a href="{% url 'reviews:review-detail' review_pk=review.pk %}">
-            {{ review.title|linebreaksbr }} <span class="review-comments">[{{ review.comments.count }}]</span></a>
+            {{ review.title|linebreaksbr }} <span class="review-comments">[{{ review.comments.count }}]</span>
+            {% if review.created_time|date:"Y. n. j" ==  today_date %}
+            &emsp;<span class="badge badge-warning">New</span>
+            {% endif %}
+          </a>
         </span>
         <span class="table-cell col3">{{ review.user|id_from_email }}</span>
         <span class="table-cell col4">{{ review.created_time|date_formatter }}</span>
@@ -59,7 +63,11 @@
             <div class="small-table-title">
               <span>
                 <a href="{% url 'reviews:review-detail' review_pk=review.pk %}">
-                  {{ review.title|linebreaksbr }}</a>
+                  {{ review.title|linebreaksbr }}
+                  {% if review.created_time|date:"Y. n. j" ==  today_date %}
+                    &ensp;<span class="badge badge-warning">New</span>
+                  {% endif %}
+                </a>
                 </span>
             </div>
             <div class="small-table-review-info">
