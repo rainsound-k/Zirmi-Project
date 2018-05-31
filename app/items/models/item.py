@@ -66,9 +66,3 @@ class Item(TimeStampedModel):
 
     def __str__(self):
         return self.name
-
-    def toggle_like_user(self, user):
-        like, like_created = self.like_user_info_list.get_or_create(user=user)
-        if not like_created:
-            like.delete()
-        return like_created

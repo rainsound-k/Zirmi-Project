@@ -34,23 +34,21 @@
                       <button type="submit" class="btn btn-sm btn-outline-secondary">내 지르미에 추가</button>
                     </form>
                   {% endif %}
-                {% else %}
                 {% endif %}
 
-
-                {% if request.user.is_authenticated and item.user != request.user %}
-                <form action="{% url 'items:item-like-toggle' item_pk=item.pk %}#item-{{ item.pk }}" method="post">
-                  {% csrf_token %}
-                  {% if request.user in item.like_users.all %}
-                    <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="fas fa-heart"></i></button>
-                  {% else %}
-                    <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="far fa-heart"></i></button>
-                  {% endif %}
-                </form>
+                {% if request.user in item.like_users.all %}
+                  <button class="like btn btn-sm btn-outline-secondary" name="{{ item.pk }}">
+                    <i id="like-{{ item.pk }}" class="fas fa-heart"></i>
+                  </button>
+                {% else %}
+                  <button class="like btn btn-sm btn-outline-secondary" name="{{ item.pk }}">
+                    <i id="dislike-{{ item.pk }}" class="far fa-heart"></i>
+                  </button>
                 {% endif %}
               </div>
+
               {% with total_like=item.like_users.count %}
-              <small class="text-muted">{{ total_like }} like{% if total_like == 0 %}{% else %}{{ total_like|pluralize }}{% endif %}</small>
+              <small id="count-{{ item.pk }}"class="text-muted">{{ total_like }} like{% if total_like == 0 %}{% else %}{{ total_like|pluralize }}{% endif %}</small>
               {% endwith %}
             </div>
           </div>
@@ -61,5 +59,38 @@
     </div>
   </div>
 </div>
+
+<script src="{% static 'js/jQuery.js' %}"></script>
+
+<script type="text/javascript">
+  $(document).on("click", ".like", function() {
+    var pk = $(this).attr('name')
+    $.ajax({
+      type: "POST",
+      url: "{% url 'items:item-like-toggle' %}",
+      data: {'pk': pk, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+      dataType: "json",
+
+      success: function(response) {
+        $("#count-"+pk).text(response.like_count_text);
+        if(response.message == '좋아요'){
+          $("#dislike-"+pk).removeClass('far').addClass('fas');
+        }else{
+          $("#like-"+pk).removeClass('fas').addClass('far');
+        }
+      },
+      error: function(request, status, error) {
+        alert("로그인이 필요합니다")
+        window.location.replace("/login/")
+        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+    });
+  })
+
+
+</script>
+
+
+
 
 {% endblock %}
