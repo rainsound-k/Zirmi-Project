@@ -21,6 +21,7 @@ def comment_create(request):
     item_pk = request.POST.get('pk', None)
     next_path = request.POST.get('next_path', None)
     item = get_object_or_404(Item, pk=item_pk)
+    comment_count = item.comments.count()
     form = CommentForm(request.POST)
     if form.is_valid():
         comment = form.save(commit=False)
@@ -29,21 +30,27 @@ def comment_create(request):
         comment.save()
         context = {
             'comment': comment,
+            'comment_count': comment_count,
         }
         return render(request, 'items/new_comment.html', context)
     return redirect(next_path)
 
 
 @login_required
-def comment_delete(request, comment_pk):
-    next_url = request.GET.get('next_url', '').strip()
+def comment_delete(request):
+    comment_pk = request.POST.get('pk', None)
+    comment = get_object_or_404(ItemComment, pk=comment_pk)
+    if comment.user == request.user:
+        comment.delete()
+        status = 1
+        message = '삭제완료'
+    else:
+        status = 0
+        message = '잘못된 접근입니다'
 
-    if request.method == 'POST':
-        comment = get_object_or_404(ItemComment, pk=comment_pk)
-        if comment.user == request.user:
-            comment.delete()
-            if next_url:
-                return redirect(next_url)
-            return redirect('items:public-item-detail', item_pk=comment.item.pk)
-        else:
-            raise PermissionDenied('권한이 없습니다')
+    context = {
+        'status': status,
+        'message': message,
+    }
+
+    return HttpResponse(json.dumps(context), content_type='application/json')

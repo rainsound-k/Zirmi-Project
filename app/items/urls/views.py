@@ -20,6 +20,6 @@ urlpatterns = [
 
     # comment
     path('comment/create/', views.comment_create, name='comment-create'),
-    path('comment/delete/<int:comment_pk>/', views.comment_delete, name='comment-delete'),
+    path('comment/delete/', views.comment_delete, name='comment-delete'),
 
 ]

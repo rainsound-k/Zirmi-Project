@@ -10,11 +10,6 @@
 	</span>
 	<p class="media-body pb-3 mb-0 small lh-125"><strong class="d-block text-gray-dark">{{ comment.user|id_from_email }}</strong>{{ comment.content|linebreaksbr }}</p>
 	{% if comment.user == user %}
-		<form class="comment-delete-form"
-		action="{% url 'items:comment-delete' comment_pk=comment.pk %}"
-		method="post">
-		{% csrf_token %}
-			<button class="btn btn-sm btn-danger">삭제</button>
-		</form>
+		<button class="comment-delete-btn btn btn-sm btn-danger" name="{{ comment.pk }}">삭제</button>
 	{% endif %}
 </div>
