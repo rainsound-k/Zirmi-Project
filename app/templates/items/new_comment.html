@@ -1,0 +1,20 @@
+{% load id_from_email_tag %}
+
+<div id="comment-{{ comment.pk }}" class="comment-content media text-muted pt-3 border-bottom border-gray align-items-center">
+	<span class="mr-2 rounded user-profile">
+		{% if comment.user.gender == male %}
+			<i class="far fa-user-circle fa-2x"></i>
+		{% else %}
+			<i class="fas fa-user-circle fa-2x"></i>
+		{% endif %}
+	</span>
+	<p class="media-body pb-3 mb-0 small lh-125"><strong class="d-block text-gray-dark">{{ comment.user|id_from_email }}</strong>{{ comment.content|linebreaksbr }}</p>
+	{% if comment.user == user %}
+		<form class="comment-delete-form"
+		action="{% url 'items:comment-delete' comment_pk=comment.pk %}"
+		method="post">
+		{% csrf_token %}
+			<button class="btn btn-sm btn-danger">삭제</button>
+		</form>
+	{% endif %}
+</div>

@@ -19,7 +19,7 @@ urlpatterns = [
     path('public/like/', views.item_like_toggle, name='item-like-toggle'),
 
     # comment
-    path('public/<int:item_pk>/comment/create/', views.comment_create, name='comment-create'),
-    path('public/comment/<int:comment_pk>/delete/', views.comment_delete, name='comment-delete'),
+    path('comment/create/', views.comment_create, name='comment-create'),
+    path('comment/delete/<int:comment_pk>/', views.comment_delete, name='comment-delete'),
 
 ]

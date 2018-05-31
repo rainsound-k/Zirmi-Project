@@ -45,37 +45,34 @@
 
   <div class="my-3 bg-white rounded box-shadow">
     <h6 class="border-bottom border-gray pb-2 mb-0">댓글 {{ item.comments.count }}</h6>
-    {% for comment in item.comments.all %}
-    <div id="itemComments{{ comment.pk }}" class="comment-content media text-muted pt-3 border-bottom border-gray align-items-center">
-      <span class="mr-2 rounded user-profile">
-        {% if comment.user.gender == male %}
-          <i class="far fa-user-circle fa-2x"></i>
-        {% else %}
-          <i class="fas fa-user-circle fa-2x"></i>
+    <div id="commentList-{{ item.pk }}">
+      {% for comment in item.comments.all %}
+      <div id="comment-{{ comment.pk }}" class="comment-content media text-muted pt-3 border-bottom border-gray align-items-center">
+        <span class="mr-2 rounded user-profile">
+          {% if comment.user.gender == male %}
+            <i class="far fa-user-circle fa-2x"></i>
+          {% else %}
+            <i class="fas fa-user-circle fa-2x"></i>
+          {% endif %}
+        </span>
+        <p class="media-body pb-3 mb-0 small lh-125"><strong class="d-block text-gray-dark">{{ comment.user|id_from_email }}</strong>{{ comment.content|linebreaksbr }}</p>
+        {% if comment.user == user %}
+          <form class="comment-delete-form"
+          action="{% url 'items:comment-delete' comment_pk=comment.pk %}"
+          method="post">
+          {% csrf_token %}
+            <button class="btn btn-sm btn-danger" name="{{ item.pk }}">삭제</button>
+          </form>
         {% endif %}
-      </span>
-      <p class="media-body pb-3 mb-0 small lh-125"><strong class="d-block text-gray-dark">{{ comment.user|id_from_email }}</strong>{{ comment.content|linebreaksbr }}</p>
-      {% if comment.user == user %}
-        <form class="comment-delete-form"
-        action="{% url 'items:comment-delete' comment_pk=comment.pk %}?next_url={% url 'items:item-detail' item_pk=item.pk %}#itemComments{{ comment.pk }}"
-        method="post">
-        {% csrf_token %}
-          <button class="btn btn-sm btn-danger">삭제</button>
-        </form>
-      {% endif %}
-    </div>
-      {% endfor %}
-
-    <form id="comments" action="{% url 'items:comment-create' item_pk=item.pk %}?next_url={% url 'items:item-detail' item_pk=item.pk %}#comments"
-    method="post">
-      {% csrf_token %}
-      <div class="input-group">
-        {{ comment_form }}
-        <div class="input-group-append">
-          <button class="btn btn-primary">등록</button>
-        </div>
       </div>
-    </form>
+        {% endfor %}
+      </div>
+    <div id="addComment-{{ item.pk }}" class="input-group">
+      {{ comment_form }}
+      <div class="input-group-append">
+        <button class="comment-add-btn btn btn-primary" name="{{ item.pk }}">등록</button>
+      </div>
+    </div>
   </div>
 
   <a href="{% url 'items:item-edit' item_pk=item.pk %}" class="btn btn-dark form-control">수정</a>
@@ -84,8 +81,35 @@
 
 
 <script type="text/javascript">
+  $(document).on("click", ".comment-add-btn", function() {
+    var pk = $(this).attr('name');
+    var content = $("#addComment-"+pk+">textarea").val();
+    var nextPath = "/items/"+pk
+    $.ajax({
+      type: "POST",
+      url: "{% url 'items:comment-create' %}",
+      data: {
+        'pk': pk,
+        'content': content,
+        'next_path': nextPath,
+        'csrfmiddlewaretoken': '{{ csrf_token }}'
+      },
+      dataType: "html",
+
+      success: function(data, textStatus, jqXHR) {
+        $("#addComment-"+pk+">textarea").val("");
+        $("#commentList-"+pk).append(data);
+      },
+      error: function(request, status, error) {
+        // alert("로그인이 필요합니다")
+        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+    });
+  })
+
+
   $(document).on("click", "#deleteBtn", function() {
-    var pk = $(this).attr('name')
+    var pk = $(this).attr('name');
     $.ajax({
       type: "POST",
       url: "{% url 'items:item-delete' %}",

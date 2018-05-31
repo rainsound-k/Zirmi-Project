@@ -1,6 +1,10 @@
+import json
+
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404, render
+from django.views.decorators.http import require_POST
 
 from ..forms import CommentForm
 from ..models import Item, ItemComment
@@ -12,21 +16,22 @@ __all__ = (
 
 
 @login_required
-def comment_create(request, item_pk):
+@require_POST
+def comment_create(request):
+    item_pk = request.POST.get('pk', None)
+    next_path = request.POST.get('next_path', None)
     item = get_object_or_404(Item, pk=item_pk)
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.user = request.user
-            comment.item = item
-            comment.save()
-
-            next_url = request.GET.get('next_url', '').strip()
-            if next_url:
-                return redirect(next_url)
-
-            return redirect('items:public-item-detail', item_pk=item_pk)
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.user = request.user
+        comment.item = item
+        comment.save()
+        context = {
+            'comment': comment,
+        }
+        return render(request, 'items/new_comment.html', context)
+    return redirect(next_path)
 
 
 @login_required
