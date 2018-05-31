@@ -79,10 +79,31 @@
   </div>
 
   <a href="{% url 'items:item-edit' item_pk=item.pk %}" class="btn btn-dark form-control">수정</a>
-  <form action="{% url 'items:item-delete' item_pk=item.pk %}" method="post">
-    {% csrf_token %}
-    <button class="btn btn-danger form-control">삭제</button>
-  </form>
+  <button id="deleteBtn" class="btn btn-danger form-control" name="{{ item.pk }}">삭제</button>
 </div>
+
+
+<script type="text/javascript">
+  $(document).on("click", "#deleteBtn", function() {
+    var pk = $(this).attr('name')
+    $.ajax({
+      type: "POST",
+      url: "{% url 'items:item-delete' %}",
+      data: {'pk': pk, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+      dataType: "json",
+
+      success: function(response) {
+        alert(response.message)
+        window.location.replace("/items/list/")
+      },
+      error: function(request, status, error) {
+        alert("로그인이 필요합니다")
+        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+    });
+  })
+</script>
+
+
 
 {% endblock %}

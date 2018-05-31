@@ -28,14 +28,10 @@
               <p class="card-text">{{ item.name }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <form action="{% url 'items:purchase-complete' item_pk=item.pk %}" method="post">
-                    {% csrf_token %}
-                  <button class="btn btn-sm btn-outline-success">지름 완료</button>
-                  </form>
-                  <form action="{% url 'items:item-delete' item_pk=item.pk %}" method="post">
-                    {% csrf_token %}
-                    <button class="btn btn-sm btn-outline-danger">삭제</button>
-                  </form>
+                  <button id="completeBtn" class="btn btn-sm btn-outline-success"
+                  name="{{ item.pk }}">지름 완료</button>
+                  <button id="deleteBtn" class="btn btn-sm btn-outline-danger"
+                  name="{{ item.pk }}">삭제</button>
                 </div>
                 <small class="text-muted">못 지른지 {{ item.created_time|timesince }}째</small>
               </div>
@@ -48,6 +44,49 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $(document).on("click", "#completeBtn", function() {
+    var pk = $(this).attr('name')
+    $.ajax({
+      type: "POST",
+      url: "{% url 'items:purchase-complete' %}",
+      data: {'pk': pk, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+      dataType: "json",
+
+      success: function(response) {
+        alert(response.message)
+        window.location.replace("/items/list/")
+      },
+      error: function(request, status, error) {
+        alert("로그인이 필요합니다")
+        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+    });
+  })
+
+  $(document).on("click", "#deleteBtn", function() {
+    var pk = $(this).attr('name')
+    $.ajax({
+      type: "POST",
+      url: "{% url 'items:item-delete' %}",
+      data: {'pk': pk, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+      dataType: "json",
+
+      success: function(response) {
+        alert(response.message)
+        window.location.replace("/items/list/")
+      },
+      error: function(request, status, error) {
+        alert("로그인이 필요합니다")
+        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+    });
+  })
+</script>
+
+
+
 
 
 {% endblock %}

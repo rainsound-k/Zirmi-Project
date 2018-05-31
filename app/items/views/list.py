@@ -39,7 +39,7 @@ def my_item_list(request):
 
 @login_required
 def my_complete_item_list(request):
-    my_items = Item.objects.filter(user=request.user, is_purchase=True)
+    my_items = Item.objects.filter(user=request.user, is_purchase=True).order_by('-modified_time')
     total_cost = 0
     for my_item in my_items:
         total_cost += my_item.price
