@@ -1,6 +1,6 @@
 {% load id_from_email_tag %}
 
-<div id="comment-{{ comment.pk }}" class="comment-content media text-muted pt-3 border-bottom border-gray align-items-center">
+<div id="comment-{{ comment.pk }}" class="comment-content media text-muted pt-3 border-bottom border-gray align-items-center"  name="{{ item.pk }}">
 	<span class="mr-2 rounded user-profile">
 		{% if comment.user.gender == male %}
 			<i class="far fa-user-circle fa-2x"></i>

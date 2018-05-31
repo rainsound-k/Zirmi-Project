@@ -37,9 +37,15 @@ def comment_create(request):
 
 
 @login_required
+@require_POST
 def comment_delete(request):
-    comment_pk = request.POST.get('pk', None)
+    comment_pk = request.POST.get('comment_pk', None)
     comment = get_object_or_404(ItemComment, pk=comment_pk)
+    item_pk = request.POST.get('item_pk', None)
+    item = get_object_or_404(Item, pk=item_pk)
+    # comment를 delete 하기 때문에 1을 빼줌
+    comment_count = item.comments.count() - 1
+
     if comment.user == request.user:
         comment.delete()
         status = 1
@@ -51,6 +57,7 @@ def comment_delete(request):
     context = {
         'status': status,
         'message': message,
+        'comment_count': comment_count,
     }
 
     return HttpResponse(json.dumps(context), content_type='application/json')
