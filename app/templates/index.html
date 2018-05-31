@@ -29,10 +29,7 @@
                   {% if is_exists %}
                     <span class="btn btn-sm btn-outline-secondary disabled">이미 있음</span>
                   {% else %}
-                    <form action="{% url 'items:add-from-public' item_pk=item.pk %}#item-{{ item.pk }}" method="post">
-                      {% csrf_token %}
-                      <button type="submit" class="btn btn-sm btn-outline-secondary">내 지르미에 추가</button>
-                    </form>
+                    <button id="add-item-{{ item.pk }}" class="add-btn btn btn-sm btn-outline-secondary" name="{{ item.pk }}">내 지르미에 추가</button>
                   {% endif %}
                 {% endif %}
 
@@ -60,7 +57,6 @@
   </div>
 </div>
 
-<script src="{% static 'js/jQuery.js' %}"></script>
 
 <script type="text/javascript">
   $(document).on("click", ".like", function() {
@@ -82,6 +78,24 @@
       error: function(request, status, error) {
         alert("로그인이 필요합니다")
         window.location.replace("/login/")
+        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+    });
+  })
+
+  $(document).on("click", ".add-btn", function() {
+    var pk = $(this).attr('name')
+    $.ajax({
+      type: "POST",
+      url: "{% url 'items:add-from-public' %}",
+      data: {'pk': pk, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+      dataType: "json",
+      success: function(response) {
+        alert(response.message)
+        $("#add-item-"+pk).text("이미 있음")
+        $("#add-item-"+pk).addClass('disabled')
+      },
+      error: function(request, status, error) {
         console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
       }
     });

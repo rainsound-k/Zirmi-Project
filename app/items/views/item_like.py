@@ -2,7 +2,7 @@ import json
 
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST
 
 from ..models import Item
@@ -12,8 +12,8 @@ __all__ = (
 )
 
 
-@require_POST
 @login_required
+@require_POST
 def item_like_toggle(request):
     item_pk = request.POST.get('pk', None)
     item = get_object_or_404(Item, pk=item_pk)
@@ -36,4 +36,3 @@ def item_like_toggle(request):
     }
 
     return HttpResponse(json.dumps(context), content_type='application/json')
-
