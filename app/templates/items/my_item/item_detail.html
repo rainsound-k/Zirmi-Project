@@ -44,10 +44,13 @@
   </div>
 
   <div class="my-3 bg-white rounded box-shadow">
-    <h6 id="itemCount" class="border-bottom border-gray pb-2 mb-0" name="{{ item.comments.count }}">댓글 {{ item.comments.count }}</h6>
+    <div id="itemCount">
+      <h6 class="border-bottom border-gray pb-2 mb-0">댓글 {{ item.comments.count }}</h6>
+    </div>
     <div id="commentList-{{ item.pk }}">
       {% for comment in item.comments.all %}
-      <div id="comment-{{ comment.pk }}" class="comment-content media text-muted pt-3 border-bottom border-gray align-items-center" name="{{ item.pk }}">
+      <div id="comment-{{ comment.pk }}"
+      class="comment-content media text-muted pt-3 border-bottom border-gray align-items-center">
         <span class="mr-2 rounded user-profile">
           {% if comment.user.gender == male %}
             <i class="far fa-user-circle fa-2x"></i>
@@ -55,7 +58,7 @@
             <i class="fas fa-user-circle fa-2x"></i>
           {% endif %}
         </span>
-        <p class="media-body pb-3 mb-0 small lh-125" name="{{ item.comments.count }}"><strong class="d-block text-gray-dark">{{ comment.user|id_from_email }}</strong>{{ comment.content|linebreaksbr }}</p>
+        <p class="media-body pb-3 mb-0 small lh-125"><strong class="d-block text-gray-dark">{{ comment.user|id_from_email }}</strong>{{ comment.content|linebreaksbr }}</p>
         {% if comment.user == user %}
           <button class="comment-delete-btn btn btn-sm btn-danger" name="{{ comment.pk }}">삭제</button>
         {% endif %}
@@ -79,50 +82,49 @@
   $(document).on("click", ".comment-add-btn", function() {
     var pk = $(this).attr('name');
     var content = $("#addComment-"+pk+">textarea").val();
-    var nextPath = "/items/"+pk;
-    // var commentCount = $("#itemCount").attr('name');
-    $.ajax({
-      type: "POST",
-      url: "{% url 'items:comment-create' %}",
-      data: {
-        'pk': pk,
-        'content': content,
-        'next_path': nextPath,
-        'csrfmiddlewaretoken': '{{ csrf_token }}'
-      },
-      dataType: "html",
+    var nextPath = "/items/"+pk
+    if (content) {
+      $.ajax({
+        type: "POST",
+        url: "{% url 'items:comment-create' %}",
+        data: {
+          'pk': pk,
+          'content': content,
+          'next_path': nextPath,
+          'csrfmiddlewaretoken': '{{ csrf_token }}'
+        },
+        dataType: "html",
 
-      success: function(data, textStatus, jqXHR) {
-        $("#addComment-"+pk+">textarea").val("");
-        $("#commentList-"+pk).append(data);
-        // $("#itemCount").text(Number(commentCount)+1);
-      },
-      error: function(request, status, error) {
-        alert("로그인이 필요합니다");
-        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-      }
-    });
+        success: function(data, textStatus, jqXHR) {
+          $("#addComment-"+pk+">textarea").val("");
+          $("#commentList-"+pk).append(data);
+          $("#itemCount").load(window.location + " #itemCount");
+        },
+        error: function(request, status, error) {
+          alert("로그인이 필요합니다");
+          console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+      });
+    } else {
+      alert("댓글 내용을 입력해주세요")
+    }
   })
 
   $(document).on("click", ".comment-delete-btn", function() {
-    var commentPk = $(this).attr('name');
-    var itemPk = $("#comment-"+commentPk).attr('name');
+    var pk = $(this).attr('name');
     $.ajax({
       type: "POST",
       url: "{% url 'items:comment-delete' %}",
       data: {
-        'comment_pk': commentPk,
-        'item_pk': itemPk,
+        'pk': pk,
         'csrfmiddlewaretoken': '{{ csrf_token }}'
       },
       dataType: "json",
 
       success: function(response) {
         if(response.status){
-          $("#comment-"+commentPk).remove();
-          if(response.comment_count >= 0){
-            $("#itemCount").text("댓글 "+response.comment_count);
-          }
+          $("#comment-"+pk).remove();
+          $("#itemCount").load(window.location + " #itemCount");
         }
       },
       error: function(request, status, error) {

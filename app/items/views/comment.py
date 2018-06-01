@@ -1,7 +1,6 @@
 import json
 
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404, render
 from django.views.decorators.http import require_POST
@@ -21,7 +20,6 @@ def comment_create(request):
     item_pk = request.POST.get('pk', None)
     next_path = request.POST.get('next_path', None)
     item = get_object_or_404(Item, pk=item_pk)
-    comment_count = item.comments.count()
     form = CommentForm(request.POST)
     if form.is_valid():
         comment = form.save(commit=False)
@@ -30,7 +28,6 @@ def comment_create(request):
         comment.save()
         context = {
             'comment': comment,
-            'comment_count': comment_count,
         }
         return render(request, 'items/new_comment.html', context)
     return redirect(next_path)
@@ -39,12 +36,8 @@ def comment_create(request):
 @login_required
 @require_POST
 def comment_delete(request):
-    comment_pk = request.POST.get('comment_pk', None)
+    comment_pk = request.POST.get('pk', None)
     comment = get_object_or_404(ItemComment, pk=comment_pk)
-    item_pk = request.POST.get('item_pk', None)
-    item = get_object_or_404(Item, pk=item_pk)
-    # comment를 delete 하기 때문에 1을 빼줌
-    comment_count = item.comments.count() - 1
 
     if comment.user == request.user:
         comment.delete()
@@ -57,7 +50,6 @@ def comment_delete(request):
     context = {
         'status': status,
         'message': message,
-        'comment_count': comment_count,
     }
 
     return HttpResponse(json.dumps(context), content_type='application/json')
