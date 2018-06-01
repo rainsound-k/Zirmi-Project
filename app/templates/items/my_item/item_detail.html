@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load id_from_email_tag %}
 {% load humanize %}
 {% load widget_tweaks %}
 {% block content %}
 
+{% if request.user != item.user %}
+ <meta http-equiv="REFRESH" content="0;url={% url 'items:public-item-detail' item_pk=item.pk %}">
+{% endif %}
 <div class="container">
   <div class="item-detail-container">
     <div class="row align-items-center">
@@ -43,38 +45,12 @@
     </div>
   </div>
 
-  <div class="my-3 bg-white rounded box-shadow">
-    <div id="itemCount">
-      <h6 class="border-bottom border-gray pb-2 mb-0">댓글 {{ item.comments.count }}</h6>
-    </div>
-    <div id="commentList-{{ item.pk }}">
-      {% for comment in item.comments.all %}
-      <div id="comment-{{ comment.pk }}"
-      class="comment-content media text-muted pt-3 border-bottom border-gray align-items-center">
-        <span class="mr-2 rounded user-profile">
-          {% if comment.user.gender == male %}
-            <i class="far fa-user-circle fa-2x"></i>
-          {% else %}
-            <i class="fas fa-user-circle fa-2x"></i>
-          {% endif %}
-        </span>
-        <p class="media-body pb-3 mb-0 small lh-125"><strong class="d-block text-gray-dark">{{ comment.user|id_from_email }}</strong>{{ comment.content|linebreaksbr }}</p>
-        {% if comment.user == user %}
-          <button class="comment-delete-btn btn btn-sm btn-danger" name="{{ comment.pk }}">삭제</button>
-        {% endif %}
-      </div>
-        {% endfor %}
-      </div>
-    <div id="addComment-{{ item.pk }}" class="input-group">
-      {{ comment_form }}
-      <div class="input-group-append">
-        <button class="comment-add-btn btn btn-primary" name="{{ item.pk }}">등록</button>
-      </div>
-    </div>
-  </div>
+  {% include 'items/comment/comment-form.html' %}
 
-  <a href="{% url 'items:item-edit' item_pk=item.pk %}" class="btn btn-dark form-control">수정</a>
-  <button id="deleteBtn" class="btn btn-danger form-control" name="{{ item.pk }}">삭제</button>
+  {% if request.user == item.user %}
+    <a href="{% url 'items:item-edit' item_pk=item.pk %}" class="btn btn-dark form-control">수정</a>
+    <button id="deleteBtn" class="btn btn-danger form-control" name="{{ item.pk }}">삭제</button>
+  {% endif %}
 </div>
 
 

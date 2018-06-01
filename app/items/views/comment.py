@@ -29,7 +29,7 @@ def comment_create(request):
         context = {
             'comment': comment,
         }
-        return render(request, 'items/new_comment.html', context)
+        return render(request, 'items/comment/new_comment.html', context)
     return redirect(next_path)
 
 
