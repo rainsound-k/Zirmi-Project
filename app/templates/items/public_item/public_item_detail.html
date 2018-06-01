@@ -43,10 +43,10 @@
 
 
 <script type="text/javascript">
-  $(document).on("click", ".comment-add-btn", function() {
+  $(document).on("click", ".comment-add-btn", function () {
     var pk = $(this).attr('name');
     var content = $("#addComment-"+pk+">textarea").val();
-    var nextPath = "/items/public/"+pk
+    var nextPath = "/items/public/"+pk;
     if (content) {
       $.ajax({
         type: "POST",
@@ -74,7 +74,7 @@
     }
   })
 
-  $(document).on("click", ".comment-delete-btn", function() {
+  $(document).on("click", ".comment-delete-btn", function () {
     var pk = $(this).attr('name');
     $.ajax({
       type: "POST",

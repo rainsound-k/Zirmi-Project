@@ -90,7 +90,7 @@ class ItemManager(models.Manager):
         item_category = request.POST['category']
         item_img = request.FILES.get('img', '')
         item_public_visibility = request.POST['public_visibility']
-        item_price = request.POST['price']
+        item_price = request.POST['price'].replace(',', '')
         item_name = request.POST['name']
         if item_public_visibility == 'on' or item_public_visibility:
             item_public_visibility = True
