@@ -45,36 +45,72 @@
     </div>
   </div>
 
-  <div class="my-3 p-3 bg-white rounded box-shadow">
-    <h6 class="border-bottom border-gray pb-2 mb-0">댓글 {{ item.comments.count }}</h6>
-    {% for comment in item.comments.all %}
-    <div id="itemComments{{ comment.pk }}"
-    class="comment-content media text-muted pt-3 border-bottom border-gray align-items-center">
-      <span class="mr-2 rounded user-profile">
-        {% if comment.user.gender == 'f' %}
-          <i class="far fa-user-circle fa-2x"></i>
-        {% else %}
-          <i class="fas fa-user-circle fa-2x"></i>
-        {% endif %}
-      </span>
-      <p class="media-body pb-3 mb-0 small lh-125"><strong class="d-block text-gray-dark">{{ comment.user|id_from_email }}</strong>{{ comment.content|linebreaksbr }}</p>
-      {% if comment.user == user %}
-        <form class="comment-delete-form"
-        action="{% url 'items:comment-delete' comment_pk=comment.pk %}#itemComments{{ comment.pk }}"
-        method="post">
-        {% csrf_token %}
-          <button class="btn btn-sm btn-danger">삭제</button>
-        </form>
-      {% endif %}
-    </div>
-      {% endfor %}
-
-      </div>
-    </form>
-  </div>
-
-
+  {% include 'items/comment/comment-form.html' %}
 
 </div>
+
+<script type="text/javascript">
+  $(document).on("click", ".comment-add-btn", function () {
+    var pk = $(this).attr('name');
+    var content = $("#addComment-"+pk+">textarea").val();
+    var nextPath = "/items/list/complete/"+pk;
+    var isAuth = "{{ request.user.is_authenticated }}";
+    if (content && isAuth == "True") {
+      $.ajax({
+        type: "POST",
+        url: "{% url 'items:comment-create' %}",
+        data: {
+          'pk': pk,
+          'content': content,
+          'next_path': nextPath,
+          'csrfmiddlewaretoken': '{{ csrf_token }}'
+        },
+        dataType: "html",
+
+        success: function(data, textStatus, jqXHR) {
+          $("#addComment-"+pk+">textarea").val("");
+          $("#commentList-"+pk).append(data);
+          $("#itemCount").load(window.location + " #itemCount");
+        },
+        error: function(request, status, error) {
+          alert("잘못된 접근입니다");
+          console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+      });
+    } else if (content && isAuth == "False") {
+      alert("로그인이 필요합니다");
+      window.location.replace("/login/?next="+nextPath);
+    } else {
+      alert("댓글 내용을 입력해주세요")
+    }
+  })
+  
+  $(document).on("click", ".comment-delete-btn", function () {
+    var pk = $(this).attr('name');
+    $.ajax({
+      type: "POST",
+      url: "{% url 'items:comment-delete' %}",
+      data: {
+        'pk': pk,
+        'csrfmiddlewaretoken': '{{ csrf_token }}'
+      },
+      dataType: "json",
+
+      success: function(response) {
+        if(response.status){
+          $("#comment-"+pk).remove();
+          $("#itemCount").load(window.location + " #itemCount");
+        }
+      },
+      error: function(request, status, error) {
+        alert("잘못된 접근입니다")
+        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+    });
+  })
+
+</script>
+
+
 
 {% endblock %}
