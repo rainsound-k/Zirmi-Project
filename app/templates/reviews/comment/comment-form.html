@@ -1,0 +1,32 @@
+{% load id_from_email_tag %}
+
+<div class="my-3 bg-white rounded box-shadow">
+  <div id="reviewCount">
+    <h6 class="border-bottom border-gray pb-2 mb-0">댓글 {{ review.comments.count }}</h6>
+  </div>
+  <div id="commentList-{{ review.pk }}">
+    {% for comment in review.comments.all %}
+    <div id="comment-{{ comment.pk }}"
+    class="comment-content media text-muted pt-3 border-bottom border-gray align-items-center">
+      <span class="mr-2 rounded user-profile">
+        {% if comment.user.gender == male %}
+          <i class="far fa-user-circle fa-2x"></i>
+        {% else %}
+          <i class="fas fa-user-circle fa-2x"></i>
+        {% endif %}
+      </span>
+      <p class="media-body pb-3 mb-0 small lh-125"><strong class="d-block text-gray-dark">{{ comment.user|id_from_email }}</strong>{{ comment.content|linebreaksbr }}</p>
+      {% if comment.user == user %}
+        <button class="comment-delete-btn btn btn-sm btn-danger" name="{{ comment.pk }}">삭제</button>
+      {% endif %}
+    </div>
+      {% endfor %}
+    </div>
+
+  <div id="addComment-{{ review.pk }}" class="input-group">
+    {{ comment_form }}
+    <div class="input-group-append">
+      <button class="comment-add-btn btn btn-primary" name="{{ review.pk }}">등록</button>
+    </div>
+  </div>
+</div>
