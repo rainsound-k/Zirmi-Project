@@ -3,3 +3,4 @@ from .comment import *
 from .detail import *
 from .list import *
 from .search import *
+from .delete import *

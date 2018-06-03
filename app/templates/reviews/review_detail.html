@@ -18,7 +18,7 @@
       <a href="{% url 'reviews:review-list' %}" class="btn btn-sm btn-dark">목록</a>
       {% if request.user == review.user %}
       <a href="" class="btn btn-sm btn-primary">수정</a>
-      <a href="" class="btn btn-sm btn-danger">삭제</a>
+      <button id="deleteBtn" class="btn btn-sm btn-danger" name="{{ review.pk }}">삭제</button>
       {% endif %}
 
     </div>
@@ -88,6 +88,25 @@
       },
       error: function(request, status, error) {
         alert("잘못된 접근입니다")
+        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      }
+    });
+  })
+
+  $(document).on("click", "#deleteBtn", function() {
+    var pk = $(this).attr('name');
+    $.ajax({
+      type: "POST",
+      url: "{% url 'reviews:review-delete' %}",
+      data: {'pk': pk, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+      dataType: "json",
+
+      success: function(response) {
+        alert(response.message)
+        window.location.replace("/reviews/")
+      },
+      error: function(request, status, error) {
+        alert("로그인이 필요합니다")
         console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
       }
     });

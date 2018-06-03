@@ -9,6 +9,7 @@ urlpatterns = [
     path('add/', views.review_add, name='review-add'),
     path('search/', views.search_review, name='search-review'),
     path('<int:review_pk>/', views.review_detail, name='review-detail'),
+    path('delete/', views.review_delete, name='review-delete'),
 
     # comment
     path('comment/create/', views.comment_create, name='comment-create'),
