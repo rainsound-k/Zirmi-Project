@@ -17,7 +17,7 @@
     <div class="edit-delete-btn">
       <a href="{% url 'reviews:review-list' %}" class="btn btn-sm btn-dark">목록</a>
       {% if request.user == review.user %}
-      <a href="" class="btn btn-sm btn-primary">수정</a>
+      <a href="{% url 'reviews:review-edit' review_pk=review.pk %}" class="btn btn-sm btn-primary">수정</a>
       <button id="deleteBtn" class="btn btn-sm btn-danger" name="{{ review.pk }}">삭제</button>
       {% endif %}
 

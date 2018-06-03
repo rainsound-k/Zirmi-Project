@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from ..forms import AddReviewForm
+from ..forms import ReviewForm
 
 __all__ = (
     'review_add',
@@ -11,14 +11,14 @@ __all__ = (
 @login_required
 def review_add(request):
     if request.method == 'POST':
-        form = AddReviewForm(request, request.POST, request.FILES)
+        form = ReviewForm(request, request.POST, request.FILES)
         if form.is_valid():
             review = form.save(commit=False)
             review.user = request.user
             review.save()
             return redirect('reviews:review-list')
     else:
-        form = AddReviewForm(request)
+        form = ReviewForm(request)
     context = {
         'form': form,
     }

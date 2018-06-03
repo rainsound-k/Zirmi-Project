@@ -4,7 +4,7 @@ from django_summernote.widgets import SummernoteWidget
 from .models import Review, ReviewComment
 
 
-class AddReviewForm(forms.ModelForm):
+class ReviewForm(forms.ModelForm):
     def __init__(self, request, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # user가 구매완료한 제품만 표시
