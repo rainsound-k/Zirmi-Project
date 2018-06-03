@@ -14,7 +14,6 @@ __all__ = (
 )
 
 
-@login_required
 @require_POST
 def comment_create(request):
     item_pk = request.POST.get('pk', None)

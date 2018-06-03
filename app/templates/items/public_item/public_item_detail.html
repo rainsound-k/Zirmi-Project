@@ -47,7 +47,8 @@
     var pk = $(this).attr('name');
     var content = $("#addComment-"+pk+">textarea").val();
     var nextPath = "/items/public/"+pk;
-    if (content) {
+    var isAuth = "{{ request.user.is_authenticated }}";
+    if (content && isAuth == "True") {
       $.ajax({
         type: "POST",
         url: "{% url 'items:comment-create' %}",
@@ -65,10 +66,13 @@
           $("#itemCount").load(window.location + " #itemCount");
         },
         error: function(request, status, error) {
-          alert("로그인이 필요합니다");
+          alert("잘못된 접근입니다");
           console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
         }
       });
+    } else if (content && isAuth == "False") {
+      alert("로그인이 필요합니다");
+      window.location.replace("/login/?next="+nextPath);
     } else {
       alert("댓글 내용을 입력해주세요")
     }
