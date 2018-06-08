@@ -46,6 +46,13 @@ AUTHENTICATION_BACKENDS = [
 # login_required 데코레이터 redirect url
 LOGIN_URL = '/login'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
