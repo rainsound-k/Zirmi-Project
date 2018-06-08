@@ -2,6 +2,7 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 
 from members.serializers import UserSerializer
+from utils.pagination import SmallPagination
 from utils.permissions import IsUserOrReadOnly
 from ..serializers import ItemSerializer, ItemLikeSerializer
 from ..models import Item
@@ -16,6 +17,7 @@ __all__ = (
 class ItemList(generics.ListCreateAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+    pagination_class = SmallPagination
     permission_classes = (
         permissions.IsAuthenticatedOrReadOnly,
     )
