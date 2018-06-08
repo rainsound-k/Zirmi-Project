@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_summernote',
     'raven.contrib.django.raven_compat',
+    'rest_framework',
     'widget_tweaks',
 
     'items',
