@@ -567,6 +567,7 @@ class ItemData:
 
     def get_info_from_g9(self):
         url = self.url
+        item_no = ''
         if 'm.g9.co.kr' in url:
             if re.search(r'VIP/(\w+)(.*)', url):
                 item_no = re.search(r'VIP/(\w+)(.*)', url).group(1)
