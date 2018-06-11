@@ -2,9 +2,9 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 
 from members.serializers import UserSerializer
+from utils.check_url_from_url_parser import CheckURL
 from utils.pagination import SmallPagination
 from utils.permissions import IsUserOrReadOnly
-from utils.url_parser import ItemData
 from ..serializers import ItemSerializer, ItemLikeSerializer, ItemCommentSerializer
 from ..models import Item, ItemComment
 
@@ -94,75 +94,23 @@ class ItemSearchFromURL(generics.GenericAPIView):
     def get(request, *args, **kwargs):
         url = request.query_params['url']
         if url:
-            item_data = ItemData(request, url)
-            if '11st.co.kr' in url:
-                item_data.get_info_from_11st()
+            search_result = CheckURL(url)
+            search_result.check_url_from_parser()
 
-            elif 'gmarket.co.kr' in url:
-                item_data.get_info_from_gmarket()
-
-            elif 'auction.co.kr' in url:
-                item_data.get_info_from_auction()
-
-            elif 'interpark.com' in url:
-                item_data.get_info_from_interpark()
-
-            elif 'smartstore.naver.com' in url:
-                item_data.get_info_from_naver_store()
-
-            elif 'naver.me' in url:
-                item_data.get_info_from_naver_short_url()
-
-            elif 'lotteimall.com' in url:
-                item_data.get_info_from_lotte_mall()
-
-            elif 'lotte.com' in url:
-                item_data.get_info_from_lotte_dot_com()
-
-            elif 'hyundaihmall.com' in url:
-                item_data.get_info_from_hyundai()
-
-            elif 'ssg.com' in url:
-                item_data.get_info_from_ssg()
-
-            elif 'gsshop.com' in url:
-                item_data.get_info_from_gs()
-
-            elif 'galleria.co.kr' in url:
-                item_data.get_info_from_galleria()
-
-            elif 'akmall.com' in url:
-                item_data.get_info_from_ak()
-
-            elif 'nsmall.com' in url:
-                item_data.get_info_from_ns()
-
-            elif 'coupang.com' in url:
-                item_data.get_info_from_coupang()
-
-            elif 'wemakeprice.com' in url:
-                item_data.get_info_from_wemakeprice()
-
-            elif 'ticketmonster.co.kr' in url:
-                item_data.get_info_from_tmon()
-
-            elif 'g9.co.kr' in url or 'g9ro.kr' in url:
-                item_data.get_info_from_g9()
-
-            item_img = item_data.item_img
-            item_price = item_data.item_price
-            item_name = item_data.item_name
-            url = item_data.url
+            img_url = search_result.item_data.item_img
+            price = search_result.item_data.item_price
+            name = search_result.item_data.item_name
+            purchase_url = search_result.item_data.url
         else:
-            item_img = ''
-            item_price = ''
-            item_name = ''
-            url = url
+            img_url = ''
+            price = ''
+            name = ''
+            purchase_url = url
 
         data = {
-            'item_img': item_img,
-            'item_price': item_price,
-            'item_name': item_name,
-            'url': url,
+            'img_url': img_url,
+            'price': price,
+            'name': name,
+            'purchase_url': purchase_url,
         }
         return Response(data)

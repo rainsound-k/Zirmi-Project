@@ -1,7 +1,12 @@
+from urllib.parse import urlparse
+
 from django.contrib.auth import get_user_model
+from django.core.files import File
 from django.db import models
 
 from core.models import TimeStampedModel
+from utils.check_url_from_url_parser import CheckURL
+from utils.file import download, get_buffer_ext
 from ..models.managers import ItemManager
 
 User = get_user_model()
@@ -45,7 +50,7 @@ class Item(TimeStampedModel):
         related_name='user_items'
     )
     name = models.CharField('상품명', max_length=50)
-    purchase_url = models.URLField('상품 URL', max_length=200, blank=True)
+    purchase_url = models.URLField('상품 URL', max_length=400, blank=True)
     price = models.IntegerField('상품 가격')
     category = models.CharField('상품 카테고리', max_length=100, choices=CHOICES_CATEGORY, blank=False)
     img = models.ImageField('상품 이미지', upload_to='items', blank=True)
@@ -63,6 +68,25 @@ class Item(TimeStampedModel):
 
     class Meta:
         ordering = ['-created_time']
+
+    def save(self, *args, **kwargs):
+        if self.purchase_url and not self.img:
+            url = self.purchase_url
+            search_result = CheckURL(url)
+            search_result.check_url_from_parser()
+
+            item_img_url = search_result.item_data.item_img
+            if item_img_url:
+                temp_file = download(item_img_url)
+                file_name = '{urlparse}.{ext}'.format(
+                    urlparse=urlparse(item_img_url).path.split('/')[-1].split('.')[0],
+                    ext=get_buffer_ext(temp_file)
+                )
+                self.purchase_url = search_result.item_data.url
+                self.img.save(file_name, File(temp_file))
+                super().save()
+            else:
+                super().save()
 
     def __str__(self):
         return self.name

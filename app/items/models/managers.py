@@ -4,8 +4,8 @@ from urllib.parse import urlparse
 from django.core.files import File
 from django.db import models
 
+from utils.check_url_from_url_parser import CheckURL
 from utils.file import download, get_buffer_ext
-from utils.url_parser import ItemData
 
 __all__ = (
     'ItemManager',
@@ -32,60 +32,8 @@ class ItemManager(models.Manager):
             return item
 
     def add_from_search(self, request, url):
-        item_data = ItemData(request, url)
-        if '11st.co.kr' in url:
-            item_data.get_info_from_11st()
-
-        elif 'gmarket.co.kr' in url:
-            item_data.get_info_from_gmarket()
-
-        elif 'auction.co.kr' in url:
-            item_data.get_info_from_auction()
-
-        elif 'interpark.com' in url:
-            item_data.get_info_from_interpark()
-
-        elif 'smartstore.naver.com' in url:
-            item_data.get_info_from_naver_store()
-
-        elif 'naver.me' in url:
-            item_data.get_info_from_naver_short_url()
-
-        elif 'lotteimall.com' in url:
-            item_data.get_info_from_lotte_mall()
-
-        elif 'lotte.com' in url:
-            item_data.get_info_from_lotte_dot_com()
-
-        elif 'hyundaihmall.com' in url:
-            item_data.get_info_from_hyundai()
-
-        elif 'ssg.com' in url:
-            item_data.get_info_from_ssg()
-
-        elif 'gsshop.com' in url:
-            item_data.get_info_from_gs()
-
-        elif 'galleria.co.kr' in url:
-            item_data.get_info_from_galleria()
-
-        elif 'akmall.com' in url:
-            item_data.get_info_from_ak()
-
-        elif 'nsmall.com' in url:
-            item_data.get_info_from_ns()
-
-        elif 'coupang.com' in url:
-            item_data.get_info_from_coupang()
-
-        elif 'wemakeprice.com' in url:
-            item_data.get_info_from_wemakeprice()
-
-        elif 'ticketmonster.co.kr' in url:
-            item_data.get_info_from_tmon()
-
-        elif 'g9.co.kr' in url or 'g9ro.kr' in url:
-            item_data.get_info_from_g9()
+        search_result = CheckURL(url)
+        search_result.check_url_from_parser()
 
         item_category = request.POST['category']
         item_img = request.FILES.get('img', '')
@@ -100,18 +48,18 @@ class ItemManager(models.Manager):
         item = self.create(
             user=request.user,
             name=item_name,
-            purchase_url=item_data.url,
+            purchase_url=search_result.item_data.url,
             price=item_price,
             category=item_category,
             img=item_img,
             public_visibility=item_public_visibility,
         )
 
-        if not item.img and item_data.item_img:
-            item_img_url = item_data.item_img
+        if not item.img and search_result.item_data.item_img:
+            item_img_url = search_result.item_data.item_img
             temp_file = download(item_img_url)
             file_name = '{urlparse}.{ext}'.format(
-                urlparse=urlparse(item_img_url).path.split('/')[-1],
+                urlparse=urlparse(item_img_url).path.split('/')[-1].split('.')[0],
                 ext=get_buffer_ext(temp_file)
             )
             item.img.save(file_name, File(temp_file))
