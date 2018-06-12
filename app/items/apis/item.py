@@ -13,6 +13,7 @@ __all__ = (
     'ItemSearchFromURL',
     'CompleteItemListView',
     'CompleteItemRetrieveUpdateDestroyView',
+    'ItemAddFromPublic',
 )
 
 
@@ -100,3 +101,37 @@ class CompleteItemRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIVie
                 raise exceptions.NotAuthenticated()
         else:
             raise exceptions.NotFound()
+
+
+class ItemAddFromPublic(generics.GenericAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+    permission_classes = (
+        permissions.IsAuthenticated,
+    )
+
+    def post(self, *args, **kwargs):
+        item_pk = self.request.data.get('pk', '')
+        if not Item.objects.filter(pk=item_pk):
+            raise exceptions.NotFound()
+        else:
+            public_item = Item.objects.get(pk=item_pk)
+            if public_item.user == self.request.user:
+                data = {
+                    'detail': '이미 존재합니다'
+                }
+                return Response(data)
+            else:
+                Item.objects.create(
+                    user=self.request.user,
+                    name=public_item.name,
+                    purchase_url=public_item.purchase_url,
+                    price=public_item.price,
+                    category=public_item.category,
+                    img=public_item.img,
+                    public_visibility=False,
+                )
+                data = {
+                    'detail': '내 아이템에 추가되었습니다'
+                }
+                return Response(data)

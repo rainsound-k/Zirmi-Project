@@ -6,6 +6,7 @@ app_name = 'items'
 urlpatterns = [
     path('', apis.ItemListCreateView.as_view(), name='items-list'),
     path('<int:item_pk>/', apis.ItemRetrieveUpdateDestroyView.as_view(), name='items-detail'),
+    path('public/add/', apis.ItemAddFromPublic.as_view(), name='public-item-add'),
 
     # complete
     path('complete/list/', apis.CompleteItemListView.as_view(), name='comeplete-item-list'),
