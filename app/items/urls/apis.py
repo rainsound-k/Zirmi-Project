@@ -7,7 +7,10 @@ urlpatterns = [
     path('', apis.ItemListCreateView.as_view(), name='items-list'),
     path('<int:item_pk>/', apis.ItemRetrieveUpdateDestroyView.as_view(), name='items-detail'),
 
+    # complete
     path('complete/list', apis.CompleteItemListView.as_view(), name='comeplete-item-list'),
+    path('complete/list/<int:item_pk>/', apis.CompleteItemRetrieveUpdateDestroyView.as_view(),
+         name='comeplete-item-detail'),
 
     # search
     path('search/', apis.ItemSearchFromURL.as_view(), name='items-search'),

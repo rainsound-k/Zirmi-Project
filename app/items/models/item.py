@@ -90,4 +90,4 @@ class Item(TimeStampedModel):
             super().save()
 
     def __str__(self):
-        return f'{self.name} - {self.user}'
+        return f'{self.pk}. {self.name} - {self.user}'

@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, status, exceptions
 from rest_framework.response import Response
 
 from members.serializers import UserSerializer
@@ -16,6 +16,7 @@ __all__ = (
     'ItemCommentRetrieveUpdateDestroyView',
     'ItemSearchFromURL',
     'CompleteItemListView',
+    'CompleteItemRetrieveUpdateDestroyView',
 )
 
 
@@ -125,5 +126,30 @@ class CompleteItemListView(generics.ListAPIView):
     )
 
     def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return Item.objects.filter(user=self.request.user, is_purchase=True)
+        else:
+            raise exceptions.NotAuthenticated()
+
+
+class CompleteItemRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    lookup_url_kwarg = 'item_pk'
+    serializer_class = ItemSerializer
+    permission_classes = (
+        IsUserOrReadOnly,
+    )
+
+    def get_queryset(self):
+        item_pk = self.kwargs.get('item_pk', None)
         user = self.request.user
-        return Item.objects.filter(user=user, is_purchase=True)
+        if Item.objects.filter(pk=item_pk):
+            item = Item.objects.get(pk=item_pk)
+            if user.is_authenticated:
+                if item.user == user:
+                    return Item.objects.filter(user=user, is_purchase=True, pk=item_pk)
+                else:
+                    raise exceptions.NotAuthenticated()
+            else:
+                raise exceptions.NotAuthenticated()
+        else:
+            raise exceptions.NotFound()
