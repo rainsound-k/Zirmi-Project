@@ -67,6 +67,7 @@ class ItemSearchFromURL(generics.GenericAPIView):
 class CompleteItemListView(generics.ListAPIView):
     serializer_class = ItemSerializer
     ordering = ('-modified_time',)
+    pagination_class = SmallPagination
     permission_classes = (
         permissions.IsAuthenticated,
     )
