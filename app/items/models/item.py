@@ -70,23 +70,24 @@ class Item(TimeStampedModel):
         ordering = ['-created_time']
 
     def save(self, *args, **kwargs):
-        if self.purchase_url and not self.img:
-            url = self.purchase_url
-            search_result = CheckURL(url)
-            search_result.check_url_from_parser()
+        if Item.objects.filter(pk=self.pk):
+            super().save()
+        else:
+            if self.purchase_url and not self.img:
+                url = self.purchase_url
+                search_result = CheckURL(url)
+                search_result.check_url_from_parser()
 
-            item_img_url = search_result.item_data.item_img
-            if item_img_url:
-                temp_file = download(item_img_url)
-                file_name = '{urlparse}.{ext}'.format(
-                    urlparse=urlparse(item_img_url).path.split('/')[-1].split('.')[0],
-                    ext=get_buffer_ext(temp_file)
-                )
-                self.purchase_url = search_result.item_data.url
-                self.img.save(file_name, File(temp_file))
-                super().save()
-            else:
-                super().save()
+                item_img_url = search_result.item_data.item_img
+                if item_img_url:
+                    temp_file = download(item_img_url)
+                    file_name = '{urlparse}.{ext}'.format(
+                        urlparse=urlparse(item_img_url).path.split('/')[-1].split('.')[0],
+                        ext=get_buffer_ext(temp_file)
+                    )
+                    self.purchase_url = search_result.item_data.url
+                    self.img.save(file_name, File(temp_file))
+            super().save()
 
     def __str__(self):
-        return self.name
+        return f'{self.name} - {self.user}'

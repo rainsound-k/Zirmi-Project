@@ -15,6 +15,7 @@ __all__ = (
     'ItemCommentListCreateView',
     'ItemCommentRetrieveUpdateDestroyView',
     'ItemSearchFromURL',
+    'CompleteItemListView',
 )
 
 
@@ -114,3 +115,15 @@ class ItemSearchFromURL(generics.GenericAPIView):
             'purchase_url': purchase_url,
         }
         return Response(data)
+
+
+class CompleteItemListView(generics.ListAPIView):
+    serializer_class = ItemSerializer
+    ordering = ('-modified_time',)
+    permission_classes = (
+        permissions.IsAuthenticated,
+    )
+
+    def get_queryset(self):
+        user = self.request.user
+        return Item.objects.filter(user=user, is_purchase=True)
