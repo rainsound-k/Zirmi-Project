@@ -9,4 +9,9 @@ urlpatterns = [
 
     # search
     path('search/', apis.ReviewSearchFromKeyword.as_view(), name='reviews-search'),
+
+    # comment
+    path('<int:review_pk>/comment/', apis.ReviewCommentListCreateView.as_view(), name='review-comment-create'),
+    path('comment/<int:comment_pk>/', apis.ReviewCommentRetrieveUpdateDestroyView.as_view(),
+         name='review-comment-delete'),
 ]

@@ -2,10 +2,11 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from items.models import Item
-from .models import Review
+from .models import Review, ReviewComment
 
 __all__ = (
     'ReviewSerializer',
+    'ReviewCommentSerializer',
 )
 
 User = get_user_model()
@@ -35,3 +36,15 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = '__all__'
+
+
+class ReviewCommentSerializer(serializers.ModelSerializer):
+    user = ReviewUserSerializer(read_only=True)
+
+    class Meta:
+        model = ReviewComment
+        fields = (
+            'pk',
+            'user',
+            'content',
+        )
