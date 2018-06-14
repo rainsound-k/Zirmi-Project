@@ -1,7 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from members.serializers import UserSerializer
 from .models import Item, ItemLike, ItemComment
 
 __all__ = (

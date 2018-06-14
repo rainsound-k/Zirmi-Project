@@ -1,3 +1,5 @@
+from django.utils.datastructures import MultiValueDictKeyError
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, permissions, exceptions
 from rest_framework.response import Response
 
@@ -21,6 +23,10 @@ class ItemListCreateView(generics.ListCreateAPIView):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
     pagination_class = SmallPagination
+    filter_backends = (
+        DjangoFilterBackend,
+    )
+    filter_fields = ('user__generation', 'user__gender')
     permission_classes = (
         permissions.IsAuthenticatedOrReadOnly,
     )
@@ -41,28 +47,35 @@ class ItemRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 class ItemSearchFromURL(generics.GenericAPIView):
     @staticmethod
     def get(request, *args, **kwargs):
-        url = request.query_params['url']
-        if url:
-            search_result = CheckURL(url)
-            search_result.check_url_from_parser()
-
-            img_url = search_result.item_data.item_img
-            price = search_result.item_data.item_price
-            name = search_result.item_data.item_name
-            purchase_url = search_result.item_data.url
+        try:
+            url = request.query_params['url']
+        except MultiValueDictKeyError:
+            data = {
+                'detail': '검색할 url을 입력해주세요'
+            }
+            raise exceptions.ValidationError(data)
         else:
-            img_url = ''
-            price = ''
-            name = ''
-            purchase_url = url
+            if url:
+                search_result = CheckURL(url)
+                search_result.check_url_from_parser()
 
-        data = {
-            'img_url': img_url,
-            'price': price,
-            'name': name,
-            'purchase_url': purchase_url,
-        }
-        return Response(data)
+                img_url = search_result.item_data.item_img
+                price = search_result.item_data.item_price
+                name = search_result.item_data.item_name
+                purchase_url = search_result.item_data.url
+            else:
+                img_url = ''
+                price = ''
+                name = ''
+                purchase_url = url
+
+            data = {
+                'img_url': img_url,
+                'price': price,
+                'name': name,
+                'purchase_url': purchase_url,
+            }
+            return Response(data)
 
 
 class CompleteItemListView(generics.ListAPIView):

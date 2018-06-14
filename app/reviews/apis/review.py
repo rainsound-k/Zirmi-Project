@@ -1,6 +1,6 @@
 from django.db.models import Q
 from django.utils.datastructures import MultiValueDictKeyError
-from rest_framework import generics, permissions, exceptions
+from rest_framework import generics, permissions, exceptions, filters
 from rest_framework.response import Response
 
 from utils.pagination import SmallPagination
@@ -19,6 +19,10 @@ class ReviewListCreateView(generics.ListCreateAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     pagination_class = SmallPagination
+    filter_backends = (
+        filters.OrderingFilter,
+    )
+    ordering_fields = ('view_count',)
     permission_classes = (
         permissions.IsAuthenticatedOrReadOnly,
     )
@@ -42,13 +46,13 @@ class ReviewSearchFromKeyword(generics.ListAPIView):
     def get_queryset(self):
         try:
             sort = self.request.query_params['sort']
-            keyword = self.request.query_params['keyword']
         except MultiValueDictKeyError:
             data = {
-                'detail': 'sort와 keyword를 확인해주세요'
+                'detail': 'sort를 입력해주세요'
             }
             raise exceptions.ValidationError(data)
         else:
+            keyword = self.request.query_params.get('keyword', None)
             if keyword:
                 if sort == 'title':
                     return Review.objects.filter(title__contains=keyword)
