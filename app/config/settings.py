@@ -13,7 +13,6 @@ import json
 import os
 import raven
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = os.path.dirname(BASE_DIR)
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
@@ -41,11 +40,30 @@ AUTH_USER_MODEL = 'members.User'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',  # Facebook
 ]
 
 # login_required 데코레이터 redirect url
 LOGIN_URL = '/login'
 
+# allauth 설정
+SITE_ID = 2
+
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
+LOGIN_REDIRECT_URL = "/"
+ACCOUNT_AUTHENTICATED_LOGOUT_REDIRECTS = True
+ACCOUNT_LOGOUT_REDIRECT_URL = "/"
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+# Connection refused error 해결
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+SOCIALACCOUNT_AUTO_SIGNUP = False
+ACCOUNT_SIGNUP_FORM_CLASS = 'members.forms.SignUpForm'
+
+# REST_FRAMEWORK 설정
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
@@ -64,10 +82,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',  # allauth
+    'django.contrib.humanize',  # integerfield 천단위로 콤마 구분
 
-    # integerfield 천단위로 콤마 구분
-    'django.contrib.humanize',
-
+    'allauth',  # allauth
+    'allauth.account',  # allauth
+    'allauth.socialaccount',  # allauth
+    'allauth.socialaccount.providers.facebook',  # allauth
     'django_extensions',
     'django_summernote',
     'django_filters',
@@ -78,7 +99,6 @@ INSTALLED_APPS = [
     'items',
     'members',
     'reviews',
-
 ]
 
 MIDDLEWARE = [

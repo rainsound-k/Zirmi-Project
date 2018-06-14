@@ -7,6 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.item_list, name='index'),
     path('', include('members.urls.views')),
+    path('accounts/', include('allauth.urls')),
     path('items/', include('items.urls.views')),
     path('reviews/', include('reviews.urls.views')),
     path('summernote/', include('django_summernote.urls')),

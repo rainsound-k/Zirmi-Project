@@ -32,3 +32,8 @@ class SignUpForm(UserCreationForm):
         if password1 != password2:
             raise ValidationError('비밀번호와 비밀번호 확인란이 같지 않습니다')
         return password2
+
+    def signup(self, request, user):
+        user.gender = self.cleaned_data['gender']
+        user.generation = self.cleaned_data['generation']
+        user.save()
