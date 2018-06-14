@@ -10,6 +10,10 @@ __all__ = (
 
 
 class SignUpForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs.pop('autofocus', None)
+
     class Meta:
         model = User
         fields = (
