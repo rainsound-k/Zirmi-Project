@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container">
+	<div class="signup_view-container">
+		<h4>페이스북으로 회원가입</h4><br>
+		<form action="{% url 'members:facebook-signup' %}" method="POST" class="clearfix">
+			{% csrf_token %}
+      {% for field in signup_form %}
+				{% if not field.label == 'Username' %}
+		      <div class="form-group clearfix">
+		        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+		        {% if field.label == '이메일' %}
+							{% with ev=facebook_email %}
+			          {% if ev %}
+									{% render_field signup_form.email class="form-control" placeholder="이메일을 적어주세요" readonly="" value=ev %}
+			          {% else %}
+			            {{ field|add_class:"form-control"|attr:"autofocus" }}
+			          {% endif %}
+							{% endwith %}
+
+						{% elif field.label == '비밀번호' %}
+		          {{ field|add_class:"form-control"|attr:"autofocus" }}
+
+						{% elif field.label == '세대' %}
+							<select name="generation" id="id_generation" class="form-control">
+								 {% for x in signup_form.fields.generation.choices %}
+								 <option value="{{ x.0 }}" {% if x.0 == facebook_generation %}selected{% endif %}>
+									 {{ x.1 }}
+								 </option>
+								 {% endfor %}
+							 </select>
+
+						{% elif field.label == '성별' %}
+							<select name="gender" id="id_gender" class="form-control">
+								 {% for x in signup_form.fields.gender.choices %}
+								 <option value="{{ x.0 }}" {% if x.0 == facebook_gender %}selected{% endif %}>
+									 {{ x.1 }}
+								 </option>
+								 {% endfor %}
+							 </select>
+
+						 {% else %}
+						 	{{ field|add_class:"form-control" }}
+
+		        {% endif %}
+		        {% for error in field.errors %}
+		          <p>{{ error }}</p>
+		        {% endfor %}
+		      </div>
+				{% endif %}
+    	{% endfor %}
+			<input type="text" name="username" value="{{ facebook_id }}" hidden>
+	    {% if redirect_field_value %}
+	      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+	    {% endif %}
+			<div>
+				<button type="submit" class="btn btn-dark">회원 가입</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+
+{% endblock %}

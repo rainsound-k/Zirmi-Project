@@ -73,7 +73,7 @@ class ReviewSearchFromKeyword(generics.ListAPIView):
             else:
                 return Review.objects.all()
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request: object, args: object, kwargs: object) -> object:
         if not self.get_queryset():
             data = {
                 'detail': '검색결과가 없습니다'

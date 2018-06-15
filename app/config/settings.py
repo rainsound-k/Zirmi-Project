@@ -41,47 +41,9 @@ AUTH_USER_MODEL = 'members.User'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',  # Facebook
+    'members.backends.FacebookBackend',  # Facebook Backend
     'members.backends.APIFacebookBackend',  # API Facebook
 ]
-
-# login_required 데코레이터 redirect url
-LOGIN_URL = '/login'
-
-# allauth 설정
-SITE_ID = 2
-
-ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
-LOGIN_REDIRECT_URL = "/"
-ACCOUNT_AUTHENTICATED_LOGOUT_REDIRECTS = True
-ACCOUNT_LOGOUT_REDIRECT_URL = "/"
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-
-SOCIALACCOUNT_PROVIDERS = {
-    'facebook': {
-        'METHOD': 'oauth2',
-        'SCOPE': ['email', 'public_profile', ],
-        # 'AUTH_PARAMS': {'auth_type': 'reauthenticate'}, # 매번 비밀번호 묻지 않으려면 주석처리
-        'INIT_PARAMS': {'cookie': True},
-        'FIELDS': [
-            'id',
-            'email',
-            'name',
-        ],
-        'EXCHANGE_TOKEN': True,
-        'LOCALE_FUNC': lambda request: 'kr_KR',
-        'VERIFIED_EMAIL': False,
-        'VERSION': 'v2.4',
-    },
-}
-
-# Connection refused error 해결
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
-SOCIALACCOUNT_AUTO_SIGNUP = False
-ACCOUNT_SIGNUP_FORM_CLASS = 'members.forms.SignUpForm'
 
 # REST_FRAMEWORK 설정
 REST_FRAMEWORK = {
@@ -102,13 +64,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',  # allauth
     'django.contrib.humanize',  # integerfield 천단위로 콤마 구분
 
-    'allauth',  # allauth
-    'allauth.account',  # allauth
-    'allauth.socialaccount',  # allauth
-    'allauth.socialaccount.providers.facebook',  # allauth
     'django_extensions',
     'django_summernote',
     'django_filters',

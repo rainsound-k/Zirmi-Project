@@ -10,7 +10,4 @@ urlpatterns = [
     path('items/', include('items.urls.views')),
     path('reviews/', include('reviews.urls.views')),
     path('summernote/', include('django_summernote.urls')),
-
-    # allauth url
-    path('accounts/', include('allauth.urls')),
 ]

@@ -46,7 +46,7 @@ class ItemRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
 class ItemSearchFromURL(generics.GenericAPIView):
     @staticmethod
-    def get(request, *args, **kwargs):
+    def get(request: object, args: object, kwargs: object) -> object:
         try:
             url = request.query_params['url']
         except MultiValueDictKeyError:

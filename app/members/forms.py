@@ -22,6 +22,7 @@ class SignUpForm(UserCreationForm):
             'password2',
             'generation',
             'gender',
+            'username',
         )
 
     def clean_email(self):
