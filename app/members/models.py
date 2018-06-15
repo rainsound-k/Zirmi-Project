@@ -48,8 +48,8 @@ class User(AbstractUser):
 
     username = models.CharField(max_length=50, unique=False, blank=True, null=True)
     email = models.EmailField(max_length=50, unique=True, null=True)
-    generation = models.CharField('세대', max_length=10, choices=CHOICES_GENERATION)
-    gender = models.CharField('성별', max_length=10, choices=CHOICES_GENDER)
+    generation = models.CharField('세대', max_length=10, choices=CHOICES_GENERATION, null=True)
+    gender = models.CharField('성별', max_length=10, choices=CHOICES_GENDER, null=True)
 
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)

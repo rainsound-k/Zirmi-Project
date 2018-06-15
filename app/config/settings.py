@@ -20,8 +20,9 @@ SECRETS_DIR = os.path.join(ROOT_DIR, '.secrets')
 SECRETS_BASE = os.path.join(SECRETS_DIR, 'base.json')
 secrets_base = json.loads(open(SECRETS_BASE, 'rt').read())
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = secrets_base['SECRET_KEY']
+FACEBOOK_APP_ID = secrets_base['FACEBOOK_APP_ID']
+FACEBOOK_SECRET_CODE = secrets_base['FACEBOOK_SECRET_CODE']
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(ROOT_DIR, '.static')
@@ -41,6 +42,7 @@ AUTH_USER_MODEL = 'members.User'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',  # Facebook
+    'members.backends.APIFacebookBackend',  # API Facebook
 ]
 
 # login_required 데코레이터 redirect url
@@ -54,6 +56,24 @@ LOGIN_REDIRECT_URL = "/"
 ACCOUNT_AUTHENTICATED_LOGOUT_REDIRECTS = True
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SCOPE': ['email', 'public_profile', ],
+        # 'AUTH_PARAMS': {'auth_type': 'reauthenticate'}, # 매번 비밀번호 묻지 않으려면 주석처리
+        'INIT_PARAMS': {'cookie': True},
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+        ],
+        'EXCHANGE_TOKEN': True,
+        'LOCALE_FUNC': lambda request: 'kr_KR',
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v2.4',
+    },
+}
 
 # Connection refused error 해결
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -94,6 +114,7 @@ INSTALLED_APPS = [
     'django_filters',
     'raven.contrib.django.raven_compat',
     'rest_framework',
+    'rest_framework.authtoken',
     'widget_tweaks',
 
     'items',
