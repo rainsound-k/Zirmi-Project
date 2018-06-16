@@ -21,9 +21,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserCreateSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-    password1 = serializers.CharField(write_only=True)
-    password2 = serializers.CharField(write_only=True)
+    email = serializers.EmailField(required=True)
+    password1 = serializers.CharField(write_only=True, required=True)
+    password2 = serializers.CharField(write_only=True, required=True)
+    generation = serializers.ChoiceField(choices=User.CHOICES_GENERATION)
+    gender = serializers.ChoiceField(choices=User.CHOICES_GENDER)
 
     class Meta:
         model = User
