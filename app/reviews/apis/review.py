@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.utils.datastructures import MultiValueDictKeyError
-from rest_framework import generics, permissions, exceptions, filters
+from rest_framework.filters import OrderingFilter
+from rest_framework import generics, permissions, exceptions
 from rest_framework.response import Response
 
 from utils.pagination import SmallPagination
@@ -20,7 +21,7 @@ class ReviewListCreateView(generics.ListCreateAPIView):
     serializer_class = ReviewSerializer
     pagination_class = SmallPagination
     filter_backends = (
-        filters.OrderingFilter,
+        OrderingFilter,
     )
     ordering_fields = ('view_count',)
     permission_classes = (
@@ -73,7 +74,7 @@ class ReviewSearchFromKeyword(generics.ListAPIView):
             else:
                 return Review.objects.all()
 
-    def get(self, request: object, args: object, kwargs: object) -> object:
+    def get(self, request, *args, **kwargs):
         if not self.get_queryset():
             data = {
                 'detail': '검색결과가 없습니다'

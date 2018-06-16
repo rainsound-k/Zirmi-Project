@@ -1,10 +1,11 @@
 from django.contrib.auth import get_user_model, authenticate
-from rest_framework import serializers
+from rest_framework import serializers, exceptions
 
 User = get_user_model()
 
 __all__ = (
     'UserSerializer',
+    'UserCreateSerializer',
 )
 
 
@@ -17,6 +18,51 @@ class UserSerializer(serializers.ModelSerializer):
             'generation',
             'gender',
         )
+
+
+class UserCreateSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password1 = serializers.CharField(write_only=True)
+    password2 = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = (
+            'pk',
+            'email',
+            'generation',
+            'gender',
+        )
+
+    def validate_email(self, email):
+        if User.objects.filter(email=email).exists():
+            data = {
+                'detail': '이미 존재하는 email 입니다'
+            }
+            raise exceptions.ValidationError(data)
+        return email
+
+    def validate(self, attrs):
+        if attrs['password1'] != attrs['password2']:
+            data = {
+                'detail': '비밀번호와 비밀번호 확인란이 같지 않습니다'
+            }
+            raise exceptions.ValidationError(data)
+        else:
+            return attrs
+
+    def save(self, **kwargs):
+        email = self.validated_data.get('email', '')
+        password = self.validated_data.get('password1', '')
+        generation = self.validated_data.get('generation', '')
+        gender = self.validated_data.get('gender', '')
+        user = User.objects.create_user(
+            email=email,
+            password=password,
+            generation=generation,
+            gender=gender,
+        )
+        return user
 
 
 class AccessTokenSerializer(serializers.Serializer):
