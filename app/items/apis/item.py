@@ -1,6 +1,7 @@
 from django.utils.datastructures import MultiValueDictKeyError
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, permissions, exceptions
+from rest_framework.filters import OrderingFilter
 from rest_framework.response import Response
 
 from utils.check_url_from_url_parser import CheckURL
@@ -25,8 +26,10 @@ class ItemListCreateView(generics.ListCreateAPIView):
     pagination_class = SmallPagination
     filter_backends = (
         DjangoFilterBackend,
+        OrderingFilter,
     )
     filter_fields = ('user__generation', 'user__gender')
+    ordering_fields = ('like_users',)
     permission_classes = (
         permissions.IsAuthenticatedOrReadOnly,
     )
