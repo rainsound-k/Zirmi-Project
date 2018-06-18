@@ -23,6 +23,9 @@ class ItemSerializer(serializers.ModelSerializer):
     user = ItemUserSerializer(read_only=True)
     public_visibility = serializers.BooleanField(default=True)
     like_users = ItemUserSerializer(many=True, read_only=True)
+    category = serializers.ChoiceField(choices=Item.CHOICES_CATEGORY, source='get_category_display')
+    is_purchase = serializers.BooleanField(read_only=True)
+    purchase_date = serializers.DateTimeField(read_only=True)
 
     class Meta:
         model = Item

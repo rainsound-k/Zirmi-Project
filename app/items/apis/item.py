@@ -28,7 +28,7 @@ class ItemListCreateView(generics.ListCreateAPIView):
         DjangoFilterBackend,
         OrderingFilter,
     )
-    filter_fields = ('user__generation', 'user__gender')
+    filter_fields = ('user__generation', 'user__gender', 'category')
     ordering_fields = ('like_users',)
     permission_classes = (
         permissions.IsAuthenticatedOrReadOnly,

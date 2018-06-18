@@ -11,8 +11,8 @@ __all__ = (
 
 
 class UserSerializer(serializers.ModelSerializer):
-    generation = serializers.CharField(source='get_generation_display')
-    gender = serializers.CharField(source='get_gender_display')
+    generation = serializers.ChoiceField(choices=User.CHOICES_GENERATION, source='get_generation_display')
+    gender = serializers.ChoiceField(choices=User.CHOICES_GENDER, source='get_gender_display')
 
     class Meta:
         model = User
