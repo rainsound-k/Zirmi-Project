@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.response import Response
 
 from members.serializers import UserSerializer
@@ -29,4 +29,4 @@ class ItemLikeToggle(generics.GenericAPIView):
             'item': ItemSerializer(instance).data,
             'result': like_status,
         }
-        return Response(data)
+        return Response(data, status=status.HTTP_201_CREATED)

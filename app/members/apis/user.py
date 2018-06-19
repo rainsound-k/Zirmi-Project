@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model, logout
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework import permissions
+from rest_framework import permissions, status
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -21,7 +21,7 @@ class SignUp(APIView):
         serializer = UserCreateSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class Login(APIView):

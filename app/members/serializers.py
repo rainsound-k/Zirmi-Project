@@ -31,6 +31,7 @@ class UserCreateSerializer(serializers.Serializer):
             'input_type': 'password',
         },
         write_only=True,
+        min_length=6,
         required=True,
     )
     password2 = serializers.CharField(
@@ -38,6 +39,7 @@ class UserCreateSerializer(serializers.Serializer):
             'input_type': 'password',
         },
         write_only=True,
+        min_length=6,
         required=True,
     )
     generation = serializers.ChoiceField(choices=User.CHOICES_GENERATION, required=False)
@@ -85,9 +87,15 @@ class AccessTokenSerializer(serializers.Serializer):
         if access_token:
             user = authenticate(access_token=access_token)
             if not user:
-                raise serializers.ValidationError('액세스 토큰이 올바르지 않습니다')
+                data = {
+                    'detail': '액세스 토큰이 올바르지 않습니다'
+                }
+                raise serializers.ValidationError(data)
         else:
-            raise serializers.ValidationError('액세스 토큰이 필요합니다')
+            data = {
+                'detail': '액세스 토큰이 필요합니다'
+            }
+            raise serializers.ValidationError(data)
 
         attrs['user'] = user
         return attrs
@@ -115,7 +123,7 @@ class LoginSerializer(serializers.Serializer):
                     }
                 else:
                     data = {
-                        'detail': '가입된 email이 없습니다.'
+                        'detail': '가입된 email이 없습니다'
                     }
                 raise exceptions.ValidationError(data)
         else:
