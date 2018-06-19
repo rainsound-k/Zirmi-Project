@@ -69,7 +69,7 @@ def facebook_login(request):
         elif facebook_gender == 'femal':
             facebook_gender = 'f'
     try:
-        user = User.objects.get(username=facebook_id)
+        user = User.objects.get(email=facebook_email)
     except User.DoesNotExist:
         form = SignUpForm()
         context = {

@@ -1,6 +1,6 @@
 from django.utils.datastructures import MultiValueDictKeyError
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics, permissions, exceptions
+from rest_framework import generics, permissions, exceptions, status
 from rest_framework.filters import OrderingFilter
 from rest_framework.response import Response
 
@@ -34,8 +34,25 @@ class ItemListCreateView(generics.ListCreateAPIView):
         permissions.IsAuthenticatedOrReadOnly,
     )
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+    def create(self, request, *args, **kwargs):
+        if request.data.get('name', '') and request.data.get('price', '') and request.data.get('category', ''):
+            item = Item.objects.create(
+                user=request.user,
+                name=request.data.get('name', ''),
+                price=request.data.get('price', ''),
+                category=request.data.get('category', ''),
+                purchase_url=request.data.get('purchase_url', ''),
+            )
+            data = {
+                'detail': '아이템이 생성되었습니다',
+                'item': ItemSerializer(item).data,
+            }
+            return Response(data, status=status.HTTP_201_CREATED)
+        else:
+            data = {
+                'detail': 'name, price, category를 입력해주세요',
+            }
+            raise exceptions.ValidationError(data)
 
 
 class ItemRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
@@ -48,8 +65,7 @@ class ItemRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ItemSearchFromURL(generics.GenericAPIView):
-    @staticmethod
-    def get(request: object, args: object, kwargs: object) -> object:
+    def get(self, request, *args, **kwargs):
         try:
             url = request.query_params['url']
         except MultiValueDictKeyError:
@@ -58,7 +74,12 @@ class ItemSearchFromURL(generics.GenericAPIView):
             }
             raise exceptions.ValidationError(data)
         else:
-            if url:
+            if not url:
+                data = {
+                    'detail': 'url의 내용을 입력해주세요'
+                }
+                raise exceptions.ValidationError(data)
+            else:
                 search_result = CheckURL(url)
                 search_result.check_url_from_parser()
 
@@ -66,19 +87,14 @@ class ItemSearchFromURL(generics.GenericAPIView):
                 price = search_result.item_data.item_price
                 name = search_result.item_data.item_name
                 purchase_url = search_result.item_data.url
-            else:
-                img_url = ''
-                price = ''
-                name = ''
-                purchase_url = url
 
-            data = {
-                'img_url': img_url,
-                'price': price,
-                'name': name,
-                'purchase_url': purchase_url,
-            }
-            return Response(data)
+                data = {
+                    'img_url': img_url,
+                    'price': price,
+                    'name': name,
+                    'purchase_url': purchase_url,
+                }
+                return Response(data)
 
 
 class CompleteItemListView(generics.ListAPIView):

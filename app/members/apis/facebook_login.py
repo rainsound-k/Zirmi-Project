@@ -1,4 +1,4 @@
-from rest_framework import permissions
+from rest_framework import permissions, status
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -16,7 +16,7 @@ class AuthTokenForFacebookAccessTokenView(APIView):
             'token': token.key,
             'user': UserSerializer(user).data,
         }
-        return Response(data)
+        return Response(data, status=status.HTTP_201_CREATED)
 
 
 class MyUserDetail(APIView):

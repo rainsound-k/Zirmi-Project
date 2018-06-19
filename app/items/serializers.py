@@ -20,12 +20,12 @@ class ItemUserSerializer(serializers.ModelSerializer):
 
 
 class ItemSerializer(serializers.ModelSerializer):
-    user = ItemUserSerializer(read_only=True)
+    user = ItemUserSerializer(many=False, read_only=True)
     public_visibility = serializers.BooleanField(default=True)
     like_users = ItemUserSerializer(many=True, read_only=True)
     category = serializers.ChoiceField(choices=Item.CHOICES_CATEGORY, source='get_category_display')
-    is_purchase = serializers.BooleanField(read_only=True)
-    purchase_date = serializers.DateTimeField(read_only=True)
+    is_purchase = serializers.BooleanField(default=False)
+    purchase_date = serializers.DateTimeField(allow_null=True, required=False)
 
     class Meta:
         model = Item
@@ -33,8 +33,8 @@ class ItemSerializer(serializers.ModelSerializer):
 
 
 class ItemLikeSerializer(serializers.ModelSerializer):
-    item = ItemSerializer(read_only=True)
-    user = ItemUserSerializer(many=True, read_only=True)
+    item = ItemSerializer()
+    user = ItemUserSerializer(many=True)
 
     class Meta:
         model = ItemLike
@@ -42,7 +42,7 @@ class ItemLikeSerializer(serializers.ModelSerializer):
 
 
 class ItemCommentSerializer(serializers.ModelSerializer):
-    user = ItemUserSerializer(read_only=True)
+    user = ItemUserSerializer()
 
     class Meta:
         model = ItemComment
