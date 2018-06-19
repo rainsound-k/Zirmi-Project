@@ -1,4 +1,4 @@
-from rest_framework import generics, status
+from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 
 from members.serializers import UserSerializer
@@ -14,6 +14,9 @@ class ItemLikeToggle(generics.GenericAPIView):
     lookup_url_kwarg = 'item_pk'
     queryset = Item.objects.all()
     serializer_class = ItemLikeSerializer
+    permission_classes = (
+        permissions.IsAuthenticated,
+    )
 
     def post(self, request, *args, **kwargs):
         instance = self.get_object()
