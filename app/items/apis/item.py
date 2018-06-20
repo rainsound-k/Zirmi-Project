@@ -128,7 +128,7 @@ class CompleteItemRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIVie
                 if item.user == user:
                     return Item.objects.filter(user=user, is_purchase=True, pk=item_pk)
                 else:
-                    raise exceptions.NotAuthenticated()
+                    raise exceptions.PermissionDenied()
             else:
                 raise exceptions.NotAuthenticated()
         else:
@@ -143,27 +143,33 @@ class ItemAddFromPublic(generics.GenericAPIView):
     )
 
     def post(self, *args, **kwargs):
-        item_pk = self.request.data.get('pk', '')
-        if not Item.objects.filter(pk=item_pk):
-            raise exceptions.NotFound()
+        item_pk = self.request.data.get('item_pk', '')
+        if not item_pk:
+            data = {
+                'detail': 'item_pk를 입력해주세요'
+            }
+            raise exceptions.ValidationError(data)
         else:
-            public_item = Item.objects.get(pk=item_pk)
-            if public_item.user == self.request.user:
-                data = {
-                    'detail': '이미 존재합니다'
-                }
-                return Response(data)
+            if not Item.objects.filter(pk=item_pk):
+                raise exceptions.NotFound()
             else:
-                Item.objects.create(
-                    user=self.request.user,
-                    name=public_item.name,
-                    purchase_url=public_item.purchase_url,
-                    price=public_item.price,
-                    category=public_item.category,
-                    img=public_item.img,
-                    public_visibility=False,
-                )
-                data = {
-                    'detail': '내 아이템에 추가되었습니다'
-                }
-                return Response(data)
+                public_item = Item.objects.get(pk=item_pk)
+                if public_item.user == self.request.user:
+                    data = {
+                        'detail': '이미 존재합니다'
+                    }
+                    return Response(data, status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    Item.objects.create(
+                        user=self.request.user,
+                        name=public_item.name,
+                        purchase_url=public_item.purchase_url,
+                        price=public_item.price,
+                        category=public_item.category,
+                        img=public_item.img,
+                        public_visibility=False,
+                    )
+                    data = {
+                        'detail': '내 아이템에 추가되었습니다',
+                    }
+                    return Response(data, status=status.HTTP_201_CREATED)

@@ -43,6 +43,7 @@ class ReviewRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
 class ReviewSearchFromKeyword(generics.ListAPIView):
     serializer_class = ReviewSerializer
+    pagination_class = SmallPagination
 
     def get_queryset(self):
         try:

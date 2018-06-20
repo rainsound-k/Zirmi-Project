@@ -9,14 +9,18 @@ class ReviewForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         # user가 구매완료한 제품만 표시
         self.fields['item'].queryset = self.fields['item'].queryset.filter(user=request.user, is_purchase=True)
-
         self.fields['item'].label = '제품명'
+        self.fields['item'].label_from_instance = self.label_from_instance
 
         class_update_fields = ('item', 'title')
         for field in class_update_fields:
             self.fields[field].widget.attrs.update({
                 'class': 'form-control',
             })
+
+    @staticmethod
+    def label_from_instance(self):
+        return f'{self.name}'
 
     class Meta:
         model = Review

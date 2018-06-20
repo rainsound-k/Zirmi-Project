@@ -33,8 +33,8 @@ class ItemSerializer(serializers.ModelSerializer):
 
 
 class ItemLikeSerializer(serializers.ModelSerializer):
-    item = ItemSerializer()
-    user = ItemUserSerializer(many=True)
+    item = ItemSerializer(read_only=True)
+    user = ItemUserSerializer(read_only=True, many=True)
 
     class Meta:
         model = ItemLike
@@ -42,7 +42,7 @@ class ItemLikeSerializer(serializers.ModelSerializer):
 
 
 class ItemCommentSerializer(serializers.ModelSerializer):
-    user = ItemUserSerializer()
+    user = ItemUserSerializer(read_only=True)
 
     class Meta:
         model = ItemComment
