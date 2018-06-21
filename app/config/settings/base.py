@@ -62,7 +62,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',  # integerfield 천단위로 콤마 구분
 
-    'django_extensions',
     'django_summernote',
     'django_filters',
     'raven.contrib.django.raven_compat',
