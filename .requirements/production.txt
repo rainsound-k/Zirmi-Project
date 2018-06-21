@@ -1,2 +1,5 @@
 Django<2.1
 raven<6.8
+Pillow<6
+psycopg2-binary<2.8
+uWSGI<2.1

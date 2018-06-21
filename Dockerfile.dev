@@ -12,7 +12,7 @@ COPY            .requirements /srv/.requirements
 WORKDIR         /srv
 RUN             pip install -r /srv/.requirements/dev.txt
 
-ENV         BUILD_MODE  local
+ENV         BUILD_MODE  dev
 ENV         DJANGO_SETTINGS_MODULE  config.settings.${BUILD_MODE}
 
 # 소스폴더 통째로 복사

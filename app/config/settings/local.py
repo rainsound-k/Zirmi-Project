@@ -1,13 +1,12 @@
 from .base import *
 
-SECRET_KEY = secrets_base['SECRET_KEY']
 DEBUG = True
 ALLOWED_HOSTS = []
 INSTALLED_APPS += [
     'django_extensions',
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.local.application'
 
 DATABASES = {
     'default': {
