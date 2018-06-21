@@ -13,14 +13,13 @@ import json
 import os
 import raven
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 ROOT_DIR = os.path.dirname(BASE_DIR)
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 SECRETS_DIR = os.path.join(ROOT_DIR, '.secrets')
 SECRETS_BASE = os.path.join(SECRETS_DIR, 'base.json')
 secrets_base = json.loads(open(SECRETS_BASE, 'rt').read())
 
-SECRET_KEY = secrets_base['SECRET_KEY']
 FACEBOOK_APP_ID = secrets_base['FACEBOOK_APP_ID']
 FACEBOOK_SECRET_CODE = secrets_base['FACEBOOK_SECRET_CODE']
 
@@ -34,9 +33,6 @@ STATICFILES_DIRS = [
     STATIC_DIR,
 ]
 
-DEBUG = True
-
-ALLOWED_HOSTS = []
 AUTH_USER_MODEL = 'members.User'
 
 AUTHENTICATION_BACKENDS = [
@@ -108,15 +104,6 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = 'config.wsgi.application'
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
 
 # DATABASES = secrets_base['DATABASES']
 

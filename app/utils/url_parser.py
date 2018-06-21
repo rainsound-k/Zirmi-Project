@@ -610,6 +610,8 @@ class ItemData:
                 item_price_str = ','.join(re.findall('\d+', item_price_list[0]))
             elif soup.select_one('.sell .num'):
                 item_price_str = soup.select_one('.sell .num')
+            else:
+                item_price_str = ''
             if not item_price_str:
                 item_price = ''
             else:
@@ -620,6 +622,8 @@ class ItemData:
                 item_name = soup.select_one('.ct_wrp .main').text.strip()
             elif soup.select_one('.ct_area .tit'):
                 item_name = soup.select_one('.ct_area .tit').text.strip()
+            else:
+                item_name = ''
 
             self.item_img = item_img
             self.item_price = item_price
