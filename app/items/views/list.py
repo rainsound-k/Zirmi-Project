@@ -23,7 +23,7 @@ def item_list(request):
     return render(request, 'index.html', context)
 
 
-@login_required
+@login_required(login_url='/login/')
 def my_item_list(request):
     my_items = Item.objects.filter(user=request.user, is_purchase=False)
     total_cost = 0
@@ -37,7 +37,7 @@ def my_item_list(request):
     return render(request, 'items/my_item/my_items_list.html', context)
 
 
-@login_required
+@login_required(login_url='/login/')
 def my_complete_item_list(request):
     my_items = Item.objects.filter(user=request.user, is_purchase=True).order_by('-modified_time')
     total_cost = 0

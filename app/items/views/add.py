@@ -9,7 +9,7 @@ __all__ = (
 )
 
 
-@login_required
+@login_required(login_url='/login/')
 def item_add(request):
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)

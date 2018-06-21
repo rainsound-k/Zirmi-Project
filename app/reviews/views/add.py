@@ -8,7 +8,7 @@ __all__ = (
 )
 
 
-@login_required
+@login_required(login_url='/login/')
 def review_add(request):
     if request.method == 'POST':
         form = ReviewForm(request, request.POST, request.FILES)

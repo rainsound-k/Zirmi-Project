@@ -32,7 +32,7 @@ def comment_create(request):
     return redirect(next_path)
 
 
-@login_required
+@login_required(login_url='/login/')
 @require_POST
 def comment_delete(request):
     comment_pk = request.POST.get('pk', None)

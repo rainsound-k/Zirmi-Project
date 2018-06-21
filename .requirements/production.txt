@@ -1,5 +1,15 @@
+boto3<1.8
+beautifulsoup4<4.7
 Django<2.1
-raven<6.8
+django-filter<1.1
+django-storages<1.7
+django-summernote<1
+django-widget-tweaks<1.5
+djangorestframework<3.9
+lxml<4.3
 Pillow<6
 psycopg2-binary<2.8
+python-magic<0.5
+raven<6.8
+requests<2.19
 uWSGI<2.1

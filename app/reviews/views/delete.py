@@ -12,7 +12,7 @@ __all__ = (
 )
 
 
-@login_required
+@login_required(login_url='/login/')
 @require_POST
 def review_delete(request):
     review_pk = request.POST.get('pk', None)

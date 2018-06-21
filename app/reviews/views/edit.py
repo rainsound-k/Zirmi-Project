@@ -6,7 +6,7 @@ from ..forms import ReviewForm
 from ..models import Review
 
 
-@login_required
+@login_required(login_url='/login/')
 def review_edit(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
     if request.user != review.user:

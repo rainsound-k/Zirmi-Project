@@ -6,7 +6,7 @@ from ..forms import ItemForm
 from ..models import Item
 
 
-@login_required
+@login_required(login_url='/login/')
 def item_edit(request, item_pk):
     item = get_object_or_404(Item, pk=item_pk)
     if request.user != item.user:

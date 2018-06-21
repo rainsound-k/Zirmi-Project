@@ -12,9 +12,10 @@ ALLOWED_HOSTS = [
 WSGI_APPLICATION = 'config.wsgi.dev.application'
 INSTALLED_APPS += [
     'django_extensions',
-    # 'storages',
+    'storages',
 ]
 
 # S3대신 EC2에서 정적파일을 제공 (프리티어 put 사용량 절감)
-# DEFAULT_FILE_STORAGE = 'config.storage.DefaultFileStorage'
 STATICFILES_STORAGE = 'config.storage.StaticFilesStorage'
+# DEFAULT_FILE_STORAGE = 'config.storage.DefaultFileStorage'
+

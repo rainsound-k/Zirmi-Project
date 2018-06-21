@@ -1,7 +1,6 @@
 import json
 
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404, render
 from django.views.decorators.http import require_POST
@@ -15,7 +14,7 @@ __all__ = (
 )
 
 
-@login_required
+@login_required(login_url='/login/')
 @require_POST
 def comment_create(request):
     review_pk = request.POST.get('pk', None)
@@ -34,7 +33,7 @@ def comment_create(request):
     return redirect(next_path)
 
 
-@login_required
+@login_required(login_url='/login/')
 @require_POST
 def comment_delete(request):
     comment_pk = request.POST.get('pk', None)

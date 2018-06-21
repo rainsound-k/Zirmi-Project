@@ -11,7 +11,7 @@ __all__ = (
 )
 
 
-@login_required
+@login_required(login_url='/login/')
 @require_POST
 def purchase_complete(request):
     item_pk = request.POST.get('pk', None)

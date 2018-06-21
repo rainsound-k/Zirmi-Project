@@ -12,7 +12,7 @@ __all__ = (
 )
 
 
-@login_required
+@login_required(login_url='/login/')
 @require_POST
 def item_like_toggle(request):
     item_pk = request.POST.get('pk', None)

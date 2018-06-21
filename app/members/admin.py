@@ -14,6 +14,7 @@ class UserAdmin(DjangoUserAdmin):
     fieldsets = (
         (None, {'fields': (
             'email',
+            'username',
             'password',
         )}),
         ('개인정보', {'fields': (
