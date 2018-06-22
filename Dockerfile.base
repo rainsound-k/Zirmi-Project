@@ -11,5 +11,3 @@ COPY            .requirements /srv/.requirements
 
 WORKDIR         /srv
 RUN             pip install -r /srv/.requirements/production.txt
-
-
