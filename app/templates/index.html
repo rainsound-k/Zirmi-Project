@@ -7,7 +7,7 @@
 
 {% block content %}
 <div class="top-container container">
-  <h3>전체 지르미들</h3>
+  <a href="/"><h3>전체 지르미들</h3></a>
   <form action="" method="get" class="filter-form">
     <div class="filter-field-container">
       <div class="form-group">
@@ -33,11 +33,10 @@
         </div>
       </div>
     </div>
-    <input type="submit">
   </form>
 </div>
 
-<div class="album py-5 bg-light">
+<div id="item-container" class="album py-5 bg-light">
   <div class="container body-container">
     <div class="row">
     {% for item in filter.qs %}
@@ -129,6 +128,31 @@
         console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
       }
     });
+  })
+
+  $('#id_category, #id_user__generation, #id_user__gender').change(function() {
+    var categoryValue = $("#id_category").val();
+    var generationValue = $("#id_user__generation").val();
+    var genderValue = $("#id_user__gender").val();
+
+    if (categoryValue && !generationValue && !genderValue) {
+      var url = "?category="+categoryValue;
+    } else if (categoryValue && generationValue && !genderValue) {
+      var url = "?category="+categoryValue+"&user__generation="+generationValue;
+    } else if (categoryValue && generationValue && genderValue) {
+      var url = "?category="+categoryValue+"&user__generation="+generationValue+"&user__gender="+genderValue;
+    } else if (!categoryValue && generationValue && !genderValue) {
+      var url = "?user__generation="+generationValue;
+    } else if (!categoryValue && generationValue && genderValue) {
+      var url = "?user__generation="+generationValue+"&user__gender="+genderValue;
+    } else if (!categoryValue && !generationValue && genderValue) {
+      var url = "?user__gender="+genderValue;
+    } else if (categoryValue && !generationValue && genderValue) {
+      var url = "?category="+categoryValue+"&user__gender="+genderValue;
+    } else {
+      var url = "/";
+    }
+    window.location.replace(url);
   })
 
 

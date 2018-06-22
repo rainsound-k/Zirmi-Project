@@ -20,6 +20,10 @@ img {
   > span {
     margin-left: auto;
   }
+  > a {
+    text-decoration: none;
+    color: inherit;
+  }
 }
 .container {
   margin-bottom: 70px;

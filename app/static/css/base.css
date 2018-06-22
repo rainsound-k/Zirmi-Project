@@ -27,6 +27,11 @@ img {
   margin-left: auto;
 }
 
+.top-container > a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .container {
   margin-bottom: 70px;
 }
