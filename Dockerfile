@@ -16,9 +16,6 @@ RUN             cp -f /srv/project/.config/${BUILD_MODE}/nginx.conf /etc/nginx/n
 # supervisor 설정파일 복사
 RUN             cp -f /srv/project/.config/${BUILD_MODE}/supervisord.conf /etc/supervisor/conf.d/
 
-# PostgreSQL DB migrate 및 createsuperuser
-WORKDIR         /srv/project/app
-RUN             python manage.py migrate && python manage.py createsu
 
 # pkill nginx 후 supervisord -n 실행
 CMD             pkill nginx; supervisord -n
