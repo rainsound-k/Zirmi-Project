@@ -5,6 +5,7 @@
 .board-container {
   padding: 0 15px;
   margin: 0 auto 70px auto;
+  min-height: 800px;
 }
 
 .board-container .review-add-btn {

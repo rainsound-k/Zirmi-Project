@@ -5,6 +5,13 @@ img {
 .row {
   margin: 0;
 }
+.card {
+  box-shadow: 2px 2px 5px 2px rgba(59, 59, 59, 0.12);
+  &:hover {
+    box-shadow: 2px 2px 5px 2px rgba(59, 59, 59, 0.12);
+    transform: translateY(-3px);
+  }
+}
 .top-container {
   margin-bottom: 20px !important;
   display: flex;
@@ -16,6 +23,9 @@ img {
 }
 .container {
   margin-bottom: 70px;
+}
+.body-container {
+  min-height: 800px;
 }
 .form-group {
   margin-bottom: 20px;

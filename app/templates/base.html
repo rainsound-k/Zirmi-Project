@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="{% static 'css/main.css' %}">
 	<link rel="stylesheet" href="{% static 'css/header.css' %}">
 	<link rel="stylesheet" href="{% static 'css/board.css' %}">
+	<link rel="stylesheet" href="{% static 'css/footer.css' %}">
 </head>
 
 <body>
@@ -75,6 +76,12 @@
 	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 
 	{% block content %} {% endblock %}
+
+	{% include 'footer.html' %}
+
+
+
+
 <script type="text/javascript">
 	// nav-bar active 표시
 	var page_path = window.location.pathname;
@@ -84,7 +91,7 @@
 		$(".home-nav").addClass("active");
 	} else if (page_url.indexOf("reviews") != -1) {
 		$(".reviews-nav").addClass("active");
-	} else if (page_url.indexOf("items/list") != -1 || page_url.indexOf("items/complete") != -1 || path_regex.test(page_url)) {
+	} else if (page_url.indexOf("items/list") != -1 || page_url.indexOf("items/complete") != -1 || page_url.indexOf("items/search") != -1 || path_regex.test(page_url)) {
 		$(".items-nav").addClass("active");
 	}
 

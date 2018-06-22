@@ -44,6 +44,18 @@ img.card-img-top {
   max-height: 340px;
 }
 
+@media (max-width: 796px) {
+  .detail-img {
+    margin-bottom: 50px;
+  }
+  .item-detail {
+    padding: 15px 0;
+  }
+  .commnet-container {
+    padding: 0 15px;
+  }
+}
+
 p.media-body {
   word-break: break-word;
   white-space: pre-wrap;
@@ -51,7 +63,7 @@ p.media-body {
 }
 
 .item-search-form, .item-add-detail-container {
-  margin-bottom: 30px;
+  margin-bottom: 100px;
 }
 
 .form-check {
@@ -61,6 +73,10 @@ p.media-body {
 .form-check > input {
   position: relative;
   margin: 0;
+}
+
+.item-name-container, .item-content-container {
+  margin-bottom: 50px;
 }
 
 .comment-delete-form {
@@ -76,4 +92,16 @@ p.media-body {
 
 .post-review-btn {
   padding: 15px;
+}
+
+.item-edit-delete-btn {
+  margin: 0 0 0 auto;
+}
+
+.comment-content-container {
+  margin-bottom: 30px;
+}
+
+.comment-content:last-child {
+  border-bottom: none !important;
 }

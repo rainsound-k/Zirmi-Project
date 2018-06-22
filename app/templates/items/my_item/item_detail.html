@@ -7,12 +7,21 @@
 {% if request.user != item.user %}
  <meta http-equiv="REFRESH" content="0;url={% url 'items:public-item-detail' item_pk=item.pk %}">
 {% endif %}
-<div class="container">
+<div class="container body-container">
+
+
   <div class="item-detail-container">
-    <div class="row align-items-center">
+    <div class="row align-items-center item-name-container">
       <h2 class="col-sm-12 text-center item-name">{{ item.name }}</h2>
+      <div class="item-edit-delete-btn float-right">
+        {% if request.user == item.user %}
+          <a href="{% url 'items:item-edit' item_pk=item.pk %}" class="btn btn-primary btn-sm">수정</a>
+          <button id="deleteBtn" class="btn btn-danger btn-sm" name="{{ item.pk }}">삭제</button>
+        {% endif %}
+      </div>
     </div>
-    <div class="row justify-content-around align-items-center">
+
+    <div class="row justify-content-around align-items-center item-content-container">
       <div class="col-sm-6 order-sm-1">
         <div class="mb3">
           <img class="col-12 rounded detail-img mx-auto d-block"
@@ -45,12 +54,11 @@
     </div>
   </div>
 
-  {% include 'items/comment/comment-form.html' %}
+  <div class="commnet-container">
+    {% include 'items/comment/comment-form.html' %}
+  </div>
 
-  {% if request.user == item.user %}
-    <a href="{% url 'items:item-edit' item_pk=item.pk %}" class="btn btn-dark form-control">수정</a>
-    <button id="deleteBtn" class="btn btn-danger form-control" name="{{ item.pk }}">삭제</button>
-  {% endif %}
+
 </div>
 
 
