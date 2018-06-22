@@ -510,39 +510,39 @@ class ItemData:
             self.item_name = item_name
             self.url = url
 
-    def get_info_from_coupang(self):
-        url = self.url
-        if re.search(r'products/(\w+)(.*)', url):
-            item_no = re.search(r'products/(\w+)(.*)', url).group(1)
-            if re.search(r'itemId=(\w+)(.*)', url):
-                item_id = re.search(r'itemId=(\w+)(.*)', url).group(1)
-                url = f'https://www.coupang.com/vp/products/{item_no}?itemId={item_id}'
-            url = f'https://www.coupang.com/vp/products/{item_no}'
-        hdr = {'referer': 'http://m.naver.com', 'User-Agent': 'Mozilla/5.0'}
-        req = requests.get(url, headers=hdr)
-        soup = BeautifulSoup(req.text, 'html.parser')
-
-        if not soup.select_one('.prod-image__detail'):
-            item_img = ''
-        else:
-            item_img = 'http:' + soup.select_one('.prod-image__detail').get('src')
-        if not soup.select_one('.prod-sale-price .total-price strong'):
-            item_price_str = ''
-        else:
-            item_price_str = soup.select_one('.prod-sale-price .total-price strong').text.strip()
-        if not item_price_str:
-            item_price = ''
-        else:
-            item_price = int(item_price_str.replace('원', '').replace(',', ''))
-        if not soup.select_one('.prod-buy-header .prod-buy-header__title'):
-            item_name = ''
-        else:
-            item_name = soup.select_one('.prod-buy-header .prod-buy-header__title').text.strip()
-
-        self.item_img = item_img
-        self.item_price = item_price
-        self.item_name = item_name
-        self.url = url
+    # def get_info_from_coupang(self):
+    #     url = self.url
+    #     if re.search(r'products/(\w+)(.*)', url):
+    #         item_no = re.search(r'products/(\w+)(.*)', url).group(1)
+    #         if re.search(r'itemId=(\w+)(.*)', url):
+    #             item_id = re.search(r'itemId=(\w+)(.*)', url).group(1)
+    #             url = f'https://www.coupang.com/vp/products/{item_no}?itemId={item_id}'
+    #         url = f'https://www.coupang.com/vp/products/{item_no}'
+    #     hdr = {'referer': 'http://m.naver.com', 'User-Agent': 'Mozilla/5.0'}
+    #     req = requests.get(url, headers=hdr)
+    #     soup = BeautifulSoup(req.text, 'html.parser')
+    #
+    #     if not soup.select_one('.prod-image__detail'):
+    #         item_img = ''
+    #     else:
+    #         item_img = 'http:' + soup.select_one('.prod-image__detail').get('src')
+    #     if not soup.select_one('.prod-sale-price .total-price strong'):
+    #         item_price_str = ''
+    #     else:
+    #         item_price_str = soup.select_one('.prod-sale-price .total-price strong').text.strip()
+    #     if not item_price_str:
+    #         item_price = ''
+    #     else:
+    #         item_price = int(item_price_str.replace('원', '').replace(',', ''))
+    #     if not soup.select_one('.prod-buy-header .prod-buy-header__title'):
+    #         item_name = ''
+    #     else:
+    #         item_name = soup.select_one('.prod-buy-header .prod-buy-header__title').text.strip()
+    #
+    #     self.item_img = item_img
+    #     self.item_price = item_price
+    #     self.item_name = item_name
+    #     self.url = url
 
     def get_info_from_wemakeprice(self):
         url = self.url
