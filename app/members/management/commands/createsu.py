@@ -11,4 +11,6 @@ class Command(BaseCommand):
             User.objects.create_superuser(
                 email=settings.SUPERUSER_EMAIL,
                 password=settings.SUPERUSER_PASSWORD,
+                generation=2,
+                gender='m',
             )
