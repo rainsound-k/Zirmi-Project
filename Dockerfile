@@ -5,7 +5,7 @@ ENV             BUILD_MODE  production
 ENV             DJANGO_SETTINGS_MODULE  config.settings.${BUILD_MODE}
 
 # 소스폴더 통째로 복사
-COPY             . /srv/project
+COPY            . /srv/project
 
 # nginx 설정파일 복사 및 링크
 RUN             cp -f /srv/project/.config/${BUILD_MODE}/nginx.conf /etc/nginx/nginx.conf &&\
