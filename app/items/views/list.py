@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.shortcuts import render
 
+from ..filter import ItemFilter
 from ..forms import CommentForm
 from ..models import Item
 
@@ -16,9 +17,11 @@ def item_list(request):
     items = Item.objects.filter(public_visibility=True).annotate(num_like_users=Count('like_users'))\
         .order_by('-num_like_users', '-created_time')
     comment_form = CommentForm()
+    item_filter = ItemFilter(request.GET, queryset=items)
     context = {
         'items': items,
         'comment_form': comment_form,
+        'filter': item_filter,
     }
     return render(request, 'index.html', context)
 

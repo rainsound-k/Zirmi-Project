@@ -1,3 +1,23 @@
+.filter-form {
+  margin: 0 0 0 auto;
+}
+
+.filter-form > .filter-field-container {
+  display: -webkit-inline-box;
+}
+
+.filter-form > .filter-field-container > .form-group {
+  display: flex;
+  align-items: center;
+  padding-right: 15px;
+  margin: 0;
+}
+
+.filter-form > .filter-field-container > .form-group > label {
+  margin: 0;
+  padding-right: 10px;
+}
+
 .right-top-container {
   display: flex;
   align-items: center;

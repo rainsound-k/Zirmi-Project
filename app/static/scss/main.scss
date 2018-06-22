@@ -1,5 +1,21 @@
 @import 'variables';
 
+.filter-form {
+  margin: 0 0 0 auto;
+  > .filter-field-container {
+    display: -webkit-inline-box;
+    > .form-group {
+      display: flex;
+      align-items: center;
+      padding-right: 15px;
+      margin: 0;
+      > label {
+        margin: 0;
+        padding-right: 10px;
+      }
+    }
+  }
+}
 .right-top-container {
   display: flex;
   align-items: center;
@@ -8,7 +24,6 @@
     padding-right: 15px;
   }
 }
-
 img.card-img-top {
   height: 225px;
   width: auto;
@@ -79,8 +94,6 @@ p.media-body {
 .item-edit-delete-btn {
   margin: 0 0 0 auto;
 }
-
-
 .comment-content-container {
   margin-bottom: 30px;
 }

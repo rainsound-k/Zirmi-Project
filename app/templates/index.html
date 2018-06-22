@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load widget_tweaks %}
 {% load humanize %}
 {% load check_item_exists_tag %}
 {% load date_formatter_tag %}
@@ -7,12 +8,39 @@
 {% block content %}
 <div class="top-container container">
   <h3>전체 지르미들</h3>
+  <form action="" method="get" class="filter-form">
+    <div class="filter-field-container">
+      <div class="form-group">
+        <label class="font-weight-bold">카테고리</label>
+        <div class="">
+          {% render_field filter.form.category class="custom-select" %}
+        </div>
+      </div>
+    </div>
+    <div class="filter-field-container">
+      <div class="form-group">
+        <label class="font-weight-bold">세대</label>
+        <div class="">
+          {% render_field filter.form.user__generation class="custom-select" %}
+        </div>
+      </div>
+    </div>
+    <div class="filter-field-container">
+      <div class="form-group">
+        <label class="font-weight-bold">성별</label>
+        <div class="">
+          {% render_field filter.form.user__gender class="custom-select" %}
+        </div>
+      </div>
+    </div>
+    <input type="submit">
+  </form>
 </div>
+
 <div class="album py-5 bg-light">
   <div class="container body-container">
     <div class="row">
-
-    {% for item in items %}
+    {% for item in filter.qs %}
       <div id="item-{{ item.pk }}" class="col-md-4">
         <div class="card mb-4 box-shadow align-items-center">
           <a href="{% url 'items:public-item-detail' item_pk=item.pk %}">
