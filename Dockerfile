@@ -1,16 +1,5 @@
-FROM            python:3.6.4-slim
+FROM            ksw128/zirmi:base
 MAINTAINER      rainsound128@gmail.com
-
-# nginx, supervisor 설치
-RUN             apt-get -y update
-RUN             apt-get -y dist-upgrade
-RUN             apt-get -y install build-essential nginx supervisor
-
-# requirements 폴더 복사
-COPY            .requirements /srv/.requirements
-
-WORKDIR         /srv
-RUN             pip install -r /srv/.requirements/production.txt
 
 ENV             BUILD_MODE  production
 ENV             DJANGO_SETTINGS_MODULE  config.settings.${BUILD_MODE}
@@ -33,5 +22,8 @@ RUN             python manage.py migrate && python manage.py createsu
 
 # pkill nginx 후 supervisord -n 실행
 CMD             pkill nginx; supervisord -n
+
+# EB에서 프록시로 연결될 Port를 열어줌
+EXPOSE          80
 
 
