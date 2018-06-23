@@ -16,6 +16,6 @@ INSTALLED_APPS += [
 ]
 
 # S3대신 EC2에서 정적파일을 제공 (프리티어 put 사용량 절감)
-STATICFILES_STORAGE = 'config.storage.StaticFilesStorage'
-# DEFAULT_FILE_STORAGE = 'config.storage.DefaultFileStorage'
+# STATICFILES_STORAGE = 'config.storage.StaticFilesStorage'
+DEFAULT_FILE_STORAGE = 'config.storage.DefaultFileStorage'
 

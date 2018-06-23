@@ -65,6 +65,24 @@ img.card-img-top {
 }
 
 @media (max-width: 796px) {
+  h1 {
+    font-size: 2.2rem;
+  }
+  h2 {
+    font-size: 1.7rem;
+  }
+  h3 {
+    font-size: 1.5rem;
+  }
+  h4 {
+    font-size: 1.2rem;
+  }
+  h5 {
+    font-size: 1rem;
+  }
+  h6 {
+    font-size: 0.8rem;
+  }
   .detail-img {
     margin-bottom: 50px;
   }
@@ -73,6 +91,51 @@ img.card-img-top {
   }
   .commnet-container {
     padding: 0 15px;
+  }
+  .top-container {
+    display: block;
+    margin-bottom: 70px !important;
+  }
+  .top-container h3 {
+    margin-bottom: 15px;
+  }
+  .top-container .filter-form {
+    display: flex;
+    font-size: 0.7rem;
+  }
+  .top-container .filter-form > .filter-field-container {
+    display: flex;
+    width: 50%;
+  }
+  .top-container .filter-form > .filter-field-container:nth-child(2) {
+    width: auto;
+  }
+  .top-container .filter-form > .filter-field-container:nth-child(3) {
+    width: auto;
+  }
+  .top-container .filter-form > .filter-field-container:nth-child(3) .form-group {
+    padding-right: 0;
+  }
+  .top-container .filter-form > .filter-field-container .form-group {
+    padding-right: 15px;
+    display: block;
+  }
+  .top-container .filter-form > .filter-field-container .form-group label {
+    padding-left: 5px;
+    margin-bottom: 5px;
+  }
+  .top-container .filter-form select {
+    height: 2rem;
+    font-size: 0.4rem !important;
+  }
+  .card:hover {
+    transform: none;
+  }
+  .item-name {
+    padding: 15px;
+  }
+  .item-name-container, .item-content-container {
+    margin-bottom: 15px;
   }
 }
 
