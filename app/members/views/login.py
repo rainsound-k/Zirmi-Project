@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login, get_user_model
-from django.shortcuts import redirect, render, render_to_response
+from django.shortcuts import redirect, render
 
 User = get_user_model()
 

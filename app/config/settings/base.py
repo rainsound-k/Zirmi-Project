@@ -160,6 +160,7 @@ SUMMERNOTE_CONFIG = {
         'height': '520',
         'lang': 'ko-KR',
     },
+    'attachment_filesize_limit': 1024 * 20480,
     'base_css': (
         '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
     ),

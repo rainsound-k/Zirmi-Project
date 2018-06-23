@@ -50,6 +50,7 @@ img.card-img-top {
   width: auto;
   max-height: 340px;
 }
+
 @media (max-width: 991px) {
   h1 {
     font-size: 2.2rem;
@@ -112,6 +113,12 @@ img.card-img-top {
       select {
         height: 2rem;
       }
+    }
+  }
+  .review-add-container {
+    label, .col-lg-11, .post-review-btn {
+      padding-left: 0;
+      padding-right: 0;
     }
   }
   .card {

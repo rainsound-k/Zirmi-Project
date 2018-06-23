@@ -128,6 +128,10 @@ img.card-img-top {
   .top-container .filter-form select {
     height: 2rem;
   }
+  .review-add-container label, .review-add-container .col-lg-11, .review-add-container .post-review-btn {
+    padding-left: 0;
+    padding-right: 0;
+  }
   .card:hover {
     transform: none;
   }
