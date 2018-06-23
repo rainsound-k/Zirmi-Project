@@ -13,7 +13,7 @@
         <input class="form-control" type="password" name="password" placeholder="Password" required>
       </div>
 
-      <button type="submit" class="btn btn-lg btn-dark btn-block">로그인</button>
+      <button type="submit" class="loginBtn btn btn-lg btn-dark btn-block">로그인</button>
       <!-- <a type="submit"
       href="https://www.facebook.com/v2.12/dialog/oauth?client_id=194729581179158&scope=email,public_profile&redirect_uri=http://{{ request.get_host }}/facebook-login/"
       class="btn btn-lg loginBtn loginBtn--facebook btn-block">페이스북 로그인</a> -->
@@ -23,5 +23,12 @@
     </form>
   </div>
 </div>
+
+
+{% if error %}
+  <script type="text/javascript">
+    alert('{{ error }}');
+  </script>
+{% endif %}
 
 {% endblock %}
