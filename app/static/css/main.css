@@ -137,6 +137,19 @@ img.card-img-top {
   .item-name-container, .item-content-container {
     margin-bottom: 15px;
   }
+  .item-search-form {
+    margin-bottom: 30px !important;
+  }
+  .item-add-detail-container {
+    margin-bottom: 30px !important;
+  }
+  .item-add-detail-container .col-lg-3, .item-add-detail-container .col-lg-5, .item-add-detail-container .col-lg-7, .item-add-detail-container .col-lg-9, .item-add-detail-container .col-12 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .item-add-detail-container img {
+    margin-bottom: 30px;
+  }
 }
 
 p.media-body {
