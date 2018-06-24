@@ -39,47 +39,50 @@
 <div id="item-container" class="album py-5 bg-light">
   <div class="container body-container">
     <div class="row">
+      {% if not filter.qs %}
+        <div class="empty-item">
+          <p class="text-muted text-center">아이템이 없습니다</p>
+        </div>
+      {% endif %}
     {% for item in filter.qs %}
       <div id="item-{{ item.pk }}" class="col-md-4">
-        <div class="card mb-4 box-shadow align-items-center">
-          <a href="{% url 'items:public-item-detail' item_pk=item.pk %}">
-            <img class="card-img-top"
-            src="{% if item.img %}{{ item.img.url }}{% else %}{% static 'images/default_img.jpg' %}{% endif %}"
-            alt="item-image">
-          </a>
-          <span class="price-text">{{ item.price|intcomma }} 원</span>
-
-          <div class="card-body">
-            <p class="card-text">{{ item.name }}</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-
-                {% if request.user.is_authenticated %}
-                  {% check_item_exists item request as is_exists %}
-                  {% if is_exists %}
-                    <span class="btn btn-sm btn-outline-secondary disabled">이미 있음</span>
-                  {% else %}
-                    <button id="addItem-{{ item.pk }}" class="add-btn btn btn-sm btn-outline-secondary" name="{{ item.pk }}">내 지르미에 추가</button>
-                  {% endif %}
-                {% endif %}
-
-                {% if request.user in item.like_users.all %}
-                  <button class="like btn btn-sm btn-outline-secondary" name="{{ item.pk }}">
-                    <i id="like-{{ item.pk }}" class="fas fa-heart"></i>
-                  </button>
-                {% else %}
-                  <button class="like btn btn-sm btn-outline-secondary" name="{{ item.pk }}">
-                    <i id="dislike-{{ item.pk }}" class="far fa-heart"></i>
-                  </button>
-                {% endif %}
+          <div class="card mb-4 box-shadow align-items-center">
+            <a href="{% url 'items:public-item-detail' item_pk=item.pk %}">
+              <div class="card-button align-items-center">
+                <img class="card-img-top"
+                src="{% if item.img %}{{ item.img.url }}{% else %}{% static 'images/default_img.jpg' %}{% endif %}"
+                alt="item-image">
+                <span class="price-text">{{ item.price|intcomma }} 원</span>
+                <p class="card-text text-center">{{ item.name }}</p>
               </div>
-
-              {% with total_like=item.like_users.count %}
-              <small id="count-{{ item.pk }}"class="text-muted">{{ total_like }} like{% if total_like == 0 %}{% else %}{{ total_like|pluralize }}{% endif %}</small>
-              {% endwith %}
+            </a>
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  {% if request.user.is_authenticated %}
+                    {% check_item_exists item request as is_exists %}
+                    {% if is_exists %}
+                      <span class="btn btn-sm btn-outline-secondary disabled">이미 있음</span>
+                    {% else %}
+                      <button id="addItem-{{ item.pk }}" class="add-btn btn btn-sm btn-outline-secondary" name="{{ item.pk }}">내 지르미에 추가</button>
+                    {% endif %}
+                  {% endif %}
+                  {% if request.user in item.like_users.all %}
+                    <button class="like btn btn-sm btn-outline-secondary" name="{{ item.pk }}">
+                      <i id="like-{{ item.pk }}" class="fas fa-heart"></i>
+                    </button>
+                  {% else %}
+                    <button class="like btn btn-sm btn-outline-secondary" name="{{ item.pk }}">
+                      <i id="dislike-{{ item.pk }}" class="far fa-heart"></i>
+                    </button>
+                  {% endif %}
+                </div>
+                {% with total_like=item.like_users.count %}
+                <small id="count-{{ item.pk }}"class="text-muted">{{ total_like }} like{% if total_like == 0 %}{% else %}{{ total_like|pluralize }}{% endif %}</small>
+                {% endwith %}
+              </div>
             </div>
           </div>
-        </div>
       </div>
     {% endfor %}
 

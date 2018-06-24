@@ -7,9 +7,16 @@ img {
 }
 .card {
   box-shadow: 2px 2px 5px 2px rgba(59, 59, 59, 0.12);
+  a {
+    text-decoration: none;
+    color: inherit;
+    .price-text {
+      margin-bottom: 20px;
+    }
+  }
   &:hover {
     box-shadow: 2px 2px 5px 2px rgba(59, 59, 59, 0.12);
-    transform: translateY(-3px);
+    transform: translateY(-1px);
   }
 }
 .top-container {

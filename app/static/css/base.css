@@ -11,9 +11,18 @@ img {
   box-shadow: 2px 2px 5px 2px rgba(59, 59, 59, 0.12);
 }
 
+.card a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.card a .price-text {
+  margin-bottom: 20px;
+}
+
 .card:hover {
   box-shadow: 2px 2px 5px 2px rgba(59, 59, 59, 0.12);
-  transform: translateY(-3px);
+  transform: translateY(-1px);
 }
 
 .top-container {
