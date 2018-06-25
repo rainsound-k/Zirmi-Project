@@ -95,7 +95,15 @@
       display: block;
       width: 100%;
       margin-bottom: 30px;
-
+      a {
+        color: inherit;
+      }
+      a:hover {
+        text-decoration: none;
+        span {
+          color: #a19f9f;
+        }
+      }
       .small-table-row {
         display: flex;
         color: #414141;
@@ -103,14 +111,11 @@
         overflow: hidden;
         height: auto;
         flex-flow: row;
-
         .empty-review {
           text-align: center;
           padding: 15px 5px;
           width: 100%;
-
         }
-
         .small-table-detail {
           display: inline-block;
           width: 85%;
@@ -118,17 +123,10 @@
           .small-table-title {
             padding-left: 5px;
             padding-right: 30px;
-            a {
-              color: inherit;
-            }
-            a:hover {
-              text-decoration: none;
-              color: #a19f9f;
-            }
           }
         }
-
         .small-table-review-info {
+          display: inline-flex;
           .review-date {
             text-align: center;
           }
@@ -145,7 +143,6 @@
             color: #cbcaca;
           }
         }
-
         .small-table-comments {
           width: 15%;
           margin-left: auto;

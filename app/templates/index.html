@@ -45,7 +45,7 @@
         </div>
       {% endif %}
     {% for item in filter.qs %}
-      <div id="item-{{ item.pk }}" class="col-md-4">
+      <div id="item-{{ item.pk }}" class="custom-card-col">
           <div class="card mb-4 box-shadow align-items-center">
             <a href="{% url 'items:public-item-detail' item_pk=item.pk %}">
               <div class="card-button align-items-center">

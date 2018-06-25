@@ -22,7 +22,7 @@
       {% endif %}
 
       {% for item in my_items %}
-        <div class="col-md-4">
+        <div class="custom-card-col">
           <div class="card mb-4 box-shadow align-items-center">
             <a href="{% url 'items:item-detail' item_pk=item.pk %}">
               <div class="card-button align-items-center">

@@ -58,32 +58,32 @@
       </div>
     {% else %}
       {% for review in reviews %}
-        <div class="small-table-row no-gutters">
-          <div class="small-table-detail">
-            <div class="small-table-title">
-              <span>
-                <a href="{% url 'reviews:review-detail' review_pk=review.pk %}">
+        <a href="{% url 'reviews:review-detail' review_pk=review.pk %}">
+          <div class="small-table-row no-gutters">
+            <div class="small-table-detail">
+              <div class="small-table-title">
+                <span>
                   {{ review.title|linebreaksbr }}
                   {% if review.created_time|date:"Y. n. j" ==  today_date %}
                     &ensp;<span class="badge badge-warning">New</span>
                   {% endif %}
-                </a>
                 </span>
+              </div>
+              <div class="small-table-review-info">
+                <span>{{ review.user|id_from_email }}</span>
+                <span class="review-date">{{ review.created_time|date_formatter }}</span>
+                <span><i class="eye-icon fas fa-eye"></i> {{ review.view_count|intcomma }}</span>
+              </div>
             </div>
-            <div class="small-table-review-info">
-              <span>{{ review.user|id_from_email }}</span>
-              <span class="review-date">{{ review.created_time|date_formatter }}</span>
-              <span><i class="eye-icon fas fa-eye"></i> {{ review.view_count|intcomma }}</span>
+            <div class="small-table-comments">
+              <div class="comments-box">
+                <span class="comments-count">{{ review.comments.count }}</span>
+                <br>
+                <span class="comments-text">댓글</span>
+              </div>
             </div>
           </div>
-          <div class="small-table-comments">
-            <div class="comments-box">
-              <span class="comments-count">{{ review.comments.count }}</span>
-              <br>
-              <span class="comments-text">댓글</span>
-            </div>
-          </div>
-        </div>
+        </a>
       {% endfor %}
     {% endif %}
   </div>

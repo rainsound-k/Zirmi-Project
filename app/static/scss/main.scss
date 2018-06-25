@@ -42,6 +42,8 @@ img.card-img-top {
 }
 .card-text {
   @include max-line(1);
+  padding-left: 20px;
+  padding-right: 20px;
 }
 .card-body {
   width: 100%;
@@ -50,10 +52,48 @@ img.card-img-top {
   width: auto;
   max-height: 340px;
 }
+.custom-card-col {
+  max-width: calc(100% / 3);
+  flex: 0 0 calc(100%/3);
+  position: relative;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 100%;
+  min-height: 1px;
+}
 @media (max-width: 768px) {
-  .col-md-4 {
+  .custom-card-col {
     max-width: none !important;
     flex: none !important;
+  }
+  .filter-form {
+    display: flex;
+    font-size: 0.7rem;
+    > .filter-field-container {
+      display: flex;
+      width: 50%;
+      &:nth-child(2) {
+        width: auto;
+      }
+      &:nth-child(3) {
+        width: auto;
+        .form-group {
+          padding-right: 0;
+        }
+      }
+      .form-group {
+        padding-right: 15px;
+        display: block;
+        width: 100%;
+        label  {
+          padding-left: 5px;
+          margin-bottom: 5px;
+        }
+      }
+    }
+    select {
+      height: 2rem;
+    }
   }
 }
 @media (max-width: 991px) {
@@ -75,7 +115,7 @@ img.card-img-top {
   h6 {
     font-size: 0.8rem;
   }
-  .col-md-4 {
+  .custom-card-col {
     max-width: 50%;
     flex: 0 0 50%;
   }
@@ -94,35 +134,11 @@ img.card-img-top {
     h3 {
       margin-bottom: 15px;
     }
-    .filter-form {
-      display: flex;
-      font-size: 0.7rem;
-      > .filter-field-container {
-        display: flex;
-        width: 50%;
-        &:nth-child(2) {
-          width: auto;
-        }
-        &:nth-child(3) {
-          width: auto;
-          .form-group {
-            padding-right: 0;
-          }
-        }
-        .form-group {
-          padding-right: 15px;
-          display: block;
-          width: 100%;
-          label  {
-            padding-left: 5px;
-            margin-bottom: 5px;
-          }
-        }
-      }
-      select {
-        height: 2rem;
-      }
-    }
+
+
+
+
+
   }
   .review-add-container {
     label, .col-lg-11, .post-review-btn {
