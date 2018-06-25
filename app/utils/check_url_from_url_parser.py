@@ -51,8 +51,8 @@ class CheckURL:
         elif 'nsmall.com' in url:
             self.item_data.get_info_from_ns()
 
-        # elif 'coupang.com' in url:
-        #     self.item_data.get_info_from_coupang()
+        elif 'coupang.com' in url:
+            self.item_data.get_info_from_coupang()
 
         elif 'wemakeprice.com' in url:
             self.item_data.get_info_from_wemakeprice()
