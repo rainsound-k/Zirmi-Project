@@ -26,6 +26,7 @@ img {
 }
 
 .top-container {
+  margin-top: 76px;
   margin-bottom: 20px !important;
   display: flex;
   align-items: center;

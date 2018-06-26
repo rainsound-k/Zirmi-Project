@@ -20,7 +20,7 @@
 <body>
 	<div class="header-wrap">
 		<header class="main-header">
-			<nav class="navbar top navbar-expand-md navbar-dark bg-dark">
+			<nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
 				<a class="navbar-brand" href="{% url 'index' %}">지르미</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarText" aria-controls="navbarText"
@@ -95,6 +95,20 @@
 	} else if (page_url.indexOf("items/list") != -1 || page_url.indexOf("items/complete") != -1 || page_url.indexOf("items/search") != -1 || path_regex.test(page_url)) {
 		$(".items-nav").addClass("active");
 	}
+
+
+
+	$(window).scroll(function () {
+		var offset = $(document).scrollTop();
+		if (offset < 100) {
+			$('.navbar').css('opacity', (1 - offset / 50));
+		} else if (offset > 300 && offset < 600){
+			$('.navbar').css('opacity', (offset / 1000));
+		} else if (offset > 600){
+			$('.navbar').css('opacity', (offset / 600));
+		};
+	})
+
 
 </script>
 
