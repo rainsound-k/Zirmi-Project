@@ -32,6 +32,10 @@ img {
     color: inherit;
   }
 }
+.form-control:focus {
+  border: 1px solid #ced4da;
+  box-shadow: none;
+}
 .container {
   margin-bottom: 70px;
 }

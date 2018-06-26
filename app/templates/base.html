@@ -88,7 +88,7 @@
 	var page_path = window.location.pathname;
 	var page_url = window.location.href;
 	var path_regex = /items[/]\d+/;
-	if (page_path == "/") {
+	if (page_path == "/" || page_url.indexOf("items/public") != -1) {
 		$(".home-nav").addClass("active");
 	} else if (page_url.indexOf("reviews") != -1) {
 		$(".reviews-nav").addClass("active");

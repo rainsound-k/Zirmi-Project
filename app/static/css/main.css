@@ -141,7 +141,7 @@ img.card-img-top {
   .item-detail {
     padding: 15px 0;
   }
-  .commnet-container {
+  .comment-container {
     padding: 0 15px;
   }
   .top-container {
@@ -222,10 +222,14 @@ p.media-body {
 }
 
 .comment-content-container {
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
-.comment-container:last-child div:nth-last-child(2) {
+.comment-container {
+  margin-bottom: 150px;
+}
+
+.comment-list-container:last-child div:nth-last-child(2) {
   border-bottom: none !important;
 }
 
@@ -233,8 +237,13 @@ p.media-body {
   margin-top: -1rem;
 }
 
-.child-comment, .add-reply {
+.child-comment {
   padding-left: 20px;
+}
+
+.add-reply {
+  padding-left: 20px;
+  display: flex;
 }
 
 .reply-add-btn {

@@ -41,10 +41,8 @@ class ReviewCommentForm(forms.ModelForm):
             'content',
         )
         widgets = {
-            'content': forms.Textarea(
+            'content': forms.TextInput(
                 attrs={
-                    'cols': 115,
-                    'rows': 3,
                     'class': 'form-control',
                     'placeholder': "댓글을 입력해주세요",
                 }

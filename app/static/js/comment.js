@@ -1,5 +1,5 @@
 function commentAdd (pk, is_auth, url, csrf_token, next_path) {
-  var content = $("#addComment-"+pk+">textarea").val();
+  var content = $("#addComment-"+pk+">input").val();
   if (content && is_auth == "True") {
     $.ajax({
       type: "POST",
@@ -13,7 +13,7 @@ function commentAdd (pk, is_auth, url, csrf_token, next_path) {
       dataType: "html",
 
       success: function(data, textStatus, jqXHR) {
-        $("#addComment-"+pk+">textarea").val("");
+        $("#addComment-"+pk+">input").val("");
         $("#comment-box").load(window.location + " #comment-box");
       },
       error: function(request, status, error) {
@@ -53,17 +53,18 @@ function commentDel (pk, url, csrf_token, count) {
 }
 
 function replyAddForm (pk) {
-  if ($("#addReply-"+pk).is(":hidden")) {
+  if ($("#replyAddContainer-"+pk).css("display") == "none") {
     $("#comment-"+pk).children('.comment-content').last().removeClass("border-bottom");
-    $("#addReply-"+pk).slideDown("800").css("display", "flex");
+    $("#replyAddContainer-"+pk).slideToggle(200);
+    $("#addReply-"+pk+"> input").focus();
   } else {
+    $("#replyAddContainer-"+pk).slideToggle(200);
     $("#comment-"+pk).children('.comment-content').last().addClass("border-bottom");
-    $("#addReply-"+pk).hide();
   };
 }
 
 function replyAdd (parent_pk, pk, is_auth, url, csrf_token, next_path) {
-  var content = $("#addReply-"+parent_pk+">textarea").val();
+  var content = $("#addReply-"+parent_pk+">input").val();
   if (content && is_auth == "True") {
     $.ajax({
       type: "POST",
@@ -78,7 +79,7 @@ function replyAdd (parent_pk, pk, is_auth, url, csrf_token, next_path) {
       dataType: "html",
 
       success: function(data, textStatus, jqXHR) {
-        $("#addReply-"+parent_pk+">textarea").val("");
+        $("#addReply-"+parent_pk+">input").val("");
         $("#comment-box").load(window.location + " #comment-box");
       },
       error: function(request, status, error) {
