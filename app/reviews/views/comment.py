@@ -19,12 +19,18 @@ __all__ = (
 def comment_create(request):
     review_pk = request.POST.get('pk', None)
     next_path = request.POST.get('next_path', None)
-    form = ReviewCommentForm(request.POST)
+    parent_pk = request.POST.get('parent_pk', None)
     review = get_object_or_404(Review, pk=review_pk)
+    try:
+        parent = get_object_or_404(ReviewComment, pk=parent_pk)
+    except Exception:
+        parent = None
+    form = ReviewCommentForm(request.POST)
     if form.is_valid():
         comment = form.save(commit=False)
         comment.user = request.user
         comment.review = review
+        comment.parent = parent
         comment.save()
         context = {
             'comment': comment,
