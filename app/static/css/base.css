@@ -52,3 +52,12 @@ img {
 .form-group {
   margin-bottom: 20px;
 }
+
+.none {
+  display: none;
+}
+
+.slideUp {
+  height: 0;
+  transition: all .5s linear;
+}

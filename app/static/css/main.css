@@ -225,8 +225,21 @@ p.media-body {
   margin-bottom: 30px;
 }
 
-.comment-content:last-child {
+.comment-container:last-child div:nth-last-child(2) {
   border-bottom: none !important;
+}
+
+.comment-delete-btn {
+  margin-top: -1rem;
+}
+
+.child-comment, .add-reply {
+  padding-left: 20px;
+}
+
+.reply-add-btn {
+  margin-top: -1rem;
+  margin-right: 2px;
 }
 
 .card-button {
