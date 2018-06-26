@@ -42,136 +42,44 @@
   </div>
 </div>
 
-
+<script src="{% static 'js/comment.js' %}"></script>
 <script type="text/javascript">
+  var isAuth = "{{ request.user.is_authenticated }}";
+  var csrfToken = "{{ csrf_token }}";
+
+
   $(document).on("click", ".comment-add-btn", function () {
     var pk = $(this).attr('name');
-    var content = $("#addComment-"+pk+">textarea").val();
+    var url = "{% url 'items:comment-create' %}";
     var nextPath = "/items/public/"+pk;
-    var isAuth = "{{ request.user.is_authenticated }}";
-    if (content && isAuth == "True") {
-      $.ajax({
-        type: "POST",
-        url: "{% url 'items:comment-create' %}",
-        data: {
-          'pk': pk,
-          'content': content,
-          'next_path': nextPath,
-          'csrfmiddlewaretoken': '{{ csrf_token }}'
-        },
-        dataType: "html",
-
-        success: function(data, textStatus, jqXHR) {
-          $("#addComment-"+pk+">textarea").val("");
-          $("#comment-box").load(window.location + " #comment-box");
-        },
-        error: function(request, status, error) {
-          alert("잘못된 접근입니다");
-          console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-        }
-      });
-    } else if (content && isAuth == "False") {
-      alert("로그인이 필요합니다");
-      window.location.replace("/login/?next="+nextPath);
-    } else {
-      alert("댓글 내용을 입력해주세요")
-    };
+    commentAdd(pk, isAuth, url, csrfToken, nextPath);
   })
 
   $(document).on("click", ".comment-delete-btn", function () {
     var pk = $(this).attr('name');
-    $.ajax({
-      type: "POST",
-      url: "{% url 'items:comment-delete' %}",
-      data: {
-        'pk': pk,
-        'csrfmiddlewaretoken': '{{ csrf_token }}'
-      },
-      dataType: "json",
-
-      success: function(response) {
-        if(response.status){
-          $("#comment-"+pk).remove();
-          $("#itemCount").load(window.location + " #itemCount");
-        }
-      },
-      error: function(request, status, error) {
-        alert("잘못된 접근입니다")
-        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-      }
-    });
+    var url = "{% url 'items:comment-delete' %}";
+    var count = "#itemCount";
+    commentDel(pk, url, csrfToken, count);
   })
 
   $(document).on("click", ".reply-add-btn", function () {
     var pk = $(this).attr('name');
-    if ($("#addReply-"+pk).is(":hidden")) {
-      $("#comment-"+pk).children('.comment-content').last().removeClass("border-bottom");
-      $("#addReply-"+pk).slideDown("800").css("display", "flex");
-    } else {
-      $("#comment-"+pk).children('.comment-content').last().addClass("border-bottom");
-      $("#addReply-"+pk).hide();
-    };
+    replyAddForm(pk);
   })
-
 
   $(document).on("click", ".comment-reply-add-btn", function () {
     var parentPk = $(this).attr('name');
     var pk = {{ item.pk }};
-    var content = $("#addReply-"+parentPk+">textarea").val();
+    var url = "{% url 'items:comment-create' %}";
     var nextPath = "/items/public/"+pk;
-    var isAuth = "{{ request.user.is_authenticated }}";
-    if (content && isAuth == "True") {
-      $.ajax({
-        type: "POST",
-        url: "{% url 'items:comment-create' %}",
-        data: {
-          'pk': pk,
-          'parent_pk': parentPk,
-          'content': content,
-          'next_path': nextPath,
-          'csrfmiddlewaretoken': '{{ csrf_token }}'
-        },
-        dataType: "html",
-
-        success: function(data, textStatus, jqXHR) {
-          $("#addReply-"+parentPk+">textarea").val("");
-          $("#comment-box").load(window.location + " #comment-box");
-        },
-        error: function(request, status, error) {
-          alert("잘못된 접근입니다");
-          console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-        }
-      });
-    } else if (content && isAuth == "False") {
-      alert("로그인이 필요합니다");
-      window.location.replace("/login/?next="+nextPath);
-    } else {
-      alert("댓글 내용을 입력해주세요")
-    };
+    replyAdd(parentPk, pk, isAuth, url, csrfToken, nextPath);
   })
 
   $(document).on("click", ".reply-delete-btn", function () {
     var pk = $(this).attr('name');
-    $.ajax({
-      type: "POST",
-      url: "{% url 'items:comment-delete' %}",
-      data: {
-        'pk': pk,
-        'csrfmiddlewaretoken': '{{ csrf_token }}'
-      },
-      dataType: "json",
-
-      success: function(response) {
-        if(response.status){
-          $("#replyComment-"+pk).remove();
-          $("#itemCount").load(window.location + " #itemCount");
-        }
-      },
-      error: function(request, status, error) {
-        alert("잘못된 접근입니다")
-        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-      }
-    });
+    var url = "{% url 'items:comment-delete' %}";
+    var count = "#itemCount";
+    replyDel(pk, url, csrfToken, count);
   })
 
 
