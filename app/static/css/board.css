@@ -86,11 +86,16 @@
 }
 
 .board-container #table .col2 {
-  width: 68%;
+  width: 60%;
 }
 
-.board-container #table .col3, .board-container #table .col4 {
+.board-container #table .col3 {
   width: 10%;
+  text-align: center;
+}
+
+.board-container #table .col4 {
+  width: 14%;
   text-align: center;
 }
 
@@ -126,6 +131,9 @@
   .board-container #small-table a {
     color: inherit;
   }
+  .board-container #small-table a:first-child .small-table-row {
+    border-top: 1px solid #ccc;
+  }
   .board-container #small-table a:hover {
     text-decoration: none;
   }
@@ -144,9 +152,6 @@
     text-align: center;
     padding: 15px 5px;
     width: 100%;
-  }
-  .board-container #small-table .small-table-row:first-child {
-    border-top: 1px solid #ccc;
   }
   .board-container #small-table .small-table-row .small-table-detail {
     display: inline-block;
