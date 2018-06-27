@@ -1,12 +1,17 @@
+{% load static %}
 <!doctype html>
-<html lang="kr">
+<html lang="ko">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>페이지를 찾을 수 없습니다</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>지르미</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="{% static 'css/page_404.css' %}">
+	<link rel="icon" href="{% static 'favicon-128.png' %}" sizes="128x128">
 </head>
+
 <body class="permission_denied">
   <div id="particles-js"></div>
   <div class="denied__wrapper">
@@ -104,128 +109,128 @@
   </svg>
     <a href="/"><button class="denied__link">Go Home</button></a>
   </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 
-<script>
-var particles = {
-   "particles": {
-     "number": {
-       "value": 160,
-       "density": {
-         "enable": true,
-         "value_area": 800
-       }
-     },
-     "color": {
-       "value": "#ffffff"
-     },
-     "shape": {
-       "type": "circle",
-       "stroke": {
-         "width": 0,
-         "color": "#000000"
-       },
-       "polygon": {
-         "nb_sides": 5
-       },
-       "image": {
-         "src": "img/github.svg",
-         "width": 100,
-         "height": 100
-       }
-     },
-     "opacity": {
-       "value": 1,
-       "random": true,
-       "anim": {
-         "enable": true,
-         "speed": 1,
-         "opacity_min": 0,
-         "sync": false
-       }
-     },
-     "size": {
-       "value": 3,
-       "random": true,
-       "anim": {
-         "enable": false,
-         "speed": 4,
-         "size_min": 0.3,
-         "sync": false
-       }
-     },
-     "line_linked": {
-       "enable": false,
-       "distance": 150,
-       "color": "#ffffff",
-       "opacity": 0.4,
-       "width": 1
-     },
-     "move": {
-       "enable": true,
-       "speed": 0.17,
-       "direction": "none",
-       "random": true,
-       "straight": false,
-       "out_mode": "out",
-       "bounce": false,
-       "attract": {
-         "enable": false,
-         "rotateX": 600,
-         "rotateY": 600
-       }
-     }
-   },
-   "interactivity": {
-     "detect_on": "canvas",
-     "events": {
-       "onhover": {
-         "enable": false,
-         "mode": "bubble"
-       },
-       "onclick": {
-         "enable": false,
-         "mode": "repulse"
-       },
-       "resize": false
-     },
-     "modes": {
-       "grab": {
-         "distance": 400,
-         "line_linked": {
-           "opacity": 1
+  <script type="text/javascript">
+  var particles = {
+     "particles": {
+       "number": {
+         "value": 160,
+         "density": {
+           "enable": true,
+           "value_area": 800
          }
        },
-       "bubble": {
-         "distance": 250,
-         "size": 0,
-         "duration": 2,
-         "opacity": 0,
-         "speed": 3
+       "color": {
+         "value": "#ffffff"
        },
-       "repulse": {
-         "distance": 400,
-         "duration": 0.4
+       "shape": {
+         "type": "circle",
+         "stroke": {
+           "width": 0,
+           "color": "#000000"
+         },
+         "polygon": {
+           "nb_sides": 5
+         },
+         "image": {
+           "src": "img/github.svg",
+           "width": 100,
+           "height": 100
+         }
        },
-       "push": {
-         "particles_nb": 4
+       "opacity": {
+         "value": 1,
+         "random": true,
+         "anim": {
+           "enable": true,
+           "speed": 1,
+           "opacity_min": 0,
+           "sync": false
+         }
        },
-       "remove": {
-         "particles_nb": 2
+       "size": {
+         "value": 3,
+         "random": true,
+         "anim": {
+           "enable": false,
+           "speed": 4,
+           "size_min": 0.3,
+           "sync": false
+         }
+       },
+       "line_linked": {
+         "enable": false,
+         "distance": 150,
+         "color": "#ffffff",
+         "opacity": 0.4,
+         "width": 1
+       },
+       "move": {
+         "enable": true,
+         "speed": 0.17,
+         "direction": "none",
+         "random": true,
+         "straight": false,
+         "out_mode": "out",
+         "bounce": false,
+         "attract": {
+           "enable": false,
+           "rotateX": 600,
+           "rotateY": 600
+         }
        }
-     }
-   },
-   "retina_detect": true
-};
-particlesJS('particles-js', particles, function() {
-  console.log('callback - particles.js config loaded');
-});
-</script>
+     },
+     "interactivity": {
+       "detect_on": "canvas",
+       "events": {
+         "onhover": {
+           "enable": false,
+           "mode": "bubble"
+         },
+         "onclick": {
+           "enable": false,
+           "mode": "repulse"
+         },
+         "resize": false
+       },
+       "modes": {
+         "grab": {
+           "distance": 400,
+           "line_linked": {
+             "opacity": 1
+           }
+         },
+         "bubble": {
+           "distance": 250,
+           "size": 0,
+           "duration": 2,
+           "opacity": 0,
+           "speed": 3
+         },
+         "repulse": {
+           "distance": 400,
+           "duration": 0.4
+         },
+         "push": {
+           "particles_nb": 4
+         },
+         "remove": {
+           "particles_nb": 2
+         }
+       }
+     },
+     "retina_detect": true
+  };
+  particlesJS('particles-js', particles, function() {
+    console.log('callback - particles.js config loaded');
+  });
+  </script>
 
 
 
 </body>
-
-
-
-
 </html>

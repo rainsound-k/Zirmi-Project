@@ -5,7 +5,7 @@ set_config(secrets, module_name=__name__, start=True)
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = []
 INSTALLED_APPS += [
     'django_extensions',
 ]
