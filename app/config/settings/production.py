@@ -8,6 +8,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '.elasticbeanstalk.com',
+    'zirmi.net',
 ]
 WSGI_APPLICATION = 'config.wsgi.production.application'
 INSTALLED_APPS += [
