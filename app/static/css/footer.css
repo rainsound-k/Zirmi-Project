@@ -1,3 +1,9 @@
-.footer-container {
+footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+footer .footer-container {
   margin: 40px 0;
 }

@@ -1,3 +1,6 @@
+html, body {
+  height: 100%;
+}
 img {
   max-width: 100%;
   height: auto;
@@ -43,6 +46,9 @@ img {
 }
 .body-container {
   min-height: 800px;
+}
+.member-container {
+  min-height: 700px;
 }
 .form-group {
   margin-bottom: 20px;
