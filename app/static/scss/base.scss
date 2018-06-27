@@ -38,6 +38,7 @@ img {
   box-shadow: none;
 }
 .container {
+  margin-top: 100px;
   margin-bottom: 70px;
 }
 .body-container {
@@ -52,4 +53,7 @@ img {
 .slideUp{
   height: 0;
   transition: all .5s linear;
+}
+#item-container .container, .album .container {
+  margin-top: 0;
 }

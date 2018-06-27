@@ -6,7 +6,7 @@
   </div>
   <div id="commentList-{{ review.pk }}" class="comment-content-container">
     {% for comment in review.comments.no_reply_all %}
-    <div id="comment-{{ comment.pk }}" class="comment-container">
+    <div id="comment-{{ comment.pk }}" class="comment-list-container">
       <div class="parent-comment comment-content media text-muted pt-3 border-bottom border-gray align-items-center">
         <span class="mr-2 rounded user-profile">
           {% if comment.user.gender == male %}
@@ -38,11 +38,13 @@
         </div>
       {% endfor %}
 
-      <div id="addReply-{{ comment.pk }}" class="add-reply none input-group">
-        {{ comment_form }}
-        <div class="input-group-append">
-          <input type="hidden" name="parent_pk" value="{{ comment.pk }}">
-          <button class="comment-reply-add-btn btn btn-primary" name="{{ comment.pk }}">등록</button>
+      <div id="replyAddContainer-{{ comment.pk }}" class="none">
+        <div id="addReply-{{ comment.pk }}" class="add-reply input-group">
+          {{ comment_form }}
+          <div class="input-group-append">
+            <input type="hidden" name="parent_pk" value="{{ comment.pk }}">
+            <button class="comment-reply-add-btn btn btn-secondary" name="{{ comment.pk }}">등록</button>
+          </div>
         </div>
       </div>
     </div>
@@ -52,7 +54,7 @@
   <div id="addComment-{{ review.pk }}" class="input-group">
     {{ comment_form }}
     <div class="input-group-append">
-      <button class="comment-add-btn btn btn-primary" name="{{ review.pk }}">등록</button>
+      <button class="comment-add-btn btn btn-secondary" name="{{ review.pk }}">등록</button>
     </div>
   </div>
 </div>

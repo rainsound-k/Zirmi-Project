@@ -101,10 +101,8 @@
 	$(window).scroll(function () {
 		var offset = $(document).scrollTop();
 		if (offset < 100) {
-			$('.navbar').css('opacity', (1 - offset / 50));
-		} else if (offset > 300 && offset < 600){
-			$('.navbar').css('opacity', (offset / 1000));
-		} else if (offset > 600){
+			$('.navbar').css('opacity', (1 - offset / 20));
+		} else if (offset > 500){
 			$('.navbar').css('opacity', (offset / 600));
 		};
 	})
