@@ -3,7 +3,7 @@ from .base import *
 secrets = json.loads(open(SECRETS_PRODUCTION, 'rt').read())
 set_config(secrets, module_name=__name__, start=True)
 
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
