@@ -4,7 +4,6 @@ from django.urls import path, include
 from django.conf.urls import handler404
 
 from . import apis, views
-from .. import views
 
 urlpatterns = [
     path('', include('config.urls.views')),
