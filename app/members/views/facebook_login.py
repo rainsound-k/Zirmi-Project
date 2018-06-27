@@ -19,7 +19,7 @@ def facebook_login(request):
     url_me = 'https://graph.facebook.com/v2.12/me'
     code = request.GET['code']
 
-    redirect_uri = 'http://localhost:8000/facebook-login/'
+    redirect_uri = 'https://zirmi.net/facebook-login/'
     params_access_token = {
         'client_id': client_app_id,
         'redirect_uri': redirect_uri,
