@@ -4,7 +4,8 @@ secrets = json.loads(open(SECRETS_LOCAL, 'rt').read())
 set_config(secrets, module_name=__name__, start=True)
 
 DEBUG = True
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ['localhost']
 INSTALLED_APPS += [
     'django_extensions',
 ]
