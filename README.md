@@ -103,8 +103,8 @@ FROM    <사용자명/<저장소명>:base
 ```json
     {
       "SECRET_KEY": "<Django secret key>",
-      "FACEBOOK_APP_ID": "Facebook zirmi app id"
-      "FACEBOOK_SECRET_CODE": "Facebook zirmi secret code"
+      "FACEBOOK_APP_ID": "<Facebook zirmi app id>",
+      "FACEBOOK_SECRET_CODE": "<Facebook zirmi secret code>",
 
       "RAVEN_CONFIG": {
         "dsn": "<Raven dsn>",
