@@ -52,22 +52,22 @@ python manage.py runserver
 `localhost:8000` 에서 확인
 
 ```
-docker build -t eb-docker:local -f Dockerfile.local
-docker run --rm -it 8000:80 eb-docker:local
+docker build -t zirmi:local -f Dockerfile.local
+docker run --rm -it 8000:80 zirmi:local
 ```
 
 ### AWS 환경 (개발 모드)
 
 ```
-docker build -t eb-docker:dev -f Dockerfile.dev
-docker run --rm -it 8000:80 eb-docker:dev
+docker build -t zirmi:dev -f Dockerfile.dev
+docker run --rm -it 8000:80 zirmi:dev
 ```
 
 ### AWS 환경 (배포 모드)
 
 ```
-docker build -t eb-docker:production -f Dockerfile.production
-docker run --rm -it 8000:80 eb-docker:production
+docker build -t zirmi:production -f Dockerfile.production
+docker run --rm -it 8000:80 zirmi:production
 ```
 
 ## DockerHub 관련
