@@ -229,10 +229,25 @@
 
 .review-info-container .review-date-view-count {
   color: #7d7c7c;
+  font-size: 1rem;
 }
 
 .review-info-container .edit-delete-btn {
   margin-left: auto;
+}
+
+.review-content-container div, img {
+  max-width: calc(100vw - 30px) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.review-content-container p {
+  max-width: calc(100vw - 30px) !important;
+  display: block;
+  height: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 .pagination {
