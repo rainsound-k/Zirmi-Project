@@ -3,6 +3,7 @@
 Zirmi 서비스는 자신이 지르고 싶은 품목을 다른 사람과 서로 공유하는 서비스 입니다.
 
 주소: [https://zirmi.net](https://zirmi.net)
+API 문서 주소: [https://rayi.gitbook.io/zirmi/](https://rayi.gitbook.io/zirmi/)
 
 Elastic Beanstalk에 Nginx-uWSGI-Django로 구성된 Docker 이미지를 배포합니다.
 
