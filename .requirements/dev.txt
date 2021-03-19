@@ -18,7 +18,7 @@ django-filter==1.1.0
 django-storages==1.6.6
 django-summernote==0.8.8.7
 django-widget-tweaks==1.4.2
-djangorestframework==3.8.2
+djangorestframework==3.11.2
 docker==3.4.0
 docker-compose==1.21.2
 docker-pycreds==0.3.0
